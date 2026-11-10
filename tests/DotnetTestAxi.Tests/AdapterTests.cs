@@ -10,12 +10,12 @@ public class AdapterTests
 
     public static TheoryData<string, string[], string[]> Cases() => new()
     {
-        { "xunit-v3", ["--class", "A.B.C"], ["--filter-class", "A.B.C"] },
-        { "xunit-v3", ["--method", "A.B.C.M"], ["--filter-method", "A.B.C.M"] },
-        { "xunit-v3", ["--namespace", "A.*"], ["--filter-namespace", "A.*"] },
-        { "xunit-v3", ["--method", "*Fails"], ["--filter-method", "*Fails"] },
-        { "xunit-v3", ["--namespace", "A", "--class", "A.C"], ["--filter-namespace", "A", "--filter-class", "A.C"] },
-        { "xunit-v3", [], [] },
+        { "xunit3", ["--class", "A.B.C"], ["--filter-class", "A.B.C"] },
+        { "xunit3", ["--method", "A.B.C.M"], ["--filter-method", "A.B.C.M"] },
+        { "xunit3", ["--namespace", "A.*"], ["--filter-namespace", "A.*"] },
+        { "xunit3", ["--method", "*Fails"], ["--filter-method", "*Fails"] },
+        { "xunit3", ["--namespace", "A", "--class", "A.C"], ["--filter-namespace", "A", "--filter-class", "A.C"] },
+        { "xunit3", [], [] },
 
         { "mstest", ["--class", "A.B.C"], ["--filter", "FullyQualifiedName~A.B.C."] },
         { "mstest", ["--class", "A.B.C*"], ["--filter", "FullyQualifiedName~A.B.C"] },
@@ -46,8 +46,8 @@ public class AdapterTests
         Assert.Equal(expected, AdapterRegistry.All.Single(a => a.Id == id).BuildFilterArguments(Filter(flags)));
 
     [Theory]
-    [InlineData("xunit-v3", "xunit.v3")]
-    [InlineData("xunit-v3", "xunit.v3.mtp-v2")]
+    [InlineData("xunit3", "xunit.v3")]
+    [InlineData("xunit3", "xunit.v3.mtp-v2")]
     [InlineData("mstest", "MSTest")]
     [InlineData("mstest", "MSTest.TestFramework")]
     [InlineData("nunit", "NUnit")]
@@ -59,6 +59,6 @@ public class AdapterTests
     public void Unknown_packages_match_nothing()
     {
         Assert.Null(AdapterRegistry.Find(["Newtonsoft.Json", "NUnit.Analyzers"]));
-        Assert.Equal(["xunit-v3", "mstest", "nunit", "tunit"], AdapterRegistry.All.Select(a => a.Id));
+        Assert.Equal(["xunit3", "mstest", "nunit", "tunit"], AdapterRegistry.All.Select(a => a.Id));
     }
 }

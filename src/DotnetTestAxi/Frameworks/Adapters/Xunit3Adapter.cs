@@ -4,7 +4,7 @@ namespace DotnetTestAxi.Frameworks.Adapters;
 
 internal sealed class Xunit3Adapter : IFrameworkAdapter
 {
-    public string Id => "xunit-v3";
+    public string Id => "xunit3";
 
     public bool Matches(IEnumerable<string> packageIds) =>
         packageIds.Any(p => p.StartsWith("xunit.v3", StringComparison.OrdinalIgnoreCase));
