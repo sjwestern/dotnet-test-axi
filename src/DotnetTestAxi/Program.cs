@@ -36,7 +36,7 @@ internal static partial class Program
         if (args.Error is not null)
         {
             Console.Write(Output.Error(args.Error, Output.ValidationError,
-                $"valid flags: {Args.ValidFlags}", "Run `dotnet-test-axi --help` for usage"));
+                args.ErrorHelp ?? $"valid flags: {Args.ValidFlags}", "Run `dotnet-test-axi --help` for usage"));
             return 2;
         }
 

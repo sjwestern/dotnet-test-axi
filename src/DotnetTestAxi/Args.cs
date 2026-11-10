@@ -1,3 +1,5 @@
+using DotnetTestAxi.Filtering;
+
 namespace DotnetTestAxi;
 
 internal sealed class Args
@@ -13,6 +15,8 @@ internal sealed class Args
     public bool Version { get; private set; }
     public List<string> Passthrough { get; } = [];
     public string? Error { get; private set; }
+    public string? ErrorHelp { get; private set; }
+    public TestFilter Filter { get; private set; } = TestFilter.Empty;
 
     public const string ValidFlags = "--class, --method, --namespace, --no-build, --full, --from-log, --help, --version";
 
@@ -26,7 +30,7 @@ internal sealed class Args
             {
                 case "--":
                     a.Passthrough.AddRange(argv[(i + 1)..]);
-                    return a;
+                    return a.Validate();
                 case "-h" or "--help": a.Help = true; break;
                 case "-v" or "--version": a.Version = true; break;
                 case "--full": a.Full = true; break;
@@ -52,7 +56,25 @@ internal sealed class Args
             }
         }
 
-        return a;
+        return a.Validate();
+    }
+
+    private Args Validate()
+    {
+        if (Error is null)
+        {
+            if (TestFilter.TryCreate(this, out var filter, out var error))
+            {
+                Filter = filter;
+            }
+            else
+            {
+                Error = error;
+                ErrorHelp = TestFilter.ValidForms;
+            }
+        }
+
+        return this;
     }
 
     private static string? Value(string[] argv, ref int i, Args a)
