@@ -10,7 +10,7 @@ Docs read: docs/architecture/test-filtering.md (run strategies single, mixed, un
 
 ## What changes
 
-- When a project has Microsoft.Testing.Extensions.TrxReport, the run passes --report-trx, --report-trx-filename and --results-directory so the TRX is written beside the log with the same stem: <name>-<timestamp>.log and <name>-<timestamp>.trx.
+- When a project has Microsoft.Testing.Extensions.TrxReport, the run passes --report-trx, --report-trx-filename and --results-directory so the TRX is written beside the log. Each run gets its own folder, `<log dir>/<yyyy-MM-dd>/<name>-<HHmmss>/`, holding `<name>.log`, `<name>.trx` and anything else the runner writes (for example TUnit's HTML report), so a run, or a whole day, is removed by deleting a folder.
 - Run output gains a trx: field (absolute path) next to log:, only when a TRX was produced. Multi-project and mixed runs get one TRX per project, matching the per-project logs.
 - Counts and failures (name, message, stack, location) come from the TRX when present. Failure text keeps the existing truncation and total-size rules.
 - Console parsing stays the source for build errors, crashes and rejected options, and the only source for projects without TRX.
@@ -65,3 +65,6 @@ Docs read: docs/architecture/test-filtering.md (run strategies single, mixed, un
 - The package-id read may not list transitive packages; step 1 verifies and picks the fallback.
 - Frameworks may populate TRX stack and message fields differently; fixtures from all four frameworks cover this.
 - Rule intent for mismatch handling: never report success when the run failed. The mismatch to NoSummary decision is the conservative reading; revisit if it proves noisy.
+
+- Implemented limit: a run of several projects through one `dotnet test --solution` call shares one report file name, so the files would overwrite each other. TRX is used only when a run targets one project (including each project of a mixed, filtered solution run); other runs use the console log and print no trx: or warning.
+- Implemented side effect: with the TRX extension active Microsoft Testing Platform reports host exit code 7 for a crashed host instead of 134; status stays crashed.
