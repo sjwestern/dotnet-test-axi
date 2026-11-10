@@ -6,14 +6,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ### Added
 
-- TRX reports: single-project runs write a `.trx` and print `trx:` next to `log:`; failures come from it with source locations. Uses `--report-xunit-trx` for xUnit v3 and `--report-trx` for MSTest, NUnit and TUnit.
+- TRX reports: each project's run writes a `.trx` and print `trx:` next to `log:`; failures come from it with source locations. Uses `--report-xunit-trx` for xUnit v3 and `--report-trx` for MSTest, NUnit and TUnit.
 - A `warning:` with the `dotnet add ... package Microsoft.Testing.Extensions.TrxReport` command when a project needs the package and lacks it.
 
 ### Changed
 
+- Solutions and other multi-project targets now run each project separately (built once, in parallel) so each gets its own log and TRX; the output lists a `projects` table.
 - Each run now has its own folder, `<log dir>/<yyyy-MM-dd>/<name>-<HHmmss>/`, holding the log and TRX, so old runs are easy to delete.
 - A run passes only with a success summary from the console or the TRX and exit code 0; console and TRX counts that disagree give `no-summary`.
-- Framework detection also runs for unfiltered single-project targets (about 0.5 s).
+- Framework detection now runs on every target, not only filtered ones (about 0.5 s per project, in parallel).
 - With the TRX extension active, a crashed host reports exit code 7 instead of 134 in `host_exit`.
 
 ## [0.2.0] - 2026-11-10

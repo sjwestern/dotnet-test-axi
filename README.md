@@ -75,7 +75,7 @@ dotnet-test-axi --from-log <file> [--full]
 
 - `<target>`: a name from `.dotnet-test-axi.json`, or a path to a project, solution (`.sln`, `.slnx`, `.slnf`) or directory.
 - `--class`, `--method`, `--namespace` filter tests the same way on xUnit v3, MSTest, NUnit and TUnit (see Filters).
-- `--parallel <n>` sets how many projects run at once when a filtered solution mixes frameworks.
+- `--parallel <n>` sets how many projects run at once when a target has several.
 - `--full` lists every failure (the default shows the first 10).
 - `--from-log` summarises an existing log instead of running tests.
 - Exit codes: 0 for `pass`, 1 for any other status, 2 for a usage error. The underlying `dotnet test` code is reported as `exit:`.
@@ -104,9 +104,8 @@ dotnet-test-axi --from-log <file> [--full]
 - Values are fully qualified names: `--class MyApp.Orders.OrderTests`, `--method MyApp.Orders.OrderTests.Saves`, `--namespace MyApp.Orders`.
 - `*` is allowed only at the start or end of a value: `--method "*Saves"`, `--class "MyApp.Orders.*"`.
 - A method must be qualified or start with `*`; `--method Saves` is a usage error (exit 2), as is a `*` in the middle of a value.
-- The framework of each project is detected from its package references (about 0.5 s per project, when a filter is given or the target is one project) and the filter is translated to its native options. See `docs/architecture/test-filtering.md`.
-- A solution whose projects share one framework runs once. A solution that mixes frameworks is built once, then each project runs with `--no-build` and its own filter, in parallel, and the results are merged. The output adds a `projects` table (`name`, `framework`, `status`, `total`, `failed`), a `project` column on failures and one log per project. A project where the filter matched nothing shows `no-tests`; the run is `no-tests` only if nothing ran anywhere.
-- Without a filter, a multi-project target is not detected and runs as a plain `dotnet test`.
+- The framework of each project is detected from its package references (about 0.5 s per project, in parallel) and the filter is translated to its native options. See `docs/architecture/test-filtering.md`.
+- A target with several projects, of one framework or mixed, is built once, then each project runs with `--no-build` and its own filter, in parallel, and the results are merged. The output adds a `projects` table (`name`, `framework`, `status`, `total`, `failed`), a `project` column on failures, one log per project and one TRX per project. A project where the filter matched nothing shows `no-tests`; the run is `no-tests` only if nothing ran anywhere.
 
 ### Framework support
 
@@ -124,11 +123,11 @@ Test names from MSTest, NUnit and TUnit are reported without the class, so no re
 
 ### TRX reports
 
-When a run targets one project and the framework can write a TRX report, the tool asks for one and prints `trx:` next to `log:`. Failures (name, message, first source location) then come from the TRX, which is more reliable than the console text; the console log still supplies build errors, crashes and the rest. If the console and TRX counts disagree the status is `no-summary`. A pass needs a success summary and exit code 0.
+When the framework can write a TRX report, the tool asks for one and prints `trx:` next to `log:`. Failures (name, message, first source location) then come from the TRX, which is more reliable than the console text; the console log still supplies build errors, crashes and the rest. If the console and TRX counts disagree the status is `no-summary`. A pass needs a success summary and exit code 0.
 
 - Each run gets a folder, `<log dir>/<yyyy-MM-dd>/<name>-<HHmmss>/`, with `<name>.log` and `<name>.trx`. Delete a folder to clean up a run, or a date folder to clean up a day.
 - If the framework needs the TrxReport package and the project lacks it, output includes `warning:` and a `help` line with the `dotnet add ... package Microsoft.Testing.Extensions.TrxReport` command. The run still works from the console log.
-- A multi-project run through one `dotnet test --solution` call has no `trx:` (the projects would share one report file). Filtered mixed-framework solutions run per project and print `trxs`.
+- A target with several projects runs each project on its own (built once, projects in parallel) so each writes its own report, and the output lists them as `trxs`.
 - Read the `trx:` file when failure messages are truncated.
 
 See `docs/architecture/result-sources.md`.

@@ -34,12 +34,12 @@ Limit: `~` is a contains match, so a leading-wildcard-free namespace or class ca
 
 | Strategy | When | What runs |
 |---|---|---|
-| Unfiltered | no filter | one `dotnet test` as before |
-| Single | all projects share one adapter | one `dotnet test` with the adapter's arguments (`--solution` or `--project`) |
-| Mixed | several adapters | `dotnet build` once, then `dotnet test --project <p> --no-build` per project with its own arguments, in parallel (`--parallel`, default half the processors, 1 to 8); `ResultMerger` combines them |
+| Unfiltered | no filter | one project: one `dotnet test` (`--project`). Several projects: as Mixed, without filter arguments. Frameworks are still detected, for the TRX options (see `docs/architecture/result-sources.md`) |
+| Single | all projects share one adapter | one project: one `dotnet test` with the adapter's arguments. Several projects: as Mixed |
+| Mixed | several projects (any frameworks) | `dotnet build` once, then `dotnet test --project <p> --no-build` per project with its own arguments, in parallel (`--parallel`, default half the processors, 1 to 8); `ResultMerger` combines them |
 | Unknown | a project's framework is not found, or no projects | status `unknown-framework`, nothing runs |
 
-`ResultMerger` sums counts. Status severity is build-error, crashed, unsupported-runner, invalid-arguments, no-summary, fail, pass, no-tests: `no-tests` only when nothing ran anywhere, because a filter matching nothing in one project is normal. Mixed output adds `projects[N]{name,framework,status,total,failed}`, a `project` column on failure rows and a `logs` list (one per project).
+`ResultMerger` sums counts. Status severity is build-error, crashed, unsupported-runner, invalid-arguments, no-summary, fail, pass, no-tests: `no-tests` only when nothing ran anywhere, because a filter matching nothing in one project is normal. Mixed output adds `projects[N]{name,framework,status,total,failed}`, a `project` column on failure rows and a `logs` list and a `trxs` list (one per project).
 
 ## Add a framework
 

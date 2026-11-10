@@ -93,7 +93,7 @@ public class TrxRunTests
     }
 
     [Fact]
-    public async Task Multi_project_run_without_a_filter_uses_the_console_only()
+    public async Task Multi_project_run_without_a_filter_gets_one_trx_per_project()
     {
         var (exit, _, o) = await ToolRun.RunAsync("SameFramework.slnx", "pass", "--no-build");
 
@@ -101,7 +101,11 @@ public class TrxRunTests
         Assert.Equal("pass", (string?)o["status"]);
         Assert.Equal(12L, (long?)o["total"]);
         Assert.Null(o["trx"]);
-        Assert.Null(o["trxs"]);
+        var trxs = o["trxs"]!.AsArray().Select(n => (string)n!).ToList();
+        Assert.Equal(2, trxs.Count);
+        Assert.Equal(2, trxs.Distinct().Count());
+        Assert.All(trxs, t => Assert.True(File.Exists(t)));
+        Assert.Equal(2, o["projects"]!.AsArray().Count);
         Assert.Null(o["warning"]);
     }
 

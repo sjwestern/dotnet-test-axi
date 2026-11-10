@@ -47,14 +47,14 @@ public class FilterRunTests
     }
 
     [Fact]
-    public async Task Same_framework_solution_runs_once_with_merged_counts()
+    public async Task Same_framework_solution_runs_each_project_with_merged_counts()
     {
         var (exit, _, o) = await ToolRun.RunAsync("SameFramework.slnx", "pass", "--no-build", "--method", "*Passes");
 
         Assert.Equal(0, exit);
         Assert.Equal("pass", (string?)o["status"]);
         Assert.Equal(2L, (long?)o["total"]);
-        Assert.Null(o["projects"]); // single dotnet test run, no per-project table
+        Assert.Equal(2, o["projects"]!.AsArray().Count); // one run per project so each gets its own TRX
     }
 
     [Fact]

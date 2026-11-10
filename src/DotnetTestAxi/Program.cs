@@ -78,11 +78,11 @@ internal static partial class Program
         RunPlan plan = new(Strategy.Unfiltered, null, []);
         if (args.Filter.IsEmpty)
         {
-            // TRX needs the framework, so detect when the target is one project. Several projects share one
-            // report file name, so a multi-project run without a filter stays on the console log.
-            if (TestRunner.ProjectsOf(target) is [var only])
+            // TRX needs the framework, so detect even without a filter.
+            var projects = TestRunner.ProjectsOf(target);
+            if (projects.Count > 0)
             {
-                plan = RunPlan.Choose(true, [await FrameworkDetector.DetectAsync(only, config)]);
+                plan = RunPlan.Choose(true, await FrameworkDetector.DetectAsync(projects, config));
             }
         }
         else
@@ -94,14 +94,16 @@ internal static partial class Program
                 Console.Write(Output.Run(PlanFailure(plan), null, args.Target, args.Full));
                 return 1;
             }
+        }
 
-            if (plan.Strategy is Strategy.Mixed)
-            {
-                var cfgLogDir = config?.LogDir is { } ld && config.Directory is { } cdir ? Path.GetFullPath(ld, cdir) : null;
-                var merged = await MixedRun.RunAsync(plan, args, target, cwd, cfgLogDir);
-                Console.Write(Output.Run(merged, null, args.Target, args.Full));
-                return merged.Status == RunStatus.Pass ? 0 : 1;
-            }
+        // Several projects run one at a time, each with its own log and TRX: a shared `dotnet test --solution`
+        // call would make every project write the same report file name.
+        if (plan.Strategy is Strategy.Mixed || plan.Detections.Count > 1)
+        {
+            var cfgLogDir = config?.LogDir is { } ld && config.Directory is { } cdir ? Path.GetFullPath(ld, cdir) : null;
+            var merged = await MixedRun.RunAsync(plan, args, target, cwd, cfgLogDir);
+            Console.Write(Output.Run(merged, null, args.Target, args.Full));
+            return merged.Status == RunStatus.Pass ? 0 : 1;
         }
 
         var logDir = config?.LogDir is { } d && config.Directory is { } cd ? Path.GetFullPath(d, cd) : null;

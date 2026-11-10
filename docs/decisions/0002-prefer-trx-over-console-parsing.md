@@ -16,4 +16,4 @@ When a project can produce a TRX (xUnit v3 always, MSTest, NUnit and TUnit with 
 
 ## Consequences
 
-Agents get a second file for detail. A count mismatch between TRX and console yields NoSummary. A project that needs the extension and lacks it gets a warning with the install command. TRX is used for single-project runs only, because several projects would share one report file name. Classic VSTest stays out of scope.
+Agents get a second file for detail. A count mismatch between TRX and console yields NoSummary. A project that needs the extension and lacks it gets a warning with the install command. Targets with several projects run each project separately so each writes its own report file. Classic VSTest stays out of scope.

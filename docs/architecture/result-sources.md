@@ -5,12 +5,12 @@ summary: "How console parsing and TRX combine into a run result: artifact layout
 
 # Result sources
 
-How a run's result is built from the console log and the TRX report. Decision: ADR-0002-prefer-trx-over-console-parsing-when-the-extension-is.
+How a run's result is built from the console log and the TRX report. Decision: ADR-0002-prefer-trx-over-console-parsing.
 
 ## Sources
 
 - The console log is always written and always parsed first (`MtpParser`). It is the only source for build errors, crashes, rejected options and the unsupported-runner case, and the fallback source for everything else.
-- A TRX report is requested when the run targets one project and the framework can write one. It supplies the failures (name, message, first source location) through `TrxReader`, a runner-agnostic reader of the Visual Studio TRX schema in `src/DotnetTestAxi/Trx/`.
+- A TRX report is requested for each project whose framework can write one. It supplies the failures (name, message, first source location) through `TrxReader`, a runner-agnostic reader of the Visual Studio TRX schema in `src/DotnetTestAxi/Trx/`.
 
 ## Artifact layout
 
@@ -31,9 +31,9 @@ The package check reads direct package references, the same read the framework d
 
 The options are added ahead of native passthrough arguments (after `--`), together with `--results-directory <run folder>`.
 
-## One project per report
+## One run per project
 
-Test applications write the report file name they are given, and several projects run by one `dotnet test --solution` call would overwrite each other. So TRX is used when the run targets one project: a project, a solution with one test project, or each project of a mixed solution run (those run one project at a time). A multi-project run of one framework, or any unfiltered multi-project run, uses the console log only and prints no `trx:` or warning. Framework detection runs for a single-project target even without a filter (about 0.5 s) so the right option is chosen.
+Test applications write the report file name they are given, and several projects run by one `dotnet test --solution` call would overwrite each other. So a target with more than one project is built once and each project is run on its own, in parallel (`MixedRun`, `--parallel <n>`), each with its own run folder, log and TRX. This applies with or without a filter, and the output gets the `projects` table and one `trxs` entry per project that wrote a report. Framework detection runs for every target (about 0.5 s per project, in parallel) so each project gets the right option and filter.
 
 ## Merge rules (`ResultSources.Finish`)
 
@@ -47,4 +47,4 @@ A crashed host still writes a partial TRX when the extension is active; the stat
 
 ## Output
 
-`trx:` (one project) or `trxs` (several, mixed runs) is printed next to `log:` only when a report was read. When a framework needs the package and the project lacks it, the run uses the console log and prints `warning:` once, with a complete `dotnet add <project> package Microsoft.Testing.Extensions.TrxReport` command in `help`. When failures are truncated and a TRX exists, `help` points at it for complete messages and stack traces.
+`trx:` (one project) or `trxs` (several projects) is printed next to `log:` only when a report was read. When a framework needs the package and the project lacks it, the run uses the console log and prints `warning:` once, with a complete `dotnet add <project> package Microsoft.Testing.Extensions.TrxReport` command in `help`. When failures are truncated and a TRX exists, `help` points at it for complete messages and stack traces.

@@ -3,7 +3,7 @@ using DotnetTestAxi.Frameworks;
 
 namespace DotnetTestAxi.Runs;
 
-/// <summary>Builds a mixed-framework solution once, then runs each project with its own filter in parallel.</summary>
+/// <summary>Builds a multi-project target once, then runs each project in parallel with its own filter, log and TRX.</summary>
 internal static partial class MixedRun
 {
     public const int MaxDefaultParallel = 8;
@@ -62,6 +62,6 @@ internal static partial class MixedRun
         ResultSources.Finish(result, exit, trxPath);
         if (availability == TrxAvailability.MissingPackage) { result.TrxMissing.Add(d.Project); }
 
-        return new ProjectRun(name, d.Adapter!.Id, result, logPath);
+        return new ProjectRun(name, d.Adapter?.Id ?? "unknown", result, logPath);
     }
 }
