@@ -2,8 +2,6 @@
 
 ## In flight
 ## Queued
-- [ ] reuse-dotnet-axi-toon-encoder-for-spec-conformant - Reuse dotnet-axi TOON encoder for spec-conformant quoting (kind: chore) (priority: 2) (since 2026-11-10)
-  Public Apache-2.0 project chuyflores-dev/dotnet-axi has ToonV41Encoder. Reuse with attribution in NOTICE only if it stays test-specific.
 - [ ] add-process-timeout-and-child-cleanup-to-the - Add process timeout and child cleanup to the runner (kind: idea) (priority: 2) (since 2026-11-10)
   Add --timeout and kill the process tree on timeout or cancel. dotnet-axi ProcessRunner is a reference.
 - [ ] add-a-net48-xunit-v3-exe-runner-mode - Add a net48 xunit v3 exe runner mode (kind: idea) (priority: 3) (since 2026-11-10)
@@ -31,6 +29,9 @@
   A project targeting several frameworks prints one module block per target. Needs a second runtime installed on the machine.
 - [ ] add-a-skipped-tests-listing-and-a-list-flag-for - Add a skipped-tests listing and a --list flag for discovered tests (kind: idea) (priority: 4) (since 2026-11-10)
 ## Done
+- [x] reuse-dotnet-axi-toon-encoder-for-spec-conformant - Reuse dotnet-axi TOON encoder for spec-conformant quoting (kind: chore) (priority: 2) (done 2026-11-10)
+  Public Apache-2.0 project chuyflores-dev/dotnet-axi has ToonV41Encoder. Reuse with attribution in NOTICE only if it stays test-specific.
+  Won't do: tool already uses the official Toon.Format library, as AGENTS.md requires.
 - [x] add-trx-reporting-as-a-structured-result-source - Add TRX reporting as a structured result source with console parsing as fallback (kind: change) (priority: 1) (done 2026-11-10)
   Use --report-trx when the Microsoft.Testing.Extensions.TrxReport extension is present. Keep the console parser for build errors, crashes and projects without the extension.
 - [x] add-per-framework-test-filters - Translate --class, --method and --namespace to each test framework (kind: change) (priority: 1) (done 2026-11-10)
