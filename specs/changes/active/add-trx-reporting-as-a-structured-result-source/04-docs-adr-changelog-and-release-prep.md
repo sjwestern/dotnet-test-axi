@@ -13,8 +13,8 @@ Docs impact section of the proposal lists the files. CHANGELOG uses Keep a Chang
 
 ## Work
 
-1. Create docs/architecture/result-sources.md with docs-axi new architecture: TRX versus console parsing, artifact naming, merge and mismatch rules, hint.
-2. ADR docs/decisions/0002-prefer-trx-over-console-parsing.md already exists as proposed; review it against what was built and set it accepted with docs-axi.
+1. Create docs/architecture/result-sources.md with docs-axi new architecture: TRX versus console parsing, artifact naming, merge and mismatch rules, per-framework TRX option, missing-package warning.
+2. ADR docs/decisions/0002-prefer-trx-over-console-parsing-when-the-extension-is.md already exists as proposed; review it against what was built and set it accepted with docs-axi.
 3. README: add a TRX column to the framework table and document trx:.
 4. CHANGELOG: one short user-facing line under Unreleased/Added.
 5. skills/dotnet-test-axi/SKILL.md: mention trx: and how to read it for detail.
