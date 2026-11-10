@@ -53,9 +53,9 @@ A TestFilter value (namespace, class, method patterns) is parsed and validated o
 
 ## Docs impact
 
-- README.md - update: framework table (flags now work on all four), filter syntax, --parallel, frameworks config.
-- docs/architecture/test-filtering.md - create: how detection, adapters and mixed runs work.
-- docs/decisions/0001-use-xunit-v3-filter-semantics-as-the-tool-s-own-and.md - create: the decision record.
+- `README.md` - update: framework table, filter syntax, --parallel, frameworks config.
+- `docs/architecture/test-filtering.md` - create: how detection, adapters and mixed runs work.
+- `docs/decisions/0001-use-xunit-v3-filter-semantics-as-the-tool-s-own-and.md` - create: the decision record, accepted.
 
 ## Risks and open questions
 
