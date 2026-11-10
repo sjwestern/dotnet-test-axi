@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- The NUnit sample without Microsoft.Testing.Extensions.TrxReport: covers the console-only fallback and the missing-package warning. Not part of Mixed.slnx. -->
+  <PropertyGroup>
+    <EnableNUnitRunner>true</EnableNUnitRunner>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <Compile Include="../NUnit.Sample/SampleTests.cs" Link="SampleTests.cs" />
+  </ItemGroup>
+</Project>

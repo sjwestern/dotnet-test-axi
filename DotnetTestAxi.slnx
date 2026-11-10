@@ -11,6 +11,7 @@
     <Project Path="tests/Samples/Xunit3.Other.Sample/Xunit3.Other.Sample.csproj" />
     <Project Path="tests/Samples/MSTest.Sample/MSTest.Sample.csproj" />
     <Project Path="tests/Samples/NUnit.Sample/NUnit.Sample.csproj" />
+    <Project Path="tests/Samples/NUnit.NoTrx.Sample/NUnit.NoTrx.Sample.csproj" />
     <Project Path="tests/Samples/TUnit.Sample/TUnit.Sample.csproj" />
   </Folder>
 </Solution>
