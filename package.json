@@ -1,6 +1,7 @@
 {
   "name": "dotnet-test-axi-dev",
   "private": true,
+  "type": "module",
   "description": "Contributor tooling only (commit message lint). The tool itself is a .NET tool and needs no Node.",
   "scripts": {
     "prepare": "husky"
