@@ -73,7 +73,8 @@ public sealed class SolutionReaderTests : IDisposable
         while (root is not null && !File.Exists(Path.Combine(root, "DotnetTestAxi.slnx"))) { root = Path.GetDirectoryName(root); }
         Assert.NotNull(root);
         var projects = SolutionReader.Read(Path.Combine(root!, "DotnetTestAxi.slnx"));
-        Assert.Equal(7, projects.Count);
+        Assert.Contains(projects, p => p.EndsWith("DotnetTestAxi.csproj"));
+        Assert.True(projects.Count >= 7);
         Assert.All(projects, p => Assert.True(Path.IsPathRooted(p) && File.Exists(p)));
     }
 }

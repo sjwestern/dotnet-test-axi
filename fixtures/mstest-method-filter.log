@@ -1,0 +1,22 @@
+Running tests from /work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll (net10.0|x64)
+failed Fails (22ms)
+  from /work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll (net10.0|x64)
+  Assertion failed. Expected values to be equal.
+  
+  expected: 3
+  actual:   2
+  
+  Assert.AreEqual(Scenario.Failing ? 3 : 2, 1 + 1)
+    at Samples.MSTest.SampleTests.Fails() in /work/samples/MSTest.Sample/SampleTests.cs:12
+    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+/work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll (net10.0|x64) failed with 1 error(s) (711ms)
+Exit code: 2
+
+Test run summary: Failed!
+  total: 1
+  failed: 1
+  succeeded: 0
+  skipped: 0
+  duration: 938ms
+Test run completed with non-success exit code: 2 (see: https://aka.ms/testingplatform/exitcodes)

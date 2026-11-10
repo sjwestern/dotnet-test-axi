@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Xunit3.Sample/Xunit3.Sample.csproj" />
+  <Project Path="MSTest.Sample/MSTest.Sample.csproj" />
+  <Project Path="NUnit.Sample/NUnit.Sample.csproj" />
+  <Project Path="TUnit.Sample/TUnit.Sample.csproj" />
+</Solution>

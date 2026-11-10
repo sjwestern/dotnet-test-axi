@@ -53,6 +53,19 @@ foreach ($f in $Framework) {
     Save "$key-class-filter" ($base + '--no-build' + '--filter-class' + 'Samples.Missing')
 }
 
+# A native filter that selects one test, as translated by the framework adapters for --method <ns>.SampleTests.Fails.
+$native = [ordered]@{
+    Xunit3 = @('--filter-method', 'Samples.Xunit3.SampleTests.Fails')
+    MSTest = @('--filter', 'FullyQualifiedName=Samples.MSTest.SampleTests.Fails')
+    NUnit  = @('--filter', 'FullyQualifiedName=Samples.NUnitSample.SampleTests.Fails')
+    TUnit  = @('--treenode-filter', '/*/Samples.TUnitSample/SampleTests/Fails')
+}
+foreach ($f in $Framework) {
+    if (-not $native.Contains($f)) { continue }
+    $project = Join-Path $samples "$f.Sample"
+    Save "$($f.ToLowerInvariant())-method-filter" (@('test', '--project', $project, '--no-progress', '--no-build') + $native[$f]) @{ SAMPLE_SCENARIO = 'fail' }
+}
+
 # Framework independent cases, captured once from the xUnit v3 sample.
 $x = Join-Path $samples 'Xunit3.Sample'
 Save 'build-error' @('test', '--project', $x, '--no-progress', '-p:SampleBuildError=true')

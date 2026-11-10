@@ -53,6 +53,17 @@ public class FrameworkFixtureTests
 
     [Theory]
     [MemberData(nameof(Frameworks))]
+    public void Native_method_filter_selects_one_failing_test(string key, string _)
+    {
+        var r = Parse(key, "method-filter");
+
+        Assert.Equal(RunStatus.Fail, r.Status);
+        Assert.Equal((1, 1), (r.Total, r.Failed));
+        Assert.Contains("Fails", Assert.Single(r.Failures).Name);
+    }
+
+    [Theory]
+    [MemberData(nameof(Frameworks))]
     public void Fail_reports_a_source_location_for_thrown_exceptions(string key, string _)
     {
         var r = Parse(key, "fail");

@@ -12,6 +12,7 @@
     <ProjectReference Include="../../src/DotnetTestAxi/DotnetTestAxi.csproj" />
     <!-- The samples are run by the tests, not referenced for code. Referencing them builds them first. -->
     <ProjectReference Include="../Samples/Xunit3.Sample/Xunit3.Sample.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="../Samples/Xunit3.Other.Sample/Xunit3.Other.Sample.csproj" ReferenceOutputAssembly="false" />
     <ProjectReference Include="../Samples/MSTest.Sample/MSTest.Sample.csproj" ReferenceOutputAssembly="false" />
     <ProjectReference Include="../Samples/NUnit.Sample/NUnit.Sample.csproj" ReferenceOutputAssembly="false" />
     <ProjectReference Include="../Samples/TUnit.Sample/TUnit.Sample.csproj" ReferenceOutputAssembly="false" />

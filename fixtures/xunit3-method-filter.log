@@ -1,0 +1,19 @@
+Running tests from /work/samples/Xunit3.Sample/bin/Debug/net10.0/Xunit3.Sample.dll (net10.0|x64)
+failed Samples.Xunit3.SampleTests.Fails (17ms)
+  from /work/samples/Xunit3.Sample/bin/Debug/net10.0/Xunit3.Sample.dll (net10.0|x64)
+  Assert.Equal() Failure: Values differ
+  Expected: 3
+  Actual:   2
+    at Samples.Xunit3.SampleTests.Fails() in /work/samples/Xunit3.Sample/SampleTests.cs:11
+    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+/work/samples/Xunit3.Sample/bin/Debug/net10.0/Xunit3.Sample.dll (net10.0|x64) failed with 1 error(s) (776ms)
+Exit code: 2
+
+Test run summary: Failed!
+  total: 1
+  failed: 1
+  succeeded: 0
+  skipped: 0
+  duration: 1s 007ms
+Test run completed with non-success exit code: 2 (see: https://aka.ms/testingplatform/exitcodes)
