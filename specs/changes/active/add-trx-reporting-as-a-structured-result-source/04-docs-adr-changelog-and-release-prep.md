@@ -18,7 +18,7 @@ Docs impact section of the proposal lists the files. CHANGELOG uses Keep a Chang
 3. README: add a TRX column to the framework table and document trx:.
 4. CHANGELOG: one short user-facing line under Unreleased/Added.
 5. skills/dotnet-test-axi/SKILL.md: mention trx: and how to read it for detail.
-6. AGENTS.md: reword the rule "Never report success without an MTP summary and a zero exit code" to "without a success summary (console or TRX) and a zero exit code".
+6. AGENTS.md: the pass rule was already reworded (success summary from console or TRX, with the reason); check it still matches what was built.
 7. docs-axi check passes.
 
 ## Done when
