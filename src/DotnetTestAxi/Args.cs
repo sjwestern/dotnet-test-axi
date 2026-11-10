@@ -14,6 +14,8 @@ internal sealed class Args
     public List<string> Passthrough { get; } = [];
     public string? Error { get; private set; }
 
+    public const string ValidFlags = "--class, --method, --namespace, --no-build, --full, --from-log, --help, --version";
+
     public static Args Parse(string[] argv)
     {
         var a = new Args();
@@ -36,7 +38,7 @@ internal sealed class Args
                 default:
                     if (arg.StartsWith('-'))
                     {
-                        a.Error = $"unknown option {arg}";
+                        a.Error = $"unknown flag {arg}";
                     }
                     else if (a.Target is null)
                     {

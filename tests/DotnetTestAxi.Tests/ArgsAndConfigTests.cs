@@ -19,7 +19,8 @@ public class ArgsAndConfigTests
     [Fact]
     public void Unknown_option_is_an_error()
     {
-        Assert.Contains("--nope", Args.Parse(["--nope"]).Error);
+        Assert.Equal("unknown flag --nope", Args.Parse(["--nope"]).Error);
+        Assert.Contains("--class", Args.ValidFlags);
     }
 
     [Fact]

@@ -14,12 +14,14 @@ failed: 3
 skipped: 1
 duration: 1s 068ms
 failures[3]{name,message,at}:
-  MyApp.Orders.OrderTests.Rejects_empty,Assert.Equal() Failure: Values differ | Expected: 3 | Actual:   2,OrderTests.cs:6
+  MyApp.Orders.OrderTests.Rejects_empty,"Assert.Equal() Failure: Values differ | Expected: 3 | Actual:   2","OrderTests.cs:6"
   ...
 exit: 2
 log: /tmp/dotnet-test-axi/MyApp.Tests-20261110-152838.log
-next: rerun one class: dotnet-test-axi tests/MyApp.Tests --class "MyApp.Orders.OrderTests". full output: read the log, do not rerun the whole suite
+help[2]: "Run `dotnet-test-axi tests/MyApp.Tests --class \"MyApp.Orders.OrderTests\"` to rerun one failing class",Read /tmp/dotnet-test-axi/MyApp.Tests-20261110-152838.log for the full output instead of rerunning the suite
 ```
+
+Output follows the [AXI](https://github.com/kunchenguid/axi) agent-CLI principles and is encoded as [TOON](https://toonformat.dev/) with the official `Toon.Format` library.
 
 ## Why
 
@@ -34,7 +36,7 @@ Requires the .NET 10 SDK.
 git clone <this repo> && cd dotnet-test-axi
 dotnet pack src/DotnetTestAxi -c Release -o nupkg
 dotnet tool install -g dotnet-test-axi --add-source ./nupkg      # first time
-dotnet tool update  -g dotnet-test-axi --add-source ./nupkg      # after changes
+dotnet tool uninstall -g dotnet-test-axi && dotnet tool install -g dotnet-test-axi --add-source ./nupkg   # after changes (same version number)
 ```
 
 To pin it per repository instead, use a local tool manifest in that repo:
@@ -59,8 +61,10 @@ dotnet-test-axi --from-log <file> [--full]
 - `--class`, `--method`, `--namespace` map to the MTP `--filter-class`, `--filter-method` and `--filter-namespace` options.
 - `--full` lists every failure (the default shows the first 10).
 - `--from-log` summarises an existing log instead of running tests.
-- Exit code is 0 only when the status is `pass`.
+- Exit codes: 0 for `pass`, 1 for any other status, 2 for a usage error. The underlying `dotnet test` code is reported as `exit:`.
+- Errors are printed to stdout as `error`, `code` and `help`. Unknown flags are rejected with the list of valid flags.
 - Run with no arguments to see the config found and the available targets.
+- `--full` and `--from-log` read the saved log, so you never need to rerun the suite to see more.
 
 ### Status values
 

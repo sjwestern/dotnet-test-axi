@@ -8,8 +8,7 @@ namespace DotnetTestAxi;
 /// </summary>
 internal static partial class MtpParser
 {
-    private const int MaxMessageLines = 3;
-    private const int MaxMessageChars = 300;
+    private const int MaxMessageLines = 40;
 
     // "failed Ns.Class.Method(x: 1) (17ms)"
     [GeneratedRegex(@"^failed (?<name>.+) \((?<dur>(?:\d+(?:\.\d+)?\s?(?:h|m|s|ms|µs)\s?)+)\)\s*$")]
@@ -157,13 +156,7 @@ internal static partial class MtpParser
             }
         }
 
-        var text = string.Join(" | ", message);
-        if (text.Length > MaxMessageChars)
-        {
-            text = text[..MaxMessageChars] + "...";
-        }
-
-        return new TestFailure(name, text, location, assembly);
+        return new TestFailure(name, string.Join(" | ", message), location, assembly);
     }
 
     private static void ApplySummaryField(RunResult result, string key, string value)

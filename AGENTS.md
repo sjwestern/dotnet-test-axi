@@ -8,7 +8,9 @@ Agent-friendly `dotnet test` runner and result summariser (a .NET tool). It only
 - Keep the repo generic. Never reference other projects, companies, products or private paths in code, tests, fixtures, docs or examples. Use generic names (`MyApp`, `Demo`) and sanitised paths (`/work/...`).
 - Parser changes are test-first against a log in `fixtures/`. Fixtures come from real runs of throwaway demo projects, with absolute paths rewritten to `/work/...`.
 - Never report success without an MTP summary and a zero exit code.
-- Output is compact TOON-style text; keep field names stable (agents depend on them).
+- Output must follow the AXI rules (load the `axi` skill before changing anything that prints). In short: TOON on stdout produced by the official `Toon.Format` library (never hand-roll TOON, quoting is subtle); minimal fields; truncate long text and show the total size; definitive empty states; errors on stdout as `error`, `code`, `help` with exit 2 for usage errors; reject unknown flags and list the valid ones; no prompts; no progress on stdout; `help[]` suggestions are complete commands; the no-argument home view shows `bin` and `description` first, then live state; `-v`, `-V` and `--version` answer before any other work.
+- Keep field names stable (agents depend on them). Assert output in tests by decoding it with `ToonDecoder`, not by string matching.
+- Exit codes: 0 pass, 1 any other status, 2 usage error.
 - Parts of the public Apache-2.0 `dotnet-axi` project may be reused with attribution (add a `NOTICE` entry when doing so).
 - Use `dotnet test --solution DotnetTestAxi.slnx` for tests. Commits are conventional (`feat:`, `fix:`, `docs:`, `test:`, `chore:`).
 

@@ -10,20 +10,39 @@ internal static partial class Program
 
     private static async Task<int> Main(string[] argv)
     {
+        // Fast path: answer the version before touching config or the disk.
+        if (argv is [("-v" or "-V" or "--version")])
+        {
+            Console.WriteLine(Version());
+            return 0;
+        }
+
+        try
+        {
+            return await RunAsync(argv);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            Console.Write(Output.Error($"unexpected failure: {ex.Message}", Output.RuntimeError,
+                "Run `dotnet-test-axi --help` to check the usage"));
+            return 1;
+        }
+    }
+
+    private static async Task<int> RunAsync(string[] argv)
+    {
         var args = Args.Parse(argv);
-        var cwd = Directory.GetCurrentDirectory();
-        var config = Config.Find(cwd);
 
         if (args.Error is not null)
         {
-            Console.WriteLine($"error: {args.Error}");
-            Console.WriteLine("next: dotnet-test-axi --help");
+            Console.Write(Output.Error(args.Error, Output.ValidationError,
+                $"valid flags: {Args.ValidFlags}", "Run `dotnet-test-axi --help` for usage"));
             return 2;
         }
 
         if (args.Version)
         {
-            Console.WriteLine(typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion.Split('+')[0] ?? "0.0.0");
+            Console.WriteLine(Version());
             return 0;
         }
 
@@ -38,44 +57,51 @@ internal static partial class Program
             return FromLog(args);
         }
 
+        var cwd = Directory.GetCurrentDirectory();
+        var config = Config.Find(cwd);
+
         if (args.Target is null)
         {
-            Console.Write(Help.Dashboard(config));
+            Console.Write(Output.Home(config, Environment.ProcessPath ?? "dotnet-test-axi"));
             return 0;
         }
 
         var target = Config.ResolveTarget(config, args.Target, cwd);
         if (target is null)
         {
-            Console.WriteLine($"error: target '{args.Target}' is not a known name or an existing path");
-            Console.WriteLine(Help.Targets(config));
+            Console.Write(Output.UnknownTarget(args.Target, config));
             return 2;
         }
 
-        var logPath = TestRunner.NewLogPath(target, config?.LogDir is { } d && config.Directory is { } cd ? Path.GetFullPath(d, cd) : null);
+        var logDir = config?.LogDir is { } d && config.Directory is { } cd ? Path.GetFullPath(d, cd) : null;
+        var logPath = TestRunner.NewLogPath(target, logDir);
         var exit = await TestRunner.RunAsync(TestRunner.BuildArguments(target, args), cwd, logPath);
 
         var result = MtpParser.Parse(Ansi().Replace(File.ReadAllText(logPath), ""));
         result.ExitCode ??= exit != 0 ? exit : null;
         if (exit != 0 && result.Status == RunStatus.Pass)
         {
-            result.Status = RunStatus.NoSummary; // dotnet failed even though a summary said pass: do not claim success
+            result.Status = RunStatus.NoSummary; // dotnet failed although a summary said pass: never claim success
         }
 
-        Console.Write(Toon.Format(result, logPath, args.Target, args.Full));
-        return result.Status == RunStatus.Pass ? 0 : exit != 0 ? exit : 1;
+        Console.Write(Output.Run(result, logPath, args.Target, args.Full));
+        return result.Status == RunStatus.Pass ? 0 : 1;
     }
 
     private static int FromLog(Args args)
     {
         if (!File.Exists(args.FromLog))
         {
-            Console.WriteLine($"error: log file '{args.FromLog}' not found");
+            Console.Write(Output.Error($"log file '{args.FromLog}' not found", Output.ValidationError,
+                "Pass the log: path printed by a previous run"));
             return 2;
         }
 
         var result = MtpParser.Parse(Ansi().Replace(File.ReadAllText(args.FromLog!), ""));
-        Console.Write(Toon.Format(result, Path.GetFullPath(args.FromLog!), args.Target, args.Full));
+        Console.Write(Output.Run(result, Path.GetFullPath(args.FromLog!), args.Target, args.Full));
         return result.Status == RunStatus.Pass ? 0 : 1;
     }
+
+    private static string Version() =>
+        typeof(Program).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion.Split('+')[0] ?? "0.0.0";
 }
