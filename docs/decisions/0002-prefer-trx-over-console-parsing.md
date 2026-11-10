@@ -1,7 +1,7 @@
 ---
 title: Prefer TRX over console parsing
 summary: Use TRX as the structured result source for counts and failures, with console parsing for the rest
-status: proposed
+status: accepted
 ---
 
 # Prefer TRX over console parsing
