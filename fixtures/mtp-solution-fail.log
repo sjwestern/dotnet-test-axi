@@ -1,0 +1,22 @@
+Running tests from /work/app/tests/Domain.Tests/bin/Debug/net10.0/Domain.Tests.dll (net10.0|x64)
+Running tests from /work/app/tests/Unit.Tests/bin/Debug/net10.0/Unit.Tests.dll (net10.0|x64)
+failed Unit.Orders.OrderTests.Rejects_empty (12ms)
+  from /work/app/tests/Unit.Tests/bin/Debug/net10.0/Unit.Tests.dll (net10.0|x64)
+  Assert.True() Failure
+  Expected: True
+  Actual:   False
+    at Unit.Orders.OrderTests.Rejects_empty() in /work/app/tests/Unit.Tests/Orders/OrderTests.cs:21
+/work/app/tests/Unit.Tests/bin/Debug/net10.0/Unit.Tests.dll (net10.0|x64) failed with 1 error(s) (4s 929ms)
+Exit code: 2
+/work/app/tests/Domain.Tests/bin/Debug/net10.0/Domain.Tests.dll (net10.0|x64) passed (729ms)
+
+Test run summary: Failed!
+  /work/app/tests/Unit.Tests/bin/Debug/net10.0/Unit.Tests.dll (net10.0|x64) failed with 1 error(s) (4s 929ms)
+  /work/app/tests/Domain.Tests/bin/Debug/net10.0/Domain.Tests.dll (net10.0|x64) passed (729ms)
+
+  total: 662
+  failed: 1
+  succeeded: 661
+  skipped: 0
+  duration: 5s 227ms
+Test run completed with non-success exit code: 2 (see: https://aka.ms/testingplatform/exitcodes)

@@ -96,4 +96,26 @@ public class MtpParserTests
         Assert.Equal(RunStatus.Fail, r.Status);
         Assert.Equal(3, r.Failures.Count);
     }
+
+    [Fact]
+    public void Solution_run_lists_projects_inside_the_summary_before_the_totals()
+    {
+        var r = MtpParser.Parse(Fixtures.Read("mtp-solution-pass.log"));
+
+        Assert.Equal(RunStatus.Pass, r.Status);
+        Assert.Equal((662, 662, 0, 0), (r.Total, r.Passed, r.Failed, r.Skipped));
+        Assert.Equal("5s 227ms", r.Duration);
+    }
+
+    [Fact]
+    public void Solution_run_failure_keeps_totals_and_failures()
+    {
+        var r = MtpParser.Parse(Fixtures.Read("mtp-solution-fail.log"));
+
+        Assert.Equal(RunStatus.Fail, r.Status);
+        Assert.Equal((662, 1, 661), (r.Total, r.Failed, r.Passed));
+        var f = Assert.Single(r.Failures);
+        Assert.Equal("Unit.Orders.OrderTests.Rejects_empty", f.Name);
+        Assert.Equal("OrderTests.cs:21", f.Location);
+    }
 }

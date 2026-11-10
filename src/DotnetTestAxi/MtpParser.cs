@@ -61,10 +61,14 @@ internal static partial class MtpParser
             {
                 summaries++;
                 outcomes.Add(header.Groups["outcome"].Value);
-                while (i + 1 < lines.Length && SummaryField().Match(lines[i + 1]) is { Success: true } f)
+                // A solution run lists one indented line per project (and blank lines) before the totals.
+                while (i + 1 < lines.Length && (lines[i + 1].Length == 0 || char.IsWhiteSpace(lines[i + 1][0])))
                 {
-                    ApplySummaryField(result, f.Groups["key"].Value, f.Groups["value"].Value);
                     i++;
+                    if (SummaryField().Match(lines[i]) is { Success: true } f)
+                    {
+                        ApplySummaryField(result, f.Groups["key"].Value, f.Groups["value"].Value);
+                    }
                 }
                 continue;
             }

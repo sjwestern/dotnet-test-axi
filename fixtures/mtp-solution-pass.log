@@ -1,0 +1,14 @@
+Running tests from /work/app/tests/Domain.Tests/bin/Debug/net10.0/Domain.Tests.dll (net10.0|x64)
+Running tests from /work/app/tests/Unit.Tests/bin/Debug/net10.0/Unit.Tests.dll (net10.0|x64)
+/work/app/tests/Domain.Tests/bin/Debug/net10.0/Domain.Tests.dll (net10.0|x64) passed (729ms)
+/work/app/tests/Unit.Tests/bin/Debug/net10.0/Unit.Tests.dll (net10.0|x64) passed (4s 929ms)
+
+Test run summary: Passed!
+  /work/app/tests/Unit.Tests/bin/Debug/net10.0/Unit.Tests.dll (net10.0|x64) passed (4s 929ms)
+  /work/app/tests/Domain.Tests/bin/Debug/net10.0/Domain.Tests.dll (net10.0|x64) passed (729ms)
+
+  total: 662
+  failed: 0
+  succeeded: 662
+  skipped: 0
+  duration: 5s 227ms
