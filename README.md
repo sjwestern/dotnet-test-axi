@@ -30,14 +30,28 @@ This runs once, saves everything, and prints only what is needed. A run that cra
 
 ## Install (from a clone, before it is published)
 
-Requires the .NET 10 SDK.
+Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download) and git.
 
 ```sh
-git clone <this repo> && cd dotnet-test-axi
+git clone https://github.com/sjwestern/dotnet-test-axi.git
+cd dotnet-test-axi
 dotnet pack src/DotnetTestAxi -c Release -o nupkg
-dotnet tool install -g dotnet-test-axi --add-source ./nupkg      # first time
-dotnet tool uninstall -g dotnet-test-axi && dotnet tool install -g dotnet-test-axi --add-source ./nupkg   # after changes (same version number)
+dotnet tool install -g dotnet-test-axi --add-source ./nupkg
+dotnet-test-axi --version        # check it works
 ```
+
+If `dotnet-test-axi` is not found, add `~/.dotnet/tools` (`%USERPROFILE%\.dotnet\tools` on Windows) to your `PATH`.
+
+### Update
+
+```sh
+cd dotnet-test-axi
+git pull
+dotnet pack src/DotnetTestAxi -c Release -o nupkg
+dotnet tool update -g dotnet-test-axi --add-source ./nupkg
+```
+
+Each user-visible change bumps the version (SemVer), so `update` picks it up. If a build did not bump the version, use `dotnet tool uninstall -g dotnet-test-axi` then `dotnet tool install -g dotnet-test-axi --add-source ./nupkg`.
 
 To pin it per repository instead, use a local tool manifest in that repo:
 
@@ -48,7 +62,9 @@ dotnet tool restore
 dotnet tool run dotnet-test-axi -- <args>      # or: dotnet dotnet-test-axi <args>
 ```
 
-Install the agent skill by linking `skills/dotnet-test-axi` into your agent's skills folder (for example `~/.agents/skills/`).
+### Agent skill
+
+Link `skills/dotnet-test-axi` into your agent's skills folder (for example `ln -s "$PWD/skills/dotnet-test-axi" ~/.agents/skills/dotnet-test-axi`). A link means `git pull` also updates the skill.
 
 ## Use
 
@@ -136,6 +152,10 @@ dotnet test --solution DotnetTestAxi.slnx           # everything, including end 
 ```
 
 Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/), enforced by commitlint through a husky hook. Run `npm install` once after cloning to enable it (Node is only needed for this, not for the tool).
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md).
 
 ## Licence
 
