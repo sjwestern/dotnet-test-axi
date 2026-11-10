@@ -53,12 +53,13 @@ Install the agent skill by linking `skills/dotnet-test-axi` into your agent's sk
 ## Use
 
 ```
-dotnet-test-axi <target> [--class <name>] [--method <name>] [--namespace <name>] [--no-build] [--full] [-- <extra dotnet test args>]
+dotnet-test-axi <target> [--class <name>] [--method <name>] [--namespace <name>] [--no-build] [--parallel <n>] [--full] [-- <extra dotnet test args>]
 dotnet-test-axi --from-log <file> [--full]
 ```
 
 - `<target>`: a name from `.dotnet-test-axi.json`, or a path to a project, solution (`.sln`, `.slnx`, `.slnf`) or directory.
-- `--class`, `--method`, `--namespace` map to the MTP `--filter-class`, `--filter-method` and `--filter-namespace` options.
+- `--class`, `--method`, `--namespace` filter tests the same way on xUnit v3, MSTest, NUnit and TUnit (see Filters).
+- `--parallel <n>` sets how many projects run at once when a filtered solution mixes frameworks.
 - `--full` lists every failure (the default shows the first 10).
 - `--from-log` summarises an existing log instead of running tests.
 - Exit codes: 0 for `pass`, 1 for any other status, 2 for a usage error. The underlying `dotnet test` code is reported as `exit:`.
@@ -75,23 +76,34 @@ dotnet-test-axi --from-log <file> [--full]
 | `build-error` | The build failed (compile errors listed) |
 | `no-tests` | Zero tests ran, which MTP treats as an error. Usually a filter that matched nothing |
 | `crashed` | The test host died mid-run (`host_exit`, `detail`); counts are incomplete, so only `completed` is shown |
-| `invalid-arguments` | The test application rejected an option, for example a filter flag it does not have (`options` lists them) |
+| `invalid-arguments` | The test application rejected an option, usually one passed after `--` (`options` lists them) |
+| `unknown-framework` | A filter was given but a project's test framework could not be detected (`projects` names them; set `frameworks` in the config or pass native options after `--`) |
 | `unsupported-runner` | The project uses VSTest, not Microsoft Testing Platform |
 | `no-summary` | No summary was printed and no cause was recognised; read the log |
+
+### Filters
+
+`--class`, `--method` and `--namespace` use one syntax for every framework:
+
+- Values are fully qualified names: `--class MyApp.Orders.OrderTests`, `--method MyApp.Orders.OrderTests.Saves`, `--namespace MyApp.Orders`.
+- `*` is allowed only at the start or end of a value: `--method "*Saves"`, `--class "MyApp.Orders.*"`.
+- A method must be qualified or start with `*`; `--method Saves` is a usage error (exit 2), as is a `*` in the middle of a value.
+- The framework of each project is detected from its package references (about 0.5 s per project, only when a filter is given) and the filter is translated to its native options. See `docs/architecture/test-filtering.md`.
+- A solution whose projects share one framework runs once. A solution that mixes frameworks is built once, then each project runs with `--no-build` and its own filter, in parallel, and the results are merged. The output adds a `projects` table (`name`, `framework`, `status`, `total`, `failed`), a `project` column on failures and one log per project. A project where the filter matched nothing shows `no-tests`; the run is `no-tests` only if nothing ran anywhere.
+- Without a filter nothing is detected and the run is a plain `dotnet test`.
 
 ### Framework support
 
 Verified against the sample projects in `tests/Samples` (all on Microsoft Testing Platform):
 
-| Framework | Run, summary and failures | `--class`, `--method`, `--namespace` |
-|---|---|---|
-| xUnit v3 | yes | yes |
-| MSTest | yes | no, reported as `invalid-arguments` |
-| NUnit | yes | no, reported as `invalid-arguments` |
-| TUnit | yes | no, reported as `invalid-arguments` |
-| xUnit v2 / classic VSTest | not supported, reported as `unsupported-runner` | n/a |
+| Framework | Run, summary and failures | `--class`, `--method`, `--namespace` | Native option used |
+|---|---|---|---|
+| xUnit v3 | yes | yes | `--filter-class`, `--filter-method`, `--filter-namespace` |
+| MSTest | yes | yes | `--filter` on `FullyQualifiedName` |
+| NUnit | yes | yes | `--filter` on `FullyQualifiedName` |
+| TUnit | yes | yes | `--treenode-filter` |
+| xUnit v2 / classic VSTest | not supported, reported as `unsupported-runner` | n/a | n/a |
 
-`--class`, `--method` and `--namespace` are xUnit v3 options. For other frameworks pass the framework's own filter after `--`.
 Test names from MSTest, NUnit and TUnit are reported without the class, so no rerun hint is offered for them.
 
 ### Config
@@ -101,9 +113,12 @@ Optional `.dotnet-test-axi.json`, found by walking up from the working directory
 ```json
 {
   "targets": { "unit": "tests/MyApp.Tests", "all": "MyApp.slnx" },
+  "frameworks": { "tests/Odd/Odd.Tests.csproj": "mstest" },
   "logDir": ".test-logs"
 }
 ```
+
+`frameworks` overrides detection for a project (path relative to the file; `xunit3`, `mstest`, `nunit` or `tunit`), for example when the framework comes from a shared project.
 
 Logs go to the system temp folder (`dotnet-test-axi/`) unless `logDir` is set.
 
@@ -111,7 +126,7 @@ Logs go to the system temp folder (`dotnet-test-axi/`) unless `logDir` is set.
 
 Layout: `src/` holds the tool; `tests/` holds the unit tests (`DotnetTestAxi.Tests`, fast), the end-to-end tests (`DotnetTestAxi.EndToEndTests`, which run the real tool against the samples and take about 20 seconds) and `tests/Samples/`.
 
-`tests/Samples/` has one small test project per framework setup: `Xunit3.Sample`, `MSTest.Sample`, `NUnit.Sample`, `TUnit.Sample` (all Microsoft Testing Platform) and `VSTest.Sample` (xUnit v2 on the classic VSTest runner, with its own `global.json`). They pass by default. Set `SAMPLE_SCENARIO=fail` or `crash` to make them fail or kill the test host, and build with `-p:SampleBuildError=true` for a compile error.
+`tests/Samples/` has one small test project per framework setup: `Xunit3.Sample`, `Xunit3.Other.Sample` (a second xUnit v3 project), `MSTest.Sample`, `NUnit.Sample`, `TUnit.Sample` (all Microsoft Testing Platform) and `VSTest.Sample` (xUnit v2 on the classic VSTest runner, with its own `global.json`). `SameFramework.slnx` (two xUnit v3 projects) and `Mixed.slnx` (xUnit v3, MSTest, NUnit, TUnit) exercise filtered solution runs. They pass by default. Set `SAMPLE_SCENARIO=fail` or `crash` to make them fail or kill the test host, and build with `-p:SampleBuildError=true` for a compile error.
 
 Parser fixtures in `fixtures/` are real output. Regenerate the per-framework ones from the samples with `pwsh scripts/capture-fixtures.ps1` and review the diff: a change means a framework or Microsoft Testing Platform output changed. Add a fixture whenever a new output shape is found.
 

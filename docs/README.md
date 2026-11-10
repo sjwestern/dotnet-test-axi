@@ -16,9 +16,9 @@ _No docs yet._
 
 ## Architecture
 
-_No docs yet._
+- [Test filtering](architecture/test-filtering.md) - How filter flags are validated, detected per framework, translated by adapters and run (single, mixed)
 
 ## Decisions
 
-- [0001 Use xUnit v3 filter semantics as the tool's own and translate per framework](decisions/0001-use-xunit-v3-filter-semantics-as-the-tool-s-own-and.md) - The --class, --method and --namespace flags keep xUnit v3 rules and framework adapters translate them (proposed)
+- [0001 Use xUnit v3 filter semantics as the tool's own and translate per framework](decisions/0001-use-xunit-v3-filter-semantics-as-the-tool-s-own-and.md) - The --class, --method and --namespace flags keep xUnit v3 rules and framework adapters translate them (accepted)
 <!-- docs-axi:index:end -->

@@ -1,7 +1,7 @@
 ---
 title: "Use xUnit v3 filter semantics as the tool's own and translate per framework"
 summary: The --class, --method and --namespace flags keep xUnit v3 rules and framework adapters translate them
-status: proposed
+status: accepted
 ---
 
 # Use xUnit v3 filter semantics as the tool's own and translate per framework
