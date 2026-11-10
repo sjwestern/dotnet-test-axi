@@ -54,11 +54,10 @@ Docs read: docs/architecture/test-filtering.md (run strategies single, mixed, un
 
 ## Docs impact
 
-- docs/architecture/result-sources.md - new: TRX versus console parsing, artifact naming, merge and mismatch rules.
-- README.md - update: framework table gets a TRX column and the trx: field is documented.
-- CHANGELOG.md - update: Added entry under Unreleased.
-- skills/dotnet-test-axi/SKILL.md - update: mention trx: and the version bump.
-- ADR: Prefer TRX over console parsing when the extension is present (proposed).
+- `docs/architecture/result-sources.md` - new: TRX versus console parsing, run folders, per-framework options, merge and mismatch rules.
+- `README.md` - updated: framework table gets a TRX column; TRX reports section; `trx:` and `warning:` documented.
+- `CHANGELOG.md` - updated: Added and Changed entries under Unreleased.
+- `docs/decisions/0002-prefer-trx-over-console-parsing-when-the-extension-is.md` - reviewed against the build.
 
 ## Risks and open questions
 
