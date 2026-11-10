@@ -2,6 +2,7 @@
 name: dotnet-test-axi
 description: "Run .NET tests through the dotnet-test-axi CLI and read a compact pass/fail summary instead of raw dotnet test output. Use whenever you run dotnet test, check which tests fail, or need to rerun a failing test class."
 user-invocable: false
+version: 0.2.0
 ---
 
 # dotnet-test-axi
