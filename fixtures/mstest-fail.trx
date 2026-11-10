@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="f3885834-3432-486c-bcd4-49725cb233d0" name="@HOST 2026-11-10 07:07:32.4124048" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-10T07:07:32.210429Z" queuing="2026-11-10T07:07:32.210429Z" start="2026-11-10T07:07:32.210429Z" finish="2026-11-10T07:07:32.412889Z" />
+  <TestSettings name="default" id="c19e5be6-3313-40cb-80f5-066363ba2b15">
+    <Deployment runDeploymentRoot="_HOST_2026-11-10_07_07_32.4124048" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="9103de7d-77bd-4282-8971-b9df39303099" testId="16fa41d1-923b-82d0-80f9-1432bcd59032" testName="Passes" computerName="HOST" duration="00:00:00.0081860" startTime="2026-11-10T07:07:32.3188549+00:00" endTime="2026-11-10T07:07:32.3543896+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="9103de7d-77bd-4282-8971-b9df39303099" />
+    <UnitTestResult executionId="a69ea3b8-a3be-4fd3-adc8-e0814dc59eba" testId="1f2b62b3-47a6-8d30-94de-d01cc5325bc4" testName="Fails" computerName="HOST" duration="00:00:00.0156126" startTime="2026-11-10T07:07:32.3597467+00:00" endTime="2026-11-10T07:07:32.3757929+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Failed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="a69ea3b8-a3be-4fd3-adc8-e0814dc59eba">
+      <Output>
+        <ErrorInfo>
+          <Message>Assertion failed. Expected values to be equal.
+
+expected: 3
+actual:   2
+
+Assert.AreEqual(Scenario.Failing ? 3 : 2, 1 + 1)</Message>
+          <StackTrace>   at Samples.MSTest.SampleTests.Fails() in /work/samples/MSTest.Sample/SampleTests.cs:line 12
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="417261bc-05f9-4de4-a9e8-628925c3242c" testId="1e62407f-8abb-8cfe-b98b-ba02159df3a0" testName="Throws" computerName="HOST" duration="00:00:00.0010781" startTime="2026-11-10T07:07:32.3761188+00:00" endTime="2026-11-10T07:07:32.3772350+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Failed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="417261bc-05f9-4de4-a9e8-628925c3242c">
+      <Output>
+        <ErrorInfo>
+          <Message>Test method Samples.MSTest.SampleTests.Throws threw exception:
+System.InvalidOperationException: boom</Message>
+          <StackTrace>   at Samples.Scenario.FailIfRequested(String message) in /work/samples/Shared/Scenario.cs:line 20
+   at Samples.MSTest.SampleTests.Throws() in /work/samples/MSTest.Sample/SampleTests.cs:line 15
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="1d255a25-7fee-4e80-9799-345d6c30bbd5" testId="1af22801-9e95-85c7-b819-2b07c4643815" testName="Skipped" computerName="HOST" duration="00:00:00.0000000" startTime="2026-11-10T07:07:32.3772955+00:00" endTime="2026-11-10T07:07:32.3786635+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="NotExecuted" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="1d255a25-7fee-4e80-9799-345d6c30bbd5">
+      <Output>
+        <ErrorInfo>
+          <Message>not now</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="8a5a6c52-4b0a-4b05-8e52-c364b2a63ec4" testId="120b2438-d794-8ddd-9761-603accdd5c3b" testName="Theory (1)" computerName="HOST" duration="00:00:00.0003622" startTime="2026-11-10T07:07:32.3791603+00:00" endTime="2026-11-10T07:07:32.3822373+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="8a5a6c52-4b0a-4b05-8e52-c364b2a63ec4" />
+    <UnitTestResult executionId="ca9ca83d-fd17-4b76-9f26-90f4baec36b0" testId="1b6cebb2-2b60-865f-a089-e9e713288aa6" testName="Theory (2)" computerName="HOST" duration="00:00:00.0008744" startTime="2026-11-10T07:07:32.3822974+00:00" endTime="2026-11-10T07:07:32.3832688+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Failed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="ca9ca83d-fd17-4b76-9f26-90f4baec36b0">
+      <Output>
+        <ErrorInfo>
+          <Message>Assertion failed. Expected condition to be true.
+value 2 is rejected
+
+actual: false
+
+Assert.IsTrue(x != 2 || !Scenario.Failing)</Message>
+          <StackTrace>   at Samples.MSTest.SampleTests.Theory(Int32 x) in /work/samples/MSTest.Sample/SampleTests.cs:line 25
+   at InvokeStub_SampleTests.Theory(Object, Span`1)
+   at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="42ea7f40-ec3c-4e9f-9753-da2c6b55681f" testId="10e00bf6-b82b-8b0c-89ef-617cb1a36e6b" testName="Theory (3)" computerName="HOST" duration="00:00:00.0000054" startTime="2026-11-10T07:07:32.3833321+00:00" endTime="2026-11-10T07:07:32.3833587+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="42ea7f40-ec3c-4e9f-9753-da2c6b55681f" />
+    <UnitTestResult executionId="7523e89b-b974-46fd-b56d-7c106beaed12" testId="1e4f518f-a48b-8878-a653-aa6d89aec374" testName="Crashes" computerName="HOST" duration="00:00:00.0001797" startTime="2026-11-10T07:07:32.3833762+00:00" endTime="2026-11-10T07:07:32.3864486+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="7523e89b-b974-46fd-b56d-7c106beaed12" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Passes" storage="/work/samples/mstest.sample/bin/debug/net10.0/mstest.sample.dll" id="16fa41d1-923b-82d0-80f9-1432bcd59032">
+      <Execution id="9103de7d-77bd-4282-8971-b9df39303099" />
+      <TestMethod codeBase="/work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll" adapterTypeName="executor://MSTestExtension/4.5.2" className="Samples.MSTest.SampleTests" name="Passes" />
+    </UnitTest>
+    <UnitTest name="Fails" storage="/work/samples/mstest.sample/bin/debug/net10.0/mstest.sample.dll" id="1f2b62b3-47a6-8d30-94de-d01cc5325bc4">
+      <Execution id="a69ea3b8-a3be-4fd3-adc8-e0814dc59eba" />
+      <TestMethod codeBase="/work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll" adapterTypeName="executor://MSTestExtension/4.5.2" className="Samples.MSTest.SampleTests" name="Fails" />
+    </UnitTest>
+    <UnitTest name="Throws" storage="/work/samples/mstest.sample/bin/debug/net10.0/mstest.sample.dll" id="1e62407f-8abb-8cfe-b98b-ba02159df3a0">
+      <Execution id="417261bc-05f9-4de4-a9e8-628925c3242c" />
+      <TestMethod codeBase="/work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll" adapterTypeName="executor://MSTestExtension/4.5.2" className="Samples.MSTest.SampleTests" name="Throws" />
+    </UnitTest>
+    <UnitTest name="Skipped" storage="/work/samples/mstest.sample/bin/debug/net10.0/mstest.sample.dll" id="1af22801-9e95-85c7-b819-2b07c4643815">
+      <Execution id="1d255a25-7fee-4e80-9799-345d6c30bbd5" />
+      <TestMethod codeBase="/work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll" adapterTypeName="executor://MSTestExtension/4.5.2" className="Samples.MSTest.SampleTests" name="Skipped" />
+    </UnitTest>
+    <UnitTest name="Theory (1)" storage="/work/samples/mstest.sample/bin/debug/net10.0/mstest.sample.dll" id="120b2438-d794-8ddd-9761-603accdd5c3b">
+      <Execution id="8a5a6c52-4b0a-4b05-8e52-c364b2a63ec4" />
+      <TestMethod codeBase="/work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll" adapterTypeName="executor://MSTestExtension/4.5.2" className="Samples.MSTest.SampleTests" name="Theory" />
+    </UnitTest>
+    <UnitTest name="Theory (2)" storage="/work/samples/mstest.sample/bin/debug/net10.0/mstest.sample.dll" id="1b6cebb2-2b60-865f-a089-e9e713288aa6">
+      <Execution id="ca9ca83d-fd17-4b76-9f26-90f4baec36b0" />
+      <TestMethod codeBase="/work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll" adapterTypeName="executor://MSTestExtension/4.5.2" className="Samples.MSTest.SampleTests" name="Theory" />
+    </UnitTest>
+    <UnitTest name="Theory (3)" storage="/work/samples/mstest.sample/bin/debug/net10.0/mstest.sample.dll" id="10e00bf6-b82b-8b0c-89ef-617cb1a36e6b">
+      <Execution id="42ea7f40-ec3c-4e9f-9753-da2c6b55681f" />
+      <TestMethod codeBase="/work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll" adapterTypeName="executor://MSTestExtension/4.5.2" className="Samples.MSTest.SampleTests" name="Theory" />
+    </UnitTest>
+    <UnitTest name="Crashes" storage="/work/samples/mstest.sample/bin/debug/net10.0/mstest.sample.dll" id="1e4f518f-a48b-8878-a653-aa6d89aec374">
+      <Execution id="7523e89b-b974-46fd-b56d-7c106beaed12" />
+      <TestMethod codeBase="/work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll" adapterTypeName="executor://MSTestExtension/4.5.2" className="Samples.MSTest.SampleTests" name="Crashes" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="16fa41d1-923b-82d0-80f9-1432bcd59032" executionId="9103de7d-77bd-4282-8971-b9df39303099" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="1f2b62b3-47a6-8d30-94de-d01cc5325bc4" executionId="a69ea3b8-a3be-4fd3-adc8-e0814dc59eba" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="1e62407f-8abb-8cfe-b98b-ba02159df3a0" executionId="417261bc-05f9-4de4-a9e8-628925c3242c" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="1af22801-9e95-85c7-b819-2b07c4643815" executionId="1d255a25-7fee-4e80-9799-345d6c30bbd5" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="120b2438-d794-8ddd-9761-603accdd5c3b" executionId="8a5a6c52-4b0a-4b05-8e52-c364b2a63ec4" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="1b6cebb2-2b60-865f-a089-e9e713288aa6" executionId="ca9ca83d-fd17-4b76-9f26-90f4baec36b0" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="10e00bf6-b82b-8b0c-89ef-617cb1a36e6b" executionId="42ea7f40-ec3c-4e9f-9753-da2c6b55681f" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="1e4f518f-a48b-8878-a653-aa6d89aec374" executionId="7523e89b-b974-46fd-b56d-7c106beaed12" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="8" executed="7" passed="4" failed="3" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="1" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="HOST" outcome="Error" timestamp="2026-11-10T07:07:32.420794">
+        <Text>Exit code indicates failure: '2'. Please refer to https://aka.ms/testingplatform/exitcodes for more information.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="42d9e92e-7dab-41e6-975f-ff1bb2403ab9" name="@HOST 2026-11-10 07:07:34.7718303" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-10T07:07:34.4340642Z" queuing="2026-11-10T07:07:34.4340642Z" start="2026-11-10T07:07:34.4340642Z" finish="2026-11-10T07:07:34.7724226Z" />
+  <TestSettings name="default" id="6feedcfc-8fc8-44bf-b68b-654ffedf6c67">
+    <Deployment runDeploymentRoot="_HOST_2026-11-10_07_07_34.7718303" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="36ece80f-3f02-4440-9e82-1d37a244064f" testId="4645fd5a-ceda-6c43-3bad-7d6a0b6f7638" testName="Skipped" computerName="HOST" duration="00:00:00.0131892" startTime="2026-11-10T07:07:34.6257039+00:00" endTime="2026-11-10T07:07:34.6388931+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="NotExecuted" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="36ece80f-3f02-4440-9e82-1d37a244064f">
+      <Output>
+        <DebugTrace>Skipped: not now</DebugTrace>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="21bd7c0a-5b8e-4e20-a8f8-ef3ec8338cd0" testId="ec564689-442b-51ce-87fd-f86b215efa98" testName="Throws" computerName="HOST" duration="00:00:00.0016816" startTime="2026-11-10T07:07:34.6569393+00:00" endTime="2026-11-10T07:07:34.6586209+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="21bd7c0a-5b8e-4e20-a8f8-ef3ec8338cd0" />
+    <UnitTestResult executionId="10eb1371-480b-4a19-ac7e-5bb2d0300904" testId="650f4b49-8347-d9bc-1a1a-511b1514bb07" testName="Crashes" computerName="HOST" duration="00:00:00.0015856" startTime="2026-11-10T07:07:34.6570383+00:00" endTime="2026-11-10T07:07:34.6586239+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="10eb1371-480b-4a19-ac7e-5bb2d0300904" />
+    <UnitTestResult executionId="f8143a50-29ef-4a6b-9373-5c28ac640c45" testId="2dfa2139-0cb8-b3b6-670e-6403fba4f261" testName="Fails" computerName="HOST" duration="00:00:00.0178533" startTime="2026-11-10T07:07:34.6569922+00:00" endTime="2026-11-10T07:07:34.6748455+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="f8143a50-29ef-4a6b-9373-5c28ac640c45" />
+    <UnitTestResult executionId="9a4f8f5e-a12b-4f66-8e78-243e393c57bb" testId="ccc739e3-35b8-ad0f-f937-e10bf2b5e928" testName="Passes" computerName="HOST" duration="00:00:00.0178861" startTime="2026-11-10T07:07:34.6569683+00:00" endTime="2026-11-10T07:07:34.6748544+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="9a4f8f5e-a12b-4f66-8e78-243e393c57bb" />
+    <UnitTestResult executionId="a0ebbc0f-462e-430e-abb8-15cb9b324f62" testId="1cf5d503-a02b-1fd6-22b3-62ae225064ff" testName="Theory(2)" computerName="HOST" duration="00:00:00.0177460" startTime="2026-11-10T07:07:34.6569173+00:00" endTime="2026-11-10T07:07:34.6746633+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="a0ebbc0f-462e-430e-abb8-15cb9b324f62" />
+    <UnitTestResult executionId="a1a5f3f3-0521-48ec-ad33-ca56387ed291" testId="43acacd6-eb21-7cd8-c759-0611f37c6271" testName="Theory(1)" computerName="HOST" duration="00:00:00.0176387" startTime="2026-11-10T07:07:34.6570458+00:00" endTime="2026-11-10T07:07:34.6746845+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="a1a5f3f3-0521-48ec-ad33-ca56387ed291" />
+    <UnitTestResult executionId="a0328c98-fae6-49b6-8a5a-794ad7580a34" testId="5e11b6b0-664d-d017-884d-e39bf6f1fd77" testName="Theory(3)" computerName="HOST" duration="00:00:00.0176473" startTime="2026-11-10T07:07:34.6570148+00:00" endTime="2026-11-10T07:07:34.6746621+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="a0328c98-fae6-49b6-8a5a-794ad7580a34" />
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Skipped" storage="/work/samples/tunit.sample/bin/debug/net10.0/tunit.sample.dll" id="4645fd5a-ceda-6c43-3bad-7d6a0b6f7638">
+      <Execution id="36ece80f-3f02-4440-9e82-1d37a244064f" />
+      <TestMethod codeBase="/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll" adapterTypeName="executor://TUnitExtension/1.81.16.0" className="Samples.TUnitSample.SampleTests" name="Skipped" />
+    </UnitTest>
+    <UnitTest name="Throws" storage="/work/samples/tunit.sample/bin/debug/net10.0/tunit.sample.dll" id="ec564689-442b-51ce-87fd-f86b215efa98">
+      <Execution id="21bd7c0a-5b8e-4e20-a8f8-ef3ec8338cd0" />
+      <TestMethod codeBase="/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll" adapterTypeName="executor://TUnitExtension/1.81.16.0" className="Samples.TUnitSample.SampleTests" name="Throws" />
+    </UnitTest>
+    <UnitTest name="Crashes" storage="/work/samples/tunit.sample/bin/debug/net10.0/tunit.sample.dll" id="650f4b49-8347-d9bc-1a1a-511b1514bb07">
+      <Execution id="10eb1371-480b-4a19-ac7e-5bb2d0300904" />
+      <TestMethod codeBase="/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll" adapterTypeName="executor://TUnitExtension/1.81.16.0" className="Samples.TUnitSample.SampleTests" name="Crashes" />
+    </UnitTest>
+    <UnitTest name="Fails" storage="/work/samples/tunit.sample/bin/debug/net10.0/tunit.sample.dll" id="2dfa2139-0cb8-b3b6-670e-6403fba4f261">
+      <Execution id="f8143a50-29ef-4a6b-9373-5c28ac640c45" />
+      <TestMethod codeBase="/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll" adapterTypeName="executor://TUnitExtension/1.81.16.0" className="Samples.TUnitSample.SampleTests" name="Fails" />
+    </UnitTest>
+    <UnitTest name="Passes" storage="/work/samples/tunit.sample/bin/debug/net10.0/tunit.sample.dll" id="ccc739e3-35b8-ad0f-f937-e10bf2b5e928">
+      <Execution id="9a4f8f5e-a12b-4f66-8e78-243e393c57bb" />
+      <TestMethod codeBase="/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll" adapterTypeName="executor://TUnitExtension/1.81.16.0" className="Samples.TUnitSample.SampleTests" name="Passes" />
+    </UnitTest>
+    <UnitTest name="Theory(2)" storage="/work/samples/tunit.sample/bin/debug/net10.0/tunit.sample.dll" id="1cf5d503-a02b-1fd6-22b3-62ae225064ff">
+      <Execution id="a0ebbc0f-462e-430e-abb8-15cb9b324f62" />
+      <TestMethod codeBase="/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll" adapterTypeName="executor://TUnitExtension/1.81.16.0" className="Samples.TUnitSample.SampleTests" name="Theory" />
+    </UnitTest>
+    <UnitTest name="Theory(1)" storage="/work/samples/tunit.sample/bin/debug/net10.0/tunit.sample.dll" id="43acacd6-eb21-7cd8-c759-0611f37c6271">
+      <Execution id="a1a5f3f3-0521-48ec-ad33-ca56387ed291" />
+      <TestMethod codeBase="/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll" adapterTypeName="executor://TUnitExtension/1.81.16.0" className="Samples.TUnitSample.SampleTests" name="Theory" />
+    </UnitTest>
+    <UnitTest name="Theory(3)" storage="/work/samples/tunit.sample/bin/debug/net10.0/tunit.sample.dll" id="5e11b6b0-664d-d017-884d-e39bf6f1fd77">
+      <Execution id="a0328c98-fae6-49b6-8a5a-794ad7580a34" />
+      <TestMethod codeBase="/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll" adapterTypeName="executor://TUnitExtension/1.81.16.0" className="Samples.TUnitSample.SampleTests" name="Theory" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="4645fd5a-ceda-6c43-3bad-7d6a0b6f7638" executionId="36ece80f-3f02-4440-9e82-1d37a244064f" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="ec564689-442b-51ce-87fd-f86b215efa98" executionId="21bd7c0a-5b8e-4e20-a8f8-ef3ec8338cd0" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="650f4b49-8347-d9bc-1a1a-511b1514bb07" executionId="10eb1371-480b-4a19-ac7e-5bb2d0300904" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="2dfa2139-0cb8-b3b6-670e-6403fba4f261" executionId="f8143a50-29ef-4a6b-9373-5c28ac640c45" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="ccc739e3-35b8-ad0f-f937-e10bf2b5e928" executionId="9a4f8f5e-a12b-4f66-8e78-243e393c57bb" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="1cf5d503-a02b-1fd6-22b3-62ae225064ff" executionId="a0ebbc0f-462e-430e-abb8-15cb9b324f62" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="43acacd6-eb21-7cd8-c759-0611f37c6271" executionId="a1a5f3f3-0521-48ec-ad33-ca56387ed291" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="5e11b6b0-664d-d017-884d-e39bf6f1fd77" executionId="a0328c98-fae6-49b6-8a5a-794ad7580a34" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="8" executed="7" passed="7" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="1" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <CollectorDataEntries>
+      <Collector agentName="HOST" uri="datacollector://TUnitExtensionHtmlReporter/1.81.16.0" collectorDisplayName="TUnit">
+        <UriAttachments>
+          <UriAttachment>
+            <A href="HOST/TUnit.Sample-linux-net10.0-report.html" />
+          </UriAttachment>
+        </UriAttachments>
+      </Collector>
+    </CollectorDataEntries>
+  </ResultSummary>
+</TestRun>
