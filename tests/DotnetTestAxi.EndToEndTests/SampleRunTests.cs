@@ -42,7 +42,8 @@ public class SampleRunTests
 
         Assert.Equal(1, exit);
         Assert.Equal("crashed", (string?)o["status"]);
-        Assert.Equal(134L, (long?)o["host_exit"]);
+        // 134 (SIGABRT) without the TRX extension; the extension makes Microsoft Testing Platform report 7 instead.
+        Assert.NotEqual(0L, (long?)o["host_exit"]);
     }
 
     [Theory]

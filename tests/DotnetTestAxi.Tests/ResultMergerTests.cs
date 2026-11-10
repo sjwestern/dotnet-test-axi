@@ -60,4 +60,18 @@ public class ResultMergerTests
         Assert.NotNull(Args.Parse(["x", "--parallel", "many"]).Error);
         Assert.NotNull(Args.Parse(["x", "--parallel"]).Error);
     }
+
+    [Fact]
+    public void Trx_files_and_missing_package_projects_are_carried_through()
+    {
+        var a = Run("A", RunStatus.Pass, 3);
+        a.Result.Trx.Add("/logs/A.trx");
+        var b = Run("B", RunStatus.Pass, 3);
+        b.Result.TrxMissing.Add("/work/B/B.csproj");
+
+        var m = ResultMerger.Merge([a, b]);
+
+        Assert.Equal(["/logs/A.trx"], m.Trx);
+        Assert.Equal(["/work/B/B.csproj"], m.TrxMissing);
+    }
 }

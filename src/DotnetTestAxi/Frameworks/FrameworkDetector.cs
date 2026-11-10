@@ -5,7 +5,8 @@ using DotnetTestAxi.Frameworks.Adapters;
 namespace DotnetTestAxi.Frameworks;
 
 /// <summary>The framework found for one project. <see cref="Adapter"/> is null when it is unknown.</summary>
-internal sealed record Detection(string Project, IFrameworkAdapter? Adapter, string Source)
+/// <param name="PackageIds">Direct package ids of the project; null when they were not read (config override).</param>
+internal sealed record Detection(string Project, IFrameworkAdapter? Adapter, string Source, IReadOnlyList<string>? PackageIds = null)
 {
     public bool IsUnknown => Adapter is null;
 
@@ -30,7 +31,7 @@ internal static class FrameworkDetector
         }
 
         var ids = await ReadPackageIdsAsync(project);
-        return new Detection(project, AdapterRegistry.Find(ids), "packages");
+        return new Detection(project, AdapterRegistry.Find(ids), "packages", ids);
     }
 
     /// <summary>Pure matching of package ids to an adapter.</summary>
@@ -56,6 +57,10 @@ internal static class FrameworkDetector
 
         return [];
     }
+
+    /// <summary>The detection with its package ids filled in (reads them when a config override skipped the read).</summary>
+    public static async Task<Detection> WithPackageIdsAsync(Detection d) =>
+        d.PackageIds is not null ? d : d with { PackageIds = await ReadPackageIdsAsync(d.Project) };
 
     private static async Task<IReadOnlyList<string>> ReadPackageIdsAsync(string project)
     {

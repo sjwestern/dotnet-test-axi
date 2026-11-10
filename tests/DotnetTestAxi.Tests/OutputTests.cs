@@ -155,4 +155,58 @@ public class OutputTests
         Assert.Null(o["total"]);
         Assert.Contains(o["help"]!.AsArray(), h => ((string?)h)!.Contains("dotnet test <path>"));
     }
+
+    [Fact]
+    public void Trx_is_printed_beside_log_only_when_one_was_read()
+    {
+        var withTrx = Fixture("mtp-fail.log");
+        withTrx.Trx.Add("/tmp/x.trx");
+
+        var o = Decode(Output.Run(withTrx, "/tmp/x.log", "unit", full: false));
+        var none = Decode(Output.Run(Fixture("mtp-fail.log"), "/tmp/x.log", "unit", full: false));
+
+        Assert.Equal("/tmp/x.trx", (string?)o["trx"]);
+        Assert.Null(none["trx"]);
+        Assert.Null(none["warning"]);
+    }
+
+    [Fact]
+    public void Multi_project_runs_list_every_trx()
+    {
+        var r = Fixture("mtp-fail.log");
+        r.Trx.AddRange(["/tmp/a/A.trx", "/tmp/b/B.trx"]);
+
+        var o = Decode(Output.Run(r, null, "all", full: false));
+
+        Assert.Equal(["/tmp/a/A.trx", "/tmp/b/B.trx"], o["trxs"]!.AsArray().Select(n => (string?)n));
+        Assert.Null(o["trx"]);
+    }
+
+    [Fact]
+    public void Truncated_failures_point_at_the_trx()
+    {
+        var r = Fixture("mtp-fail.log");
+        r.Failures.Add(new TestFailure("Demo.Long", new string('x', 400), null, null));
+        r.Trx.Add("/tmp/x.trx");
+
+        var help = Decode(Output.Run(r, "/tmp/x.log", "unit", full: false))["help"]!.AsArray().Select(n => (string?)n).ToList();
+
+        Assert.Contains("Read /tmp/x.trx for complete messages and stack traces", help);
+    }
+
+    [Fact]
+    public void Missing_trx_package_warns_once_with_a_complete_command_per_project()
+    {
+        var r = Fixture("mtp-pass.log");
+        r.TrxMissing.Add("/work/App/App.csproj");
+        r.TrxMissing.Add("/work/Other/Other.csproj");
+
+        var o = Decode(Output.Run(r, "/tmp/x.log", "unit", full: false));
+
+        Assert.Contains("Microsoft.Testing.Extensions.TrxReport", (string?)o["warning"]);
+        Assert.Contains("App, Other", (string?)o["warning"]);
+        var help = o["help"]!.AsArray().Select(n => (string?)n).ToList();
+        Assert.Contains("Run `dotnet add /work/App/App.csproj package Microsoft.Testing.Extensions.TrxReport` for TRX results", help);
+        Assert.Contains("Run `dotnet add /work/Other/Other.csproj package Microsoft.Testing.Extensions.TrxReport` for TRX results", help);
+    }
 }

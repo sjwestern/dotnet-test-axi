@@ -40,6 +40,12 @@ internal sealed class RunResult
     /// <summary>Per-project log paths of a multi-project run.</summary>
     public List<string> Logs { get; } = [];
 
+    /// <summary>TRX files that were produced and read, one per project that has one.</summary>
+    public List<string> Trx { get; } = [];
+
+    /// <summary>Projects that need the Microsoft.Testing.Extensions.TrxReport package for TRX output and lack it.</summary>
+    public List<string> TrxMissing { get; } = [];
+
     /// <summary>Projects dotnet reported as using the VSTest runner when Microsoft Testing Platform is required.</summary>
     public List<string> VSTestProjects { get; } = [];
 

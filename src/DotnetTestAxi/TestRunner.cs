@@ -26,22 +26,33 @@ internal static class TestRunner
     }
 
     /// <param name="adapter">Translates the filter; needed only when the args carry one.</param>
-    public static List<string> BuildArguments(string targetPath, Args args, IFrameworkAdapter? adapter = null, bool noBuild = false)
+    /// <param name="trxArguments">Report options for the run; added ahead of the native passthrough arguments.</param>
+    public static List<string> BuildArguments(string targetPath, Args args, IFrameworkAdapter? adapter = null, bool noBuild = false, IEnumerable<string>? trxArguments = null)
     {
         var list = new List<string> { "test", IsSolution(targetPath) ? "--solution" : "--project", targetPath };
         if (adapter is not null) { list.AddRange(adapter.BuildFilterArguments(args.Filter)); }
         if (args.NoBuild || noBuild) { list.Add("--no-build"); }
         list.Add("--no-progress");
+        if (trxArguments is not null) { list.AddRange(trxArguments); }
         list.AddRange(args.Passthrough);
         return list;
     }
 
-    public static string NewLogPath(string targetPath, string? logDir)
+    /// <summary>
+    /// A folder for one run, <c>&lt;log dir&gt;/&lt;yyyy-MM-dd&gt;/&lt;name&gt;-&lt;HHmmss&gt;</c>, holding the log, the TRX
+    /// and anything else the runner writes. Deleting a run folder removes that run; deleting a date folder removes a day.
+    /// </summary>
+    public static RunArtifacts NewArtifacts(string targetPath, string? logDir)
     {
-        var dir = logDir ?? Path.Combine(Path.GetTempPath(), "dotnet-test-axi");
-        Directory.CreateDirectory(dir);
+        var root = logDir ?? Path.Combine(Path.GetTempPath(), "dotnet-test-axi");
         var name = Path.GetFileNameWithoutExtension(targetPath.TrimEnd('/', '\\'));
-        return Path.Combine(dir, $"{name}-{DateTime.Now:yyyyMMdd-HHmmss}.log");
+        var now = DateTime.Now;
+        var day = Path.Combine(root, now.ToString("yyyy-MM-dd"));
+        var stem = $"{name}-{now:HHmmss}";
+        var dir = Path.Combine(day, stem);
+        for (var n = 2; Directory.Exists(dir); n++) { dir = Path.Combine(day, $"{stem}-{n}"); } // two runs in one second
+        Directory.CreateDirectory(dir);
+        return new RunArtifacts(dir, Path.Combine(dir, $"{name}.log"), Path.Combine(dir, $"{name}.trx"));
     }
 
     /// <summary>Runs dotnet, writing all output to <paramref name="logPath"/>. Returns the exit code.</summary>
@@ -82,6 +93,9 @@ internal static class TestRunner
         while (await reader.ReadLineAsync() is { } line) { write(line); }
     }
 }
+
+/// <summary>Where a run writes its console log and, when the framework supports it, its TRX report: one folder per run.</summary>
+internal sealed record RunArtifacts(string Directory, string Log, string Trx);
 
 internal enum Strategy
 {

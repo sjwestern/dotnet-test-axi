@@ -76,7 +76,16 @@ internal static partial class Program
         }
 
         RunPlan plan = new(Strategy.Unfiltered, null, []);
-        if (!args.Filter.IsEmpty)
+        if (args.Filter.IsEmpty)
+        {
+            // TRX needs the framework, so detect when the target is one project. Several projects share one
+            // report file name, so a multi-project run without a filter stays on the console log.
+            if (TestRunner.ProjectsOf(target) is [var only])
+            {
+                plan = RunPlan.Choose(true, [await FrameworkDetector.DetectAsync(only, config)]);
+            }
+        }
+        else
         {
             var detections = await FrameworkDetector.DetectAsync(TestRunner.ProjectsOf(target), config);
             plan = RunPlan.Choose(false, detections);
@@ -96,15 +105,31 @@ internal static partial class Program
         }
 
         var logDir = config?.LogDir is { } d && config.Directory is { } cd ? Path.GetFullPath(d, cd) : null;
-        var logPath = TestRunner.NewLogPath(target, logDir);
-        var exit = await TestRunner.RunAsync(TestRunner.BuildArguments(target, args, plan.Adapter), cwd, logPath);
+        var artifacts = TestRunner.NewArtifacts(target, logDir);
+        var logPath = artifacts.Log;
+        string? trxPath = null;
+        string? missingTrx = null;
+        IReadOnlyList<string>? trxArguments = null;
+        if (plan.Detections is [var single])
+        {
+            var detection = await FrameworkDetector.WithPackageIdsAsync(single);
+            switch (TrxSupport.Check(detection))
+            {
+                case TrxAvailability.Available:
+                    trxPath = artifacts.Trx;
+                    trxArguments = TrxSupport.Arguments(detection.Adapter!.Id, trxPath);
+                    break;
+                case TrxAvailability.MissingPackage:
+                    missingTrx = detection.Project;
+                    break;
+            }
+        }
+
+        var exit = await TestRunner.RunAsync(TestRunner.BuildArguments(target, args, plan.Adapter, trxArguments: trxArguments), cwd, logPath);
 
         var result = MtpParser.Parse(Ansi().Replace(File.ReadAllText(logPath), ""));
-        result.ExitCode ??= exit != 0 ? exit : null;
-        if (exit != 0 && result.Status == RunStatus.Pass)
-        {
-            result.Status = RunStatus.NoSummary; // dotnet failed although a summary said pass: never claim success
-        }
+        ResultSources.Finish(result, exit, trxPath);
+        if (missingTrx is not null) { result.TrxMissing.Add(missingTrx); }
 
         Console.Write(Output.Run(result, logPath, args.Target, args.Full));
         return result.Status == RunStatus.Pass ? 0 : 1;

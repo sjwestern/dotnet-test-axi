@@ -1,4 +1,5 @@
 using System.Text.Json.Nodes;
+using DotnetTestAxi.Runs;
 using Toon.Format;
 
 namespace DotnetTestAxi;
@@ -159,6 +160,22 @@ internal static class Output
             help.Add("Read the logs listed above for each project's full output");
         }
 
+        if (logPath is not null && r.Trx.Count > 0)
+        {
+            o["trx"] = r.Trx[0];
+        }
+        else if (r.Trx.Count > 0)
+        {
+            o["trxs"] = Strings(r.Trx.ToArray());
+        }
+
+        if (r.TrxMissing.Count > 0)
+        {
+            var names = r.TrxMissing.Select(p => Path.GetFileNameWithoutExtension(p)).ToArray();
+            o["warning"] = $"no TRX report for {string.Join(", ", names)}: the project does not reference {TrxSupport.Package}, so counts and failures come from console parsing";
+            help.AddRange(r.TrxMissing.Select(p => $"Run `dotnet add {p} package {TrxSupport.Package}` for TRX results"));
+        }
+
         if (help.Count > 0)
         {
             o["help"] = Strings(help.ToArray());
@@ -219,6 +236,14 @@ internal static class Output
                     yield return $"Run `dotnet-test-axi --from-log {logPath} --full` for all failures and complete messages";
                 }
 
+                if (!full && (r.Failures.Count > DefaultLimit || truncatedText) && r.Trx.Count > 0)
+                {
+                    foreach (var trx in r.Trx)
+                    {
+                        yield return $"Read {trx} for complete messages and stack traces";
+                    }
+                }
+
                 if (logPath is not null)
                 {
                     yield return $"Read {logPath} for the full output instead of rerunning the suite";
@@ -227,6 +252,9 @@ internal static class Output
                 break;
             case RunStatus.NoTests:
                 yield return "No tests ran: check the --class, --method and --namespace filters and the target";
+                break;
+            case RunStatus.NoSummary when r.StatusHelp.Count > 0:
+                foreach (var line in r.StatusHelp) { yield return line; }
                 break;
             case RunStatus.NoSummary:
                 yield return "No test summary was printed, so the run may have crashed or the project does not use Microsoft Testing Platform"

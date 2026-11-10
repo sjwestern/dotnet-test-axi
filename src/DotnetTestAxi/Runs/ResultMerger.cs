@@ -33,6 +33,8 @@ internal static class ResultMerger
             merged.BuildErrors.AddRange(r.BuildErrors);
             merged.VSTestProjects.AddRange(r.VSTestProjects);
             merged.RejectedOptions.AddRange(r.RejectedOptions.Except(merged.RejectedOptions));
+            merged.Trx.AddRange(r.Trx);
+            merged.TrxMissing.AddRange(r.TrxMissing);
             merged.Crash ??= r.Crash;
             merged.Projects.Add(new ProjectRow(run.Name, run.Framework, r.Status, r.Total, r.Failed));
             if (run.LogPath is not null)

@@ -17,7 +17,7 @@ internal static partial class MixedRun
     {
         if (!args.NoBuild)
         {
-            var buildLog = TestRunner.NewLogPath(target, logDir);
+            var buildLog = TestRunner.NewArtifacts(target, logDir).Log;
             var exit = await TestRunner.RunAsync(["build", target, "--nologo"], cwd, buildLog);
             if (exit != 0)
             {
@@ -50,15 +50,17 @@ internal static partial class MixedRun
     private static async Task<ProjectRun> RunProjectAsync(Detection d, Args args, string cwd, string? logDir)
     {
         var name = Path.GetFileNameWithoutExtension(d.Project);
-        var logPath = TestRunner.NewLogPath(d.Project, logDir);
-        var arguments = TestRunner.BuildArguments(d.Project, args, d.Adapter, noBuild: true);
+        var artifacts = TestRunner.NewArtifacts(d.Project, logDir);
+        var logPath = artifacts.Log;
+        var detection = await FrameworkDetector.WithPackageIdsAsync(d);
+        var availability = TrxSupport.Check(detection);
+        var trxPath = availability == TrxAvailability.Available ? artifacts.Trx : null;
+        var arguments = TestRunner.BuildArguments(d.Project, args, d.Adapter, noBuild: true,
+            trxArguments: trxPath is null ? null : TrxSupport.Arguments(d.Adapter!.Id, trxPath));
         var exit = await TestRunner.RunAsync(arguments, cwd, logPath);
         var result = MtpParser.Parse(Ansi().Replace(File.ReadAllText(logPath), ""));
-        result.ExitCode ??= exit != 0 ? exit : null;
-        if (exit != 0 && result.Status == RunStatus.Pass)
-        {
-            result.Status = RunStatus.NoSummary; // never claim success when dotnet failed
-        }
+        ResultSources.Finish(result, exit, trxPath);
+        if (availability == TrxAvailability.MissingPackage) { result.TrxMissing.Add(d.Project); }
 
         return new ProjectRun(name, d.Adapter!.Id, result, logPath);
     }
