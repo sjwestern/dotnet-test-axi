@@ -20,4 +20,8 @@ Rules:
 - Rerun only what failed, using the `next:` hint.
 - A `no-summary` or `build-error` status is not a pass.
 
-If the command is not found, it is a .NET tool: install it with `dotnet tool install -g dotnet-test-axi` (or `dotnet tool restore` in a repo with a tool manifest). Until it is published, install from a clone as described in its README.
+If `dotnet-test-axi` is not found (command not found, or `dotnet tool run` fails):
+
+- Tell the user the tool is unavailable. Do not silently fall back to `dotnet test`.
+- Give the install steps: clone the repo, `dotnet pack src/DotnetTestAxi -c Release -o nupkg`, then `dotnet tool install -g dotnet-test-axi --add-source ./nupkg` (see the README). In a repo with a tool manifest, `dotnet tool restore`.
+- Do not install it without the user's approval. Use plain `dotnet test` only if the user agrees.
