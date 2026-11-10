@@ -1,4 +1,5 @@
 using System.Reflection;
+using DotnetTestAxi.Frameworks;
 using System.Text.RegularExpressions;
 
 namespace DotnetTestAxi;
@@ -73,9 +74,21 @@ internal static partial class Program
             return 2;
         }
 
+        RunPlan plan = new(Strategy.Unfiltered, null, []);
+        if (!args.Filter.IsEmpty)
+        {
+            var detections = await FrameworkDetector.DetectAsync(TestRunner.ProjectsOf(target), config);
+            plan = RunPlan.Choose(false, detections);
+            if (plan.Strategy is Strategy.Unknown or Strategy.Mixed)
+            {
+                Console.Write(Output.Run(PlanFailure(plan), null, args.Target, args.Full));
+                return 1;
+            }
+        }
+
         var logDir = config?.LogDir is { } d && config.Directory is { } cd ? Path.GetFullPath(d, cd) : null;
         var logPath = TestRunner.NewLogPath(target, logDir);
-        var exit = await TestRunner.RunAsync(TestRunner.BuildArguments(target, args), cwd, logPath);
+        var exit = await TestRunner.RunAsync(TestRunner.BuildArguments(target, args, plan.Adapter), cwd, logPath);
 
         var result = MtpParser.Parse(Ansi().Replace(File.ReadAllText(logPath), ""));
         result.ExitCode ??= exit != 0 ? exit : null;
@@ -86,6 +99,33 @@ internal static partial class Program
 
         Console.Write(Output.Run(result, logPath, args.Target, args.Full));
         return result.Status == RunStatus.Pass ? 0 : 1;
+    }
+
+    private static RunResult PlanFailure(RunPlan plan)
+    {
+        var r = new RunResult();
+        if (plan.Strategy is Strategy.Mixed)
+        {
+            r.Status = RunStatus.MixedFrameworks;
+            r.FrameworkProjects.AddRange(plan.Detections.Select(d => $"{Path.GetFileNameWithoutExtension(d.Project)}: {d.Adapter!.Id}"));
+            r.StatusHelp.Add("Run each project on its own: `dotnet-test-axi <project path> --class <name>`");
+            return r;
+        }
+
+        r.Status = RunStatus.UnknownFramework;
+        if (plan.Detections.Count == 0)
+        {
+            r.StatusHelp.Add("No test projects were found for this target; pass a project or solution path");
+            return r;
+        }
+
+        foreach (var d in plan.Detections.Where(d => d.IsUnknown))
+        {
+            r.FrameworkProjects.Add(Path.GetFileNameWithoutExtension(d.Project));
+            r.StatusHelp.Add(d.Help);
+        }
+
+        return r;
     }
 
     private static int FromLog(Args args)

@@ -52,8 +52,16 @@ internal static class Output
                 o["options"] = Strings(r.RejectedOptions.ToArray());
             }
 
-            help.Add("--class, --method and --namespace map to xUnit v3 filters; other frameworks need their own filter syntax");
-            help.Add("Pass the framework's own options after `--`, or rerun without the filter");
+            help.Add("These options came from `--` passthrough or a framework that does not accept them; --class, --method and --namespace are translated for you");
+            help.Add("Fix or remove the options after `--`, then rerun");
+        }
+        else if (r.Status is RunStatus.UnknownFramework or RunStatus.MixedFrameworks)
+        {
+            o["reason"] = r.Status is RunStatus.UnknownFramework
+                ? "the test framework of some projects could not be detected, so the filter cannot be translated"
+                : "the solution mixes test frameworks; per-project runs are not available yet";
+            o["projects"] = Strings(r.FrameworkProjects.ToArray());
+            help.AddRange(r.StatusHelp);
         }
         else if (r.Status is RunStatus.Crashed)
         {
@@ -175,6 +183,8 @@ internal static class Output
         RunStatus.NoTests => "no-tests",
         RunStatus.UnsupportedRunner => "unsupported-runner",
         RunStatus.InvalidArguments => "invalid-arguments",
+        RunStatus.UnknownFramework => "unknown-framework",
+        RunStatus.MixedFrameworks => "mixed-frameworks",
         RunStatus.Crashed => "crashed",
         _ => "no-summary",
     };

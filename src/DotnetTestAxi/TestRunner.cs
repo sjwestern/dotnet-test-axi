@@ -1,18 +1,35 @@
 using System.Diagnostics;
+using DotnetTestAxi.Frameworks;
+using DotnetTestAxi.Frameworks.Adapters;
+using DotnetTestAxi.Solutions;
 
 namespace DotnetTestAxi;
 
 internal static class TestRunner
 {
-    public static List<string> BuildArguments(string targetPath, Args args)
+    public static bool IsSolution(string path) =>
+        path.EndsWith(".sln", StringComparison.OrdinalIgnoreCase)
+        || path.EndsWith(".slnx", StringComparison.OrdinalIgnoreCase)
+        || path.EndsWith(".slnf", StringComparison.OrdinalIgnoreCase);
+
+    /// <summary>The test projects behind a target: the project itself, a solution's projects, or the one solution or project in a directory.</summary>
+    public static IReadOnlyList<string> ProjectsOf(string target)
     {
-        var isSolution = targetPath.EndsWith(".sln", StringComparison.OrdinalIgnoreCase)
-                         || targetPath.EndsWith(".slnx", StringComparison.OrdinalIgnoreCase)
-                         || targetPath.EndsWith(".slnf", StringComparison.OrdinalIgnoreCase);
-        var list = new List<string> { "test", isSolution ? "--solution" : "--project", targetPath };
-        if (args.Namespace is not null) { list.Add("--filter-namespace"); list.Add(args.Namespace); }
-        if (args.Class is not null) { list.Add("--filter-class"); list.Add(args.Class); }
-        if (args.Method is not null) { list.Add("--filter-method"); list.Add(args.Method); }
+        if (Directory.Exists(target))
+        {
+            var solutions = Directory.EnumerateFiles(target).Where(IsSolution).ToList();
+            if (solutions.Count == 1) { return SolutionReader.Read(solutions[0]); }
+            return Directory.EnumerateFiles(target, "*proj").ToList() is { Count: 1 } one ? one : [];
+        }
+
+        return IsSolution(target) ? SolutionReader.Read(target) : [target];
+    }
+
+    /// <param name="adapter">Translates the filter; needed only when the args carry one.</param>
+    public static List<string> BuildArguments(string targetPath, Args args, IFrameworkAdapter? adapter = null)
+    {
+        var list = new List<string> { "test", IsSolution(targetPath) ? "--solution" : "--project", targetPath };
+        if (adapter is not null) { list.AddRange(adapter.BuildFilterArguments(args.Filter)); }
         if (args.NoBuild) { list.Add("--no-build"); }
         list.Add("--no-progress");
         list.AddRange(args.Passthrough);
@@ -63,5 +80,28 @@ internal static class TestRunner
     private static async Task Pump(StreamReader reader, Action<string?> write)
     {
         while (await reader.ReadLineAsync() is { } line) { write(line); }
+    }
+}
+
+internal enum Strategy
+{
+    Unfiltered,
+    Single,
+    Mixed,
+    Unknown,
+}
+
+/// <summary>How a run is carried out, chosen from the filter and the detected frameworks.</summary>
+internal sealed record RunPlan(Strategy Strategy, IFrameworkAdapter? Adapter, IReadOnlyList<Detection> Detections)
+{
+    /// <summary>Pure strategy choice over project-framework pairs.</summary>
+    public static RunPlan Choose(bool filterIsEmpty, IReadOnlyList<Detection> detections)
+    {
+        if (filterIsEmpty) { return new RunPlan(Strategy.Unfiltered, null, detections); }
+        if (detections.Count == 0 || detections.Any(d => d.IsUnknown)) { return new RunPlan(Strategy.Unknown, null, detections); }
+        var ids = detections.Select(d => d.Adapter!.Id).Distinct().ToList();
+        return ids.Count == 1
+            ? new RunPlan(Strategy.Single, detections[0].Adapter, detections)
+            : new RunPlan(Strategy.Mixed, null, detections);
     }
 }

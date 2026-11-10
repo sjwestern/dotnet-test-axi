@@ -45,24 +45,31 @@ public class SampleRunTests
         Assert.Equal(134L, (long?)o["host_exit"]);
     }
 
-    [Fact]
-    public async Task Class_filter_works_on_xunit3()
+    [Theory]
+    [InlineData("Xunit3.Sample", "Samples.Xunit3")]
+    [InlineData("MSTest.Sample", "Samples.MSTest")]
+    [InlineData("NUnit.Sample", "Samples.NUnitSample")]
+    [InlineData("TUnit.Sample", "Samples.TUnitSample")]
+    public async Task Class_filter_selects_the_class_on_every_framework(string sample, string ns)
     {
-        var (_, _, o) = await ToolRun.RunAsync("Xunit3.Sample", "fail", "--no-build", "--class", "Samples.Xunit3.SampleTests");
+        var (exit, _, o) = await ToolRun.RunAsync(sample, "fail", "--no-build", "--class", ns + ".SampleTests");
 
+        Assert.Equal(1, exit);
         Assert.Equal("fail", (string?)o["status"]);
+        Assert.Equal(8L, (long?)o["total"]);
     }
 
     [Theory]
-    [InlineData("MSTest.Sample")]
-    [InlineData("NUnit.Sample")]
-    [InlineData("TUnit.Sample")]
-    public async Task Class_filter_is_reported_as_invalid_arguments_on_other_frameworks(string sample)
+    [InlineData("Xunit3.Sample", "Samples.Xunit3")]
+    [InlineData("MSTest.Sample", "Samples.MSTest")]
+    [InlineData("NUnit.Sample", "Samples.NUnitSample")]
+    [InlineData("TUnit.Sample", "Samples.TUnitSample")]
+    public async Task Method_filter_selects_one_test_on_every_framework(string sample, string ns)
     {
-        var (exit, _, o) = await ToolRun.RunAsync(sample, "pass", "--no-build", "--class", "Samples.X");
+        var (_, _, o) = await ToolRun.RunAsync(sample, "fail", "--no-build", "--method", ns + ".SampleTests.Fails");
 
-        Assert.Equal(1, exit);
-        Assert.Equal("invalid-arguments", (string?)o["status"]);
+        Assert.Equal("fail", (string?)o["status"]);
+        Assert.Equal(1L, (long?)o["total"]);
     }
 
     [Fact]

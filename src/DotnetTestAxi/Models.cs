@@ -9,6 +9,8 @@ internal enum RunStatus
     NoSummary,
     UnsupportedRunner,
     InvalidArguments,
+    UnknownFramework,
+    MixedFrameworks,
     Crashed,
 }
 
@@ -35,6 +37,12 @@ internal sealed class RunResult
 
     /// <summary>Command line options the test application rejected (for example a filter it does not support).</summary>
     public List<string> RejectedOptions { get; } = [];
+
+    /// <summary>Projects involved in an unknown-framework or mixed-frameworks status, as "name" or "name: framework".</summary>
+    public List<string> FrameworkProjects { get; } = [];
+
+    /// <summary>Help lines specific to the status, shown ahead of the generic ones.</summary>
+    public List<string> StatusHelp { get; } = [];
 
     /// <summary>Set when a test host process died without finishing the run.</summary>
     public CrashInfo? Crash { get; set; }

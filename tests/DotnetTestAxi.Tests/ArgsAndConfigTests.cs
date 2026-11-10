@@ -26,12 +26,12 @@ public class ArgsAndConfigTests
     [Fact]
     public void Project_target_maps_to_project_flag_and_solution_to_solution_flag()
     {
-        var args = Args.Parse(["x", "--method", "M", "--no-build"]);
+        var args = Args.Parse(["x", "--method", "*M", "--no-build"]);
 
-        var project = TestRunner.BuildArguments("/r/tests/Unit.csproj", args);
-        var solution = TestRunner.BuildArguments("/r/All.slnx", args);
+        var project = TestRunner.BuildArguments("/r/tests/Unit.csproj", args, new DotnetTestAxi.Frameworks.Adapters.Xunit3Adapter());
+        var solution = TestRunner.BuildArguments("/r/All.slnx", args, new DotnetTestAxi.Frameworks.Adapters.Xunit3Adapter());
 
-        Assert.Equal(["test", "--project", "/r/tests/Unit.csproj", "--filter-method", "M", "--no-build", "--no-progress"], project);
+        Assert.Equal(["test", "--project", "/r/tests/Unit.csproj", "--filter-method", "*M", "--no-build", "--no-progress"], project);
         Assert.Equal("--solution", solution[1]);
     }
 
