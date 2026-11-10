@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="fdb5e754-1f95-4ab2-9930-e743bfae7163" name="@HOST 2026-11-10 09:28:29.2312837" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-11-10T09:28:28.8948224Z" queuing="2026-11-10T09:28:28.8948224Z" start="2026-11-10T09:28:28.8948224Z" finish="2026-11-10T09:28:29.2317259Z" />
+  <TestSettings name="default" id="ef39197c-7d95-4923-b33a-0195438a58d9">
+    <Deployment runDeploymentRoot="_HOST_2026-11-10_09_28_29.2312837" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="7e02f971-658e-4ce6-891d-85948956a7c7" testId="93fb1cd1-5fb3-b661-451c-4a190f6687c5" testName="Crashes" computerName="HOST" duration="00:00:00.0033330" startTime="2026-11-10T09:28:29.1565754+00:00" endTime="2026-11-10T09:28:29.1598447+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="7e02f971-658e-4ce6-891d-85948956a7c7" />
+    <UnitTestResult executionId="9cf46a42-9191-4145-8bde-ed3f7110efc7" testId="25944376-a6b5-8959-beb3-c9c33ae56c9f" testName="Fails" computerName="HOST" duration="00:00:00.0307480" startTime="2026-11-10T09:28:29.1612475+00:00" endTime="2026-11-10T09:28:29.1919958+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Failed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="9cf46a42-9191-4145-8bde-ed3f7110efc7">
+      <Output>
+        <ErrorInfo>
+          <Message>  Assert.That(1 + 1, Is.EqualTo(Scenario.Failing ? 3 : 2))
+  Expected: 3
+  But was:  2
+</Message>
+          <StackTrace>   at Samples.NUnitSample.SampleTests.Fails() in /work/samples/NUnit.Sample/SampleTests.cs:line 11
+
+1)    at Samples.NUnitSample.SampleTests.Fails() in /work/samples/NUnit.Sample/SampleTests.cs:line 11
+
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="2bbe8d6f-7238-4165-847d-d7fa56e9cb87" testId="e61fbb01-17c0-e61e-942c-8f2e13fad2de" testName="Passes" computerName="HOST" duration="00:00:00.0001240" startTime="2026-11-10T09:28:29.1923162+00:00" endTime="2026-11-10T09:28:29.1924406+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="2bbe8d6f-7238-4165-847d-d7fa56e9cb87" />
+    <UnitTestResult executionId="7703a526-1d00-40ee-9db1-ac411b29c843" testId="cc97f9c0-ce3a-ff1a-e906-382964fdba74" testName="Skipped" computerName="HOST" duration="00:00:00.0002960" startTime="2026-11-10T09:28:29.1924525+00:00" endTime="2026-11-10T09:28:29.1927479+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="NotExecuted" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="7703a526-1d00-40ee-9db1-ac411b29c843">
+      <Output>
+        <StdOut>not now</StdOut>
+        <ErrorInfo>
+          <Message>not now</Message>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="4f43a44c-401f-4999-bd3a-66a1039eb4be" testId="1017b6f7-8a70-3667-e00a-9b8e5143bd14" testName="Theory(1)" computerName="HOST" duration="00:00:00.0007950" startTime="2026-11-10T09:28:29.1928587+00:00" endTime="2026-11-10T09:28:29.1936537+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="4f43a44c-401f-4999-bd3a-66a1039eb4be" />
+    <UnitTestResult executionId="9ac71682-3182-4d09-be05-37a890628e30" testId="e0d10866-027e-129a-fa06-72f3e75f780c" testName="Theory(2)" computerName="HOST" duration="00:00:00.0011320" startTime="2026-11-10T09:28:29.1936754+00:00" endTime="2026-11-10T09:28:29.1948072+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Failed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="9ac71682-3182-4d09-be05-37a890628e30">
+      <Output>
+        <ErrorInfo>
+          <Message>  value 2 is rejected
+Assert.That(x != 2 || !Scenario.Failing, Is.True)
+  Expected: True
+  But was:  False
+</Message>
+          <StackTrace>   at Samples.NUnitSample.SampleTests.Theory(Int32 x) in /work/samples/NUnit.Sample/SampleTests.cs:line 23
+   at InvokeStub_SampleTests.Theory(Object, Span`1)
+
+1)    at Samples.NUnitSample.SampleTests.Theory(Int32 x) in /work/samples/NUnit.Sample/SampleTests.cs:line 23
+   at InvokeStub_SampleTests.Theory(Object, Span`1)
+
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+    <UnitTestResult executionId="fe3df9e9-1b8e-44ae-b772-58cc6e6939dd" testId="e50a06ea-928f-9657-bfbc-4e67fa2ec781" testName="Theory(3)" computerName="HOST" duration="00:00:00.0000130" startTime="2026-11-10T09:28:29.1948215+00:00" endTime="2026-11-10T09:28:29.1948345+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Passed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="fe3df9e9-1b8e-44ae-b772-58cc6e6939dd" />
+    <UnitTestResult executionId="6195344e-1016-44fe-9bb1-338d0e98f119" testId="331aeef8-c3f3-f2a1-1251-48c775e6e523" testName="Throws" computerName="HOST" duration="00:00:00.0040440" startTime="2026-11-10T09:28:29.1963597+00:00" endTime="2026-11-10T09:28:29.2004040+00:00" testType="13CDC9D9-DDB5-4fa4-A97D-D965CCFC6D4B" outcome="Failed" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" relativeResultsDirectory="6195344e-1016-44fe-9bb1-338d0e98f119">
+      <Output>
+        <ErrorInfo>
+          <Message>System.InvalidOperationException : boom</Message>
+          <StackTrace>   at Samples.Scenario.FailIfRequested(String message) in /work/samples/Shared/Scenario.cs:line 20
+   at Samples.NUnitSample.SampleTests.Throws() in /work/samples/NUnit.Sample/SampleTests.cs:line 14
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+1)    at Samples.Scenario.FailIfRequested(String message) in /work/samples/Shared/Scenario.cs:line 20
+   at Samples.NUnitSample.SampleTests.Throws() in /work/samples/NUnit.Sample/SampleTests.cs:line 14
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Crashes" storage="/work/samples/nunit.sample/bin/debug/net10.0/nunit.sample.dll" id="93fb1cd1-5fb3-b661-451c-4a190f6687c5">
+      <Execution id="7e02f971-658e-4ce6-891d-85948956a7c7" />
+      <TestMethod codeBase="/work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample.dll" adapterTypeName="executor://NUnitExtension/6.3.1+3fcfb233a6b4ceee0f7f28dab41994d118e701d8" className="Samples.NUnitSample.SampleTests" name="Crashes" />
+    </UnitTest>
+    <UnitTest name="Fails" storage="/work/samples/nunit.sample/bin/debug/net10.0/nunit.sample.dll" id="25944376-a6b5-8959-beb3-c9c33ae56c9f">
+      <Execution id="9cf46a42-9191-4145-8bde-ed3f7110efc7" />
+      <TestMethod codeBase="/work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample.dll" adapterTypeName="executor://NUnitExtension/6.3.1+3fcfb233a6b4ceee0f7f28dab41994d118e701d8" className="Samples.NUnitSample.SampleTests" name="Fails" />
+    </UnitTest>
+    <UnitTest name="Passes" storage="/work/samples/nunit.sample/bin/debug/net10.0/nunit.sample.dll" id="e61fbb01-17c0-e61e-942c-8f2e13fad2de">
+      <Execution id="2bbe8d6f-7238-4165-847d-d7fa56e9cb87" />
+      <TestMethod codeBase="/work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample.dll" adapterTypeName="executor://NUnitExtension/6.3.1+3fcfb233a6b4ceee0f7f28dab41994d118e701d8" className="Samples.NUnitSample.SampleTests" name="Passes" />
+    </UnitTest>
+    <UnitTest name="Skipped" storage="/work/samples/nunit.sample/bin/debug/net10.0/nunit.sample.dll" id="cc97f9c0-ce3a-ff1a-e906-382964fdba74">
+      <Execution id="7703a526-1d00-40ee-9db1-ac411b29c843" />
+      <TestMethod codeBase="/work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample.dll" adapterTypeName="executor://NUnitExtension/6.3.1+3fcfb233a6b4ceee0f7f28dab41994d118e701d8" className="Samples.NUnitSample.SampleTests" name="Skipped" />
+    </UnitTest>
+    <UnitTest name="Theory(1)" storage="/work/samples/nunit.sample/bin/debug/net10.0/nunit.sample.dll" id="1017b6f7-8a70-3667-e00a-9b8e5143bd14">
+      <Execution id="4f43a44c-401f-4999-bd3a-66a1039eb4be" />
+      <TestMethod codeBase="/work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample.dll" adapterTypeName="executor://NUnitExtension/6.3.1+3fcfb233a6b4ceee0f7f28dab41994d118e701d8" className="Samples.NUnitSample.SampleTests" name="Theory" />
+    </UnitTest>
+    <UnitTest name="Theory(2)" storage="/work/samples/nunit.sample/bin/debug/net10.0/nunit.sample.dll" id="e0d10866-027e-129a-fa06-72f3e75f780c">
+      <Execution id="9ac71682-3182-4d09-be05-37a890628e30" />
+      <TestMethod codeBase="/work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample.dll" adapterTypeName="executor://NUnitExtension/6.3.1+3fcfb233a6b4ceee0f7f28dab41994d118e701d8" className="Samples.NUnitSample.SampleTests" name="Theory" />
+    </UnitTest>
+    <UnitTest name="Theory(3)" storage="/work/samples/nunit.sample/bin/debug/net10.0/nunit.sample.dll" id="e50a06ea-928f-9657-bfbc-4e67fa2ec781">
+      <Execution id="fe3df9e9-1b8e-44ae-b772-58cc6e6939dd" />
+      <TestMethod codeBase="/work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample.dll" adapterTypeName="executor://NUnitExtension/6.3.1+3fcfb233a6b4ceee0f7f28dab41994d118e701d8" className="Samples.NUnitSample.SampleTests" name="Theory" />
+    </UnitTest>
+    <UnitTest name="Throws" storage="/work/samples/nunit.sample/bin/debug/net10.0/nunit.sample.dll" id="331aeef8-c3f3-f2a1-1251-48c775e6e523">
+      <Execution id="6195344e-1016-44fe-9bb1-338d0e98f119" />
+      <TestMethod codeBase="/work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample.dll" adapterTypeName="executor://NUnitExtension/6.3.1+3fcfb233a6b4ceee0f7f28dab41994d118e701d8" className="Samples.NUnitSample.SampleTests" name="Throws" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="93fb1cd1-5fb3-b661-451c-4a190f6687c5" executionId="7e02f971-658e-4ce6-891d-85948956a7c7" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="25944376-a6b5-8959-beb3-c9c33ae56c9f" executionId="9cf46a42-9191-4145-8bde-ed3f7110efc7" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="e61fbb01-17c0-e61e-942c-8f2e13fad2de" executionId="2bbe8d6f-7238-4165-847d-d7fa56e9cb87" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="cc97f9c0-ce3a-ff1a-e906-382964fdba74" executionId="7703a526-1d00-40ee-9db1-ac411b29c843" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="1017b6f7-8a70-3667-e00a-9b8e5143bd14" executionId="4f43a44c-401f-4999-bd3a-66a1039eb4be" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="e0d10866-027e-129a-fa06-72f3e75f780c" executionId="9ac71682-3182-4d09-be05-37a890628e30" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="e50a06ea-928f-9657-bfbc-4e67fa2ec781" executionId="fe3df9e9-1b8e-44ae-b772-58cc6e6939dd" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestEntry testId="331aeef8-c3f3-f2a1-1251-48c775e6e523" executionId="6195344e-1016-44fe-9bb1-338d0e98f119" testListId="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8C84FA94-04C1-424b-9868-57A2D4851A1D" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="8" executed="7" passed="4" failed="3" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="1" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="HOST" outcome="Error" timestamp="2026-11-10T09:28:29.2401038">
+        <Text>Exit code indicates failure: '2'. Please refer to https://aka.ms/testingplatform/exitcodes for more information.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

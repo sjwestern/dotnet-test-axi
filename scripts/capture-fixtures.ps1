@@ -53,19 +53,27 @@ foreach ($f in $Framework) {
     Save "$key-class-filter" ($base + '--no-build' + '--filter-class' + 'Samples.Missing')
 }
 
-# TRX written by the runner itself (--report-trx). Only samples whose framework bundles the TRX extension
-# (MSTest, TUnit); the xUnit v3 and NUnit samples reject the option.
-function Save-Trx([string] $name, [string] $project, [hashtable] $environment = @{}) {
+# TRX written by the runner itself. MSTest and TUnit bundle Microsoft.Testing.Extensions.TrxReport and NUnit
+# references it in its sample (--report-trx); xUnit v3 has its own option and needs no package.
+$trxOptions = @{
+    Xunit3 = @('--report-xunit-trx', '--report-xunit-trx-filename')
+    MSTest = @('--report-trx', '--report-trx-filename')
+    NUnit  = @('--report-trx', '--report-trx-filename')
+    TUnit  = @('--report-trx', '--report-trx-filename')
+}
+
+function Save-Trx([string] $name, [string] $project, [string[]] $options, [hashtable] $environment = @{}) {
     $dir = Join-Path ([IO.Path]::GetTempPath()) "trx-$name-$([guid]::NewGuid().ToString('N'))"
     $old = @{}
     foreach ($k in $environment.Keys) { $old[$k] = [Environment]::GetEnvironmentVariable($k); [Environment]::SetEnvironmentVariable($k, $environment[$k]) }
     try {
-        & dotnet test --project $project --no-progress --no-build --report-trx --report-trx-filename "$name.trx" --results-directory $dir 2>&1 | Out-Null
+        & dotnet test --project $project --no-progress --no-build $options[0] $options[1] "$name.trx" --results-directory $dir 2>&1 | Out-Null
         $text = [IO.File]::ReadAllText((Join-Path $dir "$name.trx")).TrimStart([char]0xFEFF)
         # Case-insensitive: TUnit lower-cases the storage path.
         $text = [regex]::Replace($text, [regex]::Escape($samples.Replace('\', '/')), '/work/samples', 'IgnoreCase')
         $text = [regex]::Replace($text, [regex]::Escape($root.Replace('\', '/')), '/work/repo', 'IgnoreCase')
         $text = [regex]::Replace($text, [regex]::Escape([Environment]::MachineName), 'HOST', 'IgnoreCase')
+        $text = [regex]::Replace($text, [regex]::Escape([Environment]::UserName), 'user', 'IgnoreCase')
         $text = ($text -replace "`r`n", "`n").TrimEnd() + "`n"
         Set-Content -Path (Join-Path $fixtures "$name.trx") -Value $text -NoNewline
         Write-Host "captured $name.trx"
@@ -76,11 +84,10 @@ function Save-Trx([string] $name, [string] $project, [hashtable] $environment = 
     }
 }
 
-foreach ($f in @('MSTest', 'TUnit')) {
-    if ($Framework -notcontains $f) { continue }
+foreach ($f in $Framework) {
     $project = Join-Path $samples "$f.Sample"
-    Save-Trx "$($f.ToLowerInvariant())-pass" $project
-    Save-Trx "$($f.ToLowerInvariant())-fail" $project @{ SAMPLE_SCENARIO = 'fail' }
+    Save-Trx "$($f.ToLowerInvariant())-pass" $project $trxOptions[$f]
+    Save-Trx "$($f.ToLowerInvariant())-fail" $project $trxOptions[$f] @{ SAMPLE_SCENARIO = 'fail' }
 }
 
 # A native filter that selects one test, as translated by the framework adapters for --method <ns>.SampleTests.Fails.

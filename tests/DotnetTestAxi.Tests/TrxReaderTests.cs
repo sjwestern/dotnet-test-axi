@@ -6,9 +6,13 @@ namespace DotnetTestAxi.Tests;
 public class TrxReaderTests
 {
     [Theory]
+    [InlineData("xunit3-pass")]
     [InlineData("mstest-pass")]
+    [InlineData("nunit-pass")]
     [InlineData("tunit-pass")]
+    [InlineData("xunit3-fail")]
     [InlineData("mstest-fail")]
+    [InlineData("nunit-fail")]
     [InlineData("tunit-fail")]
     public void Counts_match_the_matching_log_fixture(string name)
     {
@@ -21,7 +25,9 @@ public class TrxReaderTests
     }
 
     [Theory]
+    [InlineData("xunit3-pass")]
     [InlineData("mstest-pass")]
+    [InlineData("nunit-pass")]
     [InlineData("tunit-pass")]
     public void Pass_has_no_failures(string name)
     {
@@ -33,7 +39,9 @@ public class TrxReaderTests
     }
 
     [Theory]
+    [InlineData("xunit3-fail", "Xunit3.Sample.dll")]
     [InlineData("mstest-fail", "MSTest.Sample.dll")]
+    [InlineData("nunit-fail", "NUnit.Sample.dll")]
     [InlineData("tunit-fail", "TUnit.Sample.dll")]
     public void Failures_carry_message_location_and_assembly(string name, string assembly)
     {
@@ -41,15 +49,15 @@ public class TrxReaderTests
         var log = MtpParser.Parse(Fixtures.Read(name + ".log"));
 
         Assert.Equal(3, trx.Failures.Count);
-        var fails = trx.Failures.Single(f => f.Name == "Fails");
-        Assert.Equal("SampleTests.cs:12", fails.Location);
+        var fails = trx.Failures.Single(f => f.Name.EndsWith("Fails"));
+        Assert.StartsWith("SampleTests.cs:", fails.Location);
         Assert.Equal(assembly, fails.Assembly);
         Assert.Contains("3", fails.Message);
-        Assert.Equal("Scenario.cs:20", trx.Failures.Single(f => f.Name == "Throws").Location);
-        Assert.Contains("boom", trx.Failures.Single(f => f.Name == "Throws").Message);
+        Assert.Equal("Scenario.cs:20", trx.Failures.Single(f => f.Name.EndsWith("Throws")).Location);
+        Assert.Contains("boom", trx.Failures.Single(f => f.Name.EndsWith("Throws")).Message);
 
         // Location shape equals what MtpParser reports for the same failure.
-        if (log.Failures.Single(f => f.Name == "Fails").Location is { } logLocation)
+        if (log.Failures.Single(f => f.Name.EndsWith("Fails")).Location is { } logLocation)
         {
             Assert.Equal(logLocation, fails.Location);
         }
@@ -66,8 +74,10 @@ public class TrxReaderTests
     [Fact]
     public void Paths_in_fixtures_are_sanitised()
     {
-        Assert.DoesNotContain("/home/", Fixtures.Read("mstest-fail.trx"));
-        Assert.DoesNotContain("/home/", Fixtures.Read("tunit-fail.trx"));
+        foreach (var name in new[] { "xunit3", "mstest", "nunit", "tunit" })
+        {
+            Assert.DoesNotContain("/home/", Fixtures.Read(name + "-fail.trx"));
+        }
     }
 
     [Fact]
