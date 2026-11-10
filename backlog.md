@@ -25,8 +25,6 @@
 - [ ] split-the-at-column-into-file-and-line-to-avoid - Split the at column into file and line to avoid quoting (kind: chore) (priority: 3) (since 2026-11-10)
 - [ ] guard-the-version-fast-path-with-a-latency-test - Guard the version fast path with a latency test (kind: chore) (priority: 3) (since 2026-11-10)
 - [ ] add-fields-to-widen-the-failure-columns - Add --fields to widen the failure columns (kind: idea) (priority: 4) (since 2026-11-10)
-- [ ] map-class-method-and-namespace-to-each-frameworks - Map --class, --method and --namespace to each framework's own filter (kind: idea) (priority: 1) (since 2026-11-10)
-  Only xUnit v3 supports --filter-class/method/namespace. MSTest and NUnit use --filter, TUnit uses --treenode-filter. Detect the framework from the project package references or from the rejected option, and translate. Samples and fixtures already cover all four.
 - [ ] support-classic-vstest-projects - Support classic VSTest projects (kind: idea) (priority: 2) (since 2026-11-10)
   dotnet test --project is rejected in VSTest mode, so these projects currently report unsupported-runner. Run with a positional path and parse the VSTest console output (Passed!/Failed! summary line, Failed <name> blocks). VSTest.Sample is the test project.
 - [ ] report-class-qualified-test-names-for-mstest-nunit - Report class-qualified test names for MSTest, NUnit and TUnit (kind: idea) (priority: 3) (since 2026-11-10)
@@ -34,4 +32,6 @@
 - [ ] add-multi-target-sample-for-mtp - Add multi-target sample for MTP (kind: idea) (priority: 3) (since 2026-11-10)
   A project targeting several frameworks prints one module block per target. Needs a second runtime installed on the machine.
 - [ ] add-a-skipped-tests-listing-and-a-list-flag-for - Add a skipped-tests listing and a --list flag for discovered tests (kind: idea) (priority: 4) (since 2026-11-10)
+- [ ] add-per-framework-test-filters - Translate --class, --method and --namespace to each test framework (kind: change) (priority: 1) (since 2026-11-10)
+  Only xUnit v3 supports --filter-class/method/namespace. MSTest and NUnit use --filter, TUnit uses --treenode-filter. Detect the framework from the project package references or from the rejected option, and translate. Samples and fixtures already cover all four.
 ## Done
