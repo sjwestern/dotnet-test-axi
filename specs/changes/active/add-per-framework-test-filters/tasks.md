@@ -2,9 +2,9 @@
 
 ## In flight
 ## Queued
-- [ ] 08-update-docs-for-per-framework-filters - Update docs for per-framework filters blocked-by: 07-add-sample-solutions-and-end-to-end-test (since 2026-11-10)
-  Spec: 08-update-docs-for-per-framework-filters.md
 ## Done
+- [x] 08-update-docs-for-per-framework-filters - Update docs for per-framework filters blocked-by: 07-add-sample-solutions-and-end-to-end-test (done 2026-11-10)
+  Spec: 08-update-docs-for-per-framework-filters.md
 - [x] 07-add-sample-solutions-and-end-to-end-test - Add sample solutions and end-to-end tests for filters blocked-by: 06-run-mixed-solutions-per-project-in-paral (done 2026-11-10)
   Spec: 07-add-sample-solutions-and-end-to-end-test.md
 - [x] 06-run-mixed-solutions-per-project-in-paral - Run mixed solutions per project in parallel and merge blocked-by: 05-run-single-framework-solutions-with-tran (done 2026-11-10)
