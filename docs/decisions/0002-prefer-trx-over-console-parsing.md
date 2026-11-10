@@ -1,10 +1,10 @@
 ---
-title: Prefer TRX over console parsing when the extension is present
+title: Prefer TRX over console parsing
 summary: Use TRX as the structured result source for counts and failures, with console parsing for the rest
 status: proposed
 ---
 
-# Prefer TRX over console parsing when the extension is present
+# Prefer TRX over console parsing
 
 ## Context
 

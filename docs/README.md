@@ -21,5 +21,5 @@ _No docs yet._
 ## Decisions
 
 - [0001 Use xUnit v3 filter semantics as the tool's own and translate per framework](decisions/0001-use-xunit-v3-filter-semantics-as-the-tool-s-own-and.md) - The --class, --method and --namespace flags keep xUnit v3 rules and framework adapters translate them (accepted)
-- [0002 Prefer TRX over console parsing when the extension is present](decisions/0002-prefer-trx-over-console-parsing-when-the-extension-is.md) - Use TRX as the structured result source for counts and failures, with console parsing for the rest (proposed)
+- [0002 Prefer TRX over console parsing](decisions/0002-prefer-trx-over-console-parsing.md) - Use TRX as the structured result source for counts and failures, with console parsing for the rest (proposed)
 <!-- docs-axi:index:end -->
