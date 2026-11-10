@@ -1,8 +1,6 @@
 # Backlog
 
 ## In flight
-- [ ] add-per-framework-test-filters - Translate --class, --method and --namespace to each test framework (kind: change) (priority: 1) (since 2026-11-10)
-  Only xUnit v3 supports --filter-class/method/namespace. MSTest and NUnit use --filter, TUnit uses --treenode-filter. Detect the framework from the project package references or from the rejected option, and translate. Samples and fixtures already cover all four.
 ## Queued
 - [ ] add-trx-reporting-as-a-structured-result-source - Add TRX reporting as a structured result source with console parsing as fallback (kind: idea) (priority: 1) (since 2026-11-10)
   Use --report-trx when the Microsoft.Testing.Extensions.TrxReport extension is present. Keep the console parser for build errors, crashes and projects without the extension.
@@ -35,3 +33,5 @@
   A project targeting several frameworks prints one module block per target. Needs a second runtime installed on the machine.
 - [ ] add-a-skipped-tests-listing-and-a-list-flag-for - Add a skipped-tests listing and a --list flag for discovered tests (kind: idea) (priority: 4) (since 2026-11-10)
 ## Done
+- [x] add-per-framework-test-filters - Translate --class, --method and --namespace to each test framework (kind: change) (priority: 1) (done 2026-11-10)
+  Only xUnit v3 supports --filter-class/method/namespace. MSTest and NUnit use --filter, TUnit uses --treenode-filter. Detect the framework from the project package references or from the rejected option, and translate. Samples and fixtures already cover all four.
