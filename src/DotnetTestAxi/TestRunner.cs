@@ -26,11 +26,11 @@ internal static class TestRunner
     }
 
     /// <param name="adapter">Translates the filter; needed only when the args carry one.</param>
-    public static List<string> BuildArguments(string targetPath, Args args, IFrameworkAdapter? adapter = null)
+    public static List<string> BuildArguments(string targetPath, Args args, IFrameworkAdapter? adapter = null, bool noBuild = false)
     {
         var list = new List<string> { "test", IsSolution(targetPath) ? "--solution" : "--project", targetPath };
         if (adapter is not null) { list.AddRange(adapter.BuildFilterArguments(args.Filter)); }
-        if (args.NoBuild) { list.Add("--no-build"); }
+        if (args.NoBuild || noBuild) { list.Add("--no-build"); }
         list.Add("--no-progress");
         list.AddRange(args.Passthrough);
         return list;

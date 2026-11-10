@@ -10,11 +10,13 @@ internal enum RunStatus
     UnsupportedRunner,
     InvalidArguments,
     UnknownFramework,
-    MixedFrameworks,
     Crashed,
 }
 
-internal sealed record TestFailure(string Name, string Message, string? Location, string? Assembly);
+internal sealed record TestFailure(string Name, string Message, string? Location, string? Assembly, string? Project = null);
+
+/// <summary>One row of the projects table of a multi-project run.</summary>
+internal sealed record ProjectRow(string Name, string Framework, RunStatus Status, int Total, int Failed);
 
 internal sealed record CrashInfo(string Module, int? ExitCode, string Detail);
 
@@ -32,13 +34,19 @@ internal sealed class RunResult
     public List<TestFailure> Failures { get; } = [];
     public List<BuildIssue> BuildErrors { get; } = [];
 
+    /// <summary>Per-project rows; filled only for multi-project runs.</summary>
+    public List<ProjectRow> Projects { get; } = [];
+
+    /// <summary>Per-project log paths of a multi-project run.</summary>
+    public List<string> Logs { get; } = [];
+
     /// <summary>Projects dotnet reported as using the VSTest runner when Microsoft Testing Platform is required.</summary>
     public List<string> VSTestProjects { get; } = [];
 
     /// <summary>Command line options the test application rejected (for example a filter it does not support).</summary>
     public List<string> RejectedOptions { get; } = [];
 
-    /// <summary>Projects involved in an unknown-framework or mixed-frameworks status, as "name" or "name: framework".</summary>
+    /// <summary>Projects whose framework could not be detected (unknown-framework status).</summary>
     public List<string> FrameworkProjects { get; } = [];
 
     /// <summary>Help lines specific to the status, shown ahead of the generic ones.</summary>

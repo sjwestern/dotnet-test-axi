@@ -1,5 +1,6 @@
 using System.Reflection;
 using DotnetTestAxi.Frameworks;
+using DotnetTestAxi.Runs;
 using System.Text.RegularExpressions;
 
 namespace DotnetTestAxi;
@@ -79,10 +80,18 @@ internal static partial class Program
         {
             var detections = await FrameworkDetector.DetectAsync(TestRunner.ProjectsOf(target), config);
             plan = RunPlan.Choose(false, detections);
-            if (plan.Strategy is Strategy.Unknown or Strategy.Mixed)
+            if (plan.Strategy is Strategy.Unknown)
             {
                 Console.Write(Output.Run(PlanFailure(plan), null, args.Target, args.Full));
                 return 1;
+            }
+
+            if (plan.Strategy is Strategy.Mixed)
+            {
+                var cfgLogDir = config?.LogDir is { } ld && config.Directory is { } cdir ? Path.GetFullPath(ld, cdir) : null;
+                var merged = await MixedRun.RunAsync(plan, args, target, cwd, cfgLogDir);
+                Console.Write(Output.Run(merged, null, args.Target, args.Full));
+                return merged.Status == RunStatus.Pass ? 0 : 1;
             }
         }
 
@@ -104,14 +113,6 @@ internal static partial class Program
     private static RunResult PlanFailure(RunPlan plan)
     {
         var r = new RunResult();
-        if (plan.Strategy is Strategy.Mixed)
-        {
-            r.Status = RunStatus.MixedFrameworks;
-            r.FrameworkProjects.AddRange(plan.Detections.Select(d => $"{Path.GetFileNameWithoutExtension(d.Project)}: {d.Adapter!.Id}"));
-            r.StatusHelp.Add("Run each project on its own: `dotnet-test-axi <project path> --class <name>`");
-            return r;
-        }
-
         r.Status = RunStatus.UnknownFramework;
         if (plan.Detections.Count == 0)
         {

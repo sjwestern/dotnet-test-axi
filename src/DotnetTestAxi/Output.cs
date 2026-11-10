@@ -36,7 +36,7 @@ internal static class Output
         if (r.Status is RunStatus.UnsupportedRunner)
         {
             o["reason"] = "dotnet test rejected this target: dotnet-test-axi runs Microsoft Testing Platform projects only, and this one uses the VSTest runner";
-            if (r.VSTestProjects.Count > 0)
+            if (r.VSTestProjects.Count > 0 && r.Projects.Count == 0)
             {
                 o["projects"] = Strings(r.VSTestProjects.ToArray());
             }
@@ -55,11 +55,9 @@ internal static class Output
             help.Add("These options came from `--` passthrough or a framework that does not accept them; --class, --method and --namespace are translated for you");
             help.Add("Fix or remove the options after `--`, then rerun");
         }
-        else if (r.Status is RunStatus.UnknownFramework or RunStatus.MixedFrameworks)
+        else if (r.Status is RunStatus.UnknownFramework)
         {
-            o["reason"] = r.Status is RunStatus.UnknownFramework
-                ? "the test framework of some projects could not be detected, so the filter cannot be translated"
-                : "the solution mixes test frameworks; per-project runs are not available yet";
+            o["reason"] = "the test framework of some projects could not be detected, so the filter cannot be translated";
             o["projects"] = Strings(r.FrameworkProjects.ToArray());
             help.AddRange(r.StatusHelp);
         }
@@ -121,7 +119,12 @@ internal static class Output
                 {
                     var (message, cut) = full ? (f.Message, false) : Truncate(f.Message);
                     truncatedText |= cut;
-                    return new JsonObject { ["name"] = f.Name, ["message"] = message, ["at"] = f.Location ?? "" };
+                    var row = new JsonObject();
+                    if (f.Project is not null) { row["project"] = f.Project; }
+                    row["name"] = f.Name;
+                    row["message"] = message;
+                    row["at"] = f.Location ?? "";
+                    return row;
                 }));
                 Count(o, shown.Count, r.Failures.Count, "failures");
             }
@@ -138,9 +141,22 @@ internal static class Output
             help.AddRange(FailureHelp(r, logPath, target, full, truncatedText));
         }
 
+        if (r.Projects.Count > 0)
+        {
+            o["projects"] = Rows(r.Projects.Select(p => new JsonObject
+            {
+                ["name"] = p.Name, ["framework"] = p.Framework, ["status"] = StatusName(p.Status), ["total"] = p.Total, ["failed"] = p.Failed,
+            }));
+        }
+
         if (logPath is not null)
         {
             o["log"] = logPath;
+        }
+        else if (r.Logs.Count > 0)
+        {
+            o["logs"] = Strings(r.Logs.ToArray());
+            help.Add("Read the logs listed above for each project's full output");
         }
 
         if (help.Count > 0)
@@ -184,7 +200,6 @@ internal static class Output
         RunStatus.UnsupportedRunner => "unsupported-runner",
         RunStatus.InvalidArguments => "invalid-arguments",
         RunStatus.UnknownFramework => "unknown-framework",
-        RunStatus.MixedFrameworks => "mixed-frameworks",
         RunStatus.Crashed => "crashed",
         _ => "no-summary",
     };

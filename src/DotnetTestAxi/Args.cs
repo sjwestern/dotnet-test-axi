@@ -9,6 +9,7 @@ internal sealed class Args
     public string? Method { get; private set; }
     public string? Namespace { get; private set; }
     public string? FromLog { get; private set; }
+    public int? Parallel { get; private set; }
     public bool Full { get; private set; }
     public bool NoBuild { get; private set; }
     public bool Help { get; private set; }
@@ -18,7 +19,7 @@ internal sealed class Args
     public string? ErrorHelp { get; private set; }
     public TestFilter Filter { get; private set; } = TestFilter.Empty;
 
-    public const string ValidFlags = "--class, --method, --namespace, --no-build, --full, --from-log, --help, --version";
+    public const string ValidFlags = "--class, --method, --namespace, --no-build, --full, --parallel, --from-log, --help, --version";
 
     public static Args Parse(string[] argv)
     {
@@ -38,6 +39,17 @@ internal sealed class Args
                 case "--class": a.Class = Value(argv, ref i, a); break;
                 case "--method": a.Method = Value(argv, ref i, a); break;
                 case "--namespace": a.Namespace = Value(argv, ref i, a); break;
+                case "--parallel":
+                    if (int.TryParse(Value(argv, ref i, a), out var n) && n > 0)
+                    {
+                        a.Parallel = n;
+                    }
+                    else if (a.Error is null)
+                    {
+                        a.Error = "--parallel needs a positive integer";
+                    }
+
+                    break;
                 case "--from-log": a.FromLog = Value(argv, ref i, a); break;
                 default:
                     if (arg.StartsWith('-'))
