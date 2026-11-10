@@ -6,16 +6,16 @@ Run results come from regex-parsing console text, which breaks when a framework 
 
 ## Context
 
-Docs read: docs/architecture/test-filtering.md (run strategies single, mixed, unfiltered), ADR-0001-use-xunit-v3-filter-semantics-as-the-tool-s-own-and (no constraint on this change). Code read: TestRunner, Program, MtpParser, Models, FrameworkDetector, MixedRun. No active changes overlap. Verified in step 1: MSTest and TUnit bundle Microsoft.Testing.Extensions.TrxReport (`--report-trx`); xUnit v3 has its own `--report-xunit-trx` and needs no package (`--report-trx` is rejected there); NUnit needs a direct TrxReport package reference (the NUnit sample now has one). The msbuild PackageReference read lists direct references only, so transitive TrxReport is invisible to it.
+Docs read: docs/architecture/test-filtering.md (run strategies single, mixed, unfiltered), ADR-0001-use-xunit-v3-filter-semantics-as-the-tool-s-own-and (no constraint on this change). Code read: TestRunner, Program, MtpParser, Models, FrameworkDetector, MixedRun. No active changes overlap. Verified in step 1: the MSTest and TUnit metapackages depend on Microsoft.Testing.Extensions.TrxReport (`--report-trx`; projects referencing only MSTest.TestAdapter or TUnit.Engine do not get it); xUnit v3 has its own `--report-xunit-trx` and needs no package (`--report-trx` is rejected there); NUnit needs a direct TrxReport package reference (the NUnit sample now has one). The msbuild PackageReference read lists direct references only, so transitive TrxReport is invisible to it.
 
 ## What changes
 
 - When a project has Microsoft.Testing.Extensions.TrxReport, the run passes --report-trx, --report-trx-filename and --results-directory so the TRX is written beside the log with the same stem: <name>-<timestamp>.log and <name>-<timestamp>.trx.
 - Run output gains a trx: field (absolute path) next to log:, only when a TRX was produced. Multi-project and mixed runs get one TRX per project, matching the per-project logs.
 - Counts and failures (name, message, stack, location) come from the TRX when present. Failure text keeps the existing truncation and total-size rules.
-- Console parsing stays the source for build errors, crashes, rejected options and the MTP summary check, and the only source for projects without the extension.
+- Console parsing stays the source for build errors, crashes and rejected options, and the only source for projects without TRX.
 - Each framework adapter declares its TRX option: xUnit v3 `--report-xunit-trx`, MSTest, NUnit and TUnit `--report-trx`. TRX is always preferred over console text for counts and failures when it was produced.
-- When a framework needs the TrxReport package and the project lacks it (NUnit), the run falls back to console parsing and warns, once per run and whether or not tests fail, with a complete suggestion: add Microsoft.Testing.Extensions.TrxReport (`dotnet add <project> package Microsoft.Testing.Extensions.TrxReport`) for TRX results.
+- When a framework needs the TrxReport package and the project lacks it (for example NUnit, or MSTest without the MSTest metapackage), the run falls back to console parsing and warns, once per run and whether or not tests fail, with a complete suggestion: add Microsoft.Testing.Extensions.TrxReport (`dotnet add <project> package Microsoft.Testing.Extensions.TrxReport`) for TRX results.
 - When failures are truncated and a TRX exists, help[] gives a complete command to read the detail from the TRX.
 - The tool never deletes the TRX.
 
@@ -31,8 +31,8 @@ Docs read: docs/architecture/test-filtering.md (run strategies single, mixed, un
 
 - TrxReader: pure function, TRX XML in, counts and failures out, no MTP knowledge. Tested against fixtures captured from the samples.
 - Artifact paths: replace TestRunner.NewLogPath with a helper returning the log and TRX paths with one shared stem.
-- Detection: the adapter says which TRX option it uses and whether it needs the package. Only NUnit needs it; that is checked from the direct package ids FrameworkDetector already reads (step 1 confirmed transitive references are not listed, which is fine because MSTest, TUnit and xUnit v3 need no check). TRX args are added only when available, so no option is rejected and no run is repeated. If detection fails, fall back to console parsing.
-- Merge: console parse first (status, build errors, crash, summary), then overlay TRX counts and failures. A run only passes with an MTP summary, a zero exit code and no failure signal; TRX alone never produces pass. If TRX counts and the console summary disagree, status is NoSummary and help points at both files.
+- Detection: the adapter says which TRX option it uses and which direct package ids imply TRX support (`MSTest`, `TUnit`, `Microsoft.Testing.Extensions.TrxReport`; none for xUnit v3). FrameworkDetector already reads direct ids; step 1 confirmed transitive references are not listed, which is fine because the metapackage itself is the direct id. TRX args are added only when available, so no option is rejected and no run is repeated. If detection fails, fall back to console parsing.
+- Merge: console parse first (status, build errors, crash, summary), then overlay TRX counts and failures. A run only passes with a success summary (console or TRX, not tied to MTP wording), a zero exit code and no failure signal. If TRX counts and the console summary disagree, status is NoSummary and help points at both files.
 - Mixed runs: per-project TRX paths feed ResultMerger like per-project logs.
 - Alternatives: always pass --report-trx and retry on rejection (rejected: doubles run time on failure); check for the extension dll next to build output (rejected: needs a build first).
 
