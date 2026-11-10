@@ -1,0 +1,2 @@
+/work/demo/T.cs(6,44): error CS0246: The type or namespace name 'InvalidOperationException' could not be found (are you missing a using directive or an assembly reference?) [/work/demo/demo.csproj]
+Get projects properties with MSBuild didn't execute properly with exit code: 1.

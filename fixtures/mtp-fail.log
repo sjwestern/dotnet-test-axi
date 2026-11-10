@@ -1,0 +1,36 @@
+Running tests from /work/demo/bin/Debug/net10.0/demo.dll (net10.0|x64)
+failed Demo.MathTests.Fails (17ms)
+  from /work/demo/bin/Debug/net10.0/demo.dll (net10.0|x64)
+  Assert.Equal() Failure: Values differ
+  Expected: 3
+  Actual:   2
+    at Demo.MathTests.Fails() in /work/demo/T.cs:6
+    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+failed Demo.MathTests.Throws (0ms)
+  from /work/demo/bin/Debug/net10.0/demo.dll (net10.0|x64)
+  Xunit.MicrosoftTestingPlatform.XunitException: System.InvalidOperationException : boom
+    at Demo.MathTests.Throws() in /work/demo/T.cs:7
+    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+failed Demo.MathTests.Theory(x: 2) (0ms)
+  from /work/demo/bin/Debug/net10.0/demo.dll (net10.0|x64)
+  Assert.Equal() Failure: Values differ
+  Expected: 1
+  Actual:   2
+    at Demo.MathTests.Theory(Int32 x) in /work/demo/T.cs:9
+    at InvokeStub_MathTests.Theory(Object, Span`1)
+    at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+skipped Demo.MathTests.Skipped (0ms)
+  not now
+  from /work/demo/bin/Debug/net10.0/demo.dll (net10.0|x64)
+/work/demo/bin/Debug/net10.0/demo.dll (net10.0|x64) failed with 3 error(s) (845ms)
+Exit code: 2
+
+Test run summary: Failed!
+  total: 6
+  failed: 3
+  succeeded: 2
+  skipped: 1
+  duration: 1s 068ms
+Test run completed with non-success exit code: 2 (see: https://aka.ms/testingplatform/exitcodes)

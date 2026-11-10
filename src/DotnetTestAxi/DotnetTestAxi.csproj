@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>dotnet-test-axi</AssemblyName>
+    <RootNamespace>DotnetTestAxi</RootNamespace>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>dotnet-test-axi</ToolCommandName>
+    <PackageId>dotnet-test-axi</PackageId>
+    <Description>Runs dotnet test and prints a compact, agent-friendly summary of the result. Parses Microsoft Testing Platform output.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>dotnet;test;cli;agents;axi;microsoft-testing-platform</PackageTags>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="DotnetTestAxi.Tests" />
+  </ItemGroup>
+</Project>

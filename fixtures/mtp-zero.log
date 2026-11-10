@@ -1,0 +1,13 @@
+Running tests from /work/demo/bin/Debug/net10.0/demo.dll (net10.0|x64)
+/work/demo/bin/Debug/net10.0/demo.dll (net10.0|x64) Zero tests ran (656ms)
+Exit code: 8
+
+Test run summary: Zero tests ran
+  error: 1
+
+  total: 0
+  failed: 0
+  succeeded: 0
+  skipped: 0
+  duration: 895ms
+Test run completed with non-success exit code: 8 (see: https://aka.ms/testingplatform/exitcodes)

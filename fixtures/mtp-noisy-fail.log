@@ -1,0 +1,28 @@
+Running tests from /work/app/tests/Integration/bin/Debug/net10.0/Integration.dll (net10.0|x64)
+failed Integration.Orders.CreateOrderTests.Create_Should_Persist (642ms)
+  from /work/app/tests/Integration/bin/Debug/net10.0/Integration.dll (net10.0|x64)
+  Xunit.MicrosoftTestingPlatform.XunitException: System.ArgumentException : Key 'cause' is not allowed. (Parameter 'key')
+    at Domain.Audit.Metadata.Validate(String key) in /work/app/src/Domain/Audit/Metadata.cs:41
+    at Application.Orders.CreateOrder.Handle(CreateOrder command) in /work/app/src/Application/Orders/CreateOrder.cs:88
+failed Integration.Orders.CreateOrderTests.Create_Should_Audit (150ms)
+  from /work/app/tests/Integration/bin/Debug/net10.0/Integration.dll (net10.0|x64)
+  Xunit.MicrosoftTestingPlatform.XunitException: System.ArgumentException : Key 'cause' is not allowed. (Parameter 'key')
+    at Domain.Audit.Metadata.Validate(String key) in /work/app/src/Domain/Audit/Metadata.cs:41
+/work/app/tests/Integration/bin/Debug/net10.0/Integration.dll (net10.0|x64) failed with 2 error(s) (29s 796ms)
+Exit code: 2
+  [testcontainers.org 00:00:03.10] Docker container abc123 created
+  fail: Application.Behaviors.LoggingDecorator.QueryHandler[0]
+        Completed query GetOrderQuery with error code Orders.NotFound
+        Microsoft.Data.SqlClient.SqlException (0x80131904): Snapshot isolation transaction failed.
+           at Microsoft.Data.SqlClient.SqlConnection.OnError(SqlException exception)
+  [testcontainers.org 00:00:44.20] Delete Docker container abc123
+Running tests from /work/app/tests/Unit/bin/Debug/net10.0/Unit.dll (net10.0|x64)
+/work/app/tests/Unit/bin/Debug/net10.0/Unit.dll (net10.0|x64) passed (3s 100ms)
+
+Test run summary: Failed!
+  total: 9
+  failed: 2
+  succeeded: 7
+  skipped: 0
+  duration: 33s 216ms
+Test run completed with non-success exit code: 2 (see: https://aka.ms/testingplatform/exitcodes)

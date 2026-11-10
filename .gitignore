@@ -1,0 +1,11 @@
+bin/
+obj/
+nupkg/
+node_modules/
+*.log
+!fixtures/*.log
+.DS_Store
+.vs/
+.idea/
+.agent-memory/session-*
+.agent-todos/
