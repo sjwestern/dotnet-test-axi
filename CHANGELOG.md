@@ -4,6 +4,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-10
+
 ### Added
 
 - TRX reports: each project's run writes a `.trx` and print `trx:` next to `log:`; failures come from it with source locations. Uses `--report-xunit-trx` for xUnit v3 and `--report-trx` for MSTest, NUnit and TUnit.
@@ -37,6 +39,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Solution support, including mixed-framework solutions.
 - Agent skill.
 
-[Unreleased]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/sjwestern/dotnet-test-axi/commits/v0.1.0
