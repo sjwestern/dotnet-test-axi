@@ -18,8 +18,10 @@ Rules:
 
 - Use it instead of calling `dotnet test` directly.
 - Never rerun the suite to see more output. Read the `log:` file, or use `--full` for every failure.
+- When a `trx:` path is printed, read it for complete failure messages and stack traces.
+- A `warning:` about the TrxReport package comes with a `dotnet add` command; offer it to the user, do not run it unasked.
 - Rerun only what failed, using the `next:` hint.
-- A `no-summary` or `build-error` status is not a pass.
+- A `no-summary` or `build-error` status is not a pass. `no-summary` can also mean the console and TRX counts disagree; read both files.
 
 If `dotnet-test-axi` is not found (command not found, or `dotnet tool run` fails):
 

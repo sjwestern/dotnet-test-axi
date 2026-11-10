@@ -16,6 +16,7 @@ _No docs yet._
 
 ## Architecture
 
+- [Result sources](architecture/result-sources.md) - How console parsing and TRX combine into a run result: artifact layout, per-framework options, merge and mismatch rules
 - [Test filtering](architecture/test-filtering.md) - How filter flags are validated, detected per framework, translated by adapters and run (single, mixed)
 
 ## Decisions
