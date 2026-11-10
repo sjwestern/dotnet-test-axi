@@ -57,7 +57,7 @@ Docs read: docs/architecture/test-filtering.md (run strategies single, mixed, un
 - `docs/architecture/result-sources.md` - new: TRX versus console parsing, run folders, per-framework options, merge and mismatch rules.
 - `README.md` - updated: framework table gets a TRX column; TRX reports section; `trx:` and `warning:` documented.
 - `CHANGELOG.md` - updated: Added and Changed entries under Unreleased.
-- `docs/decisions/0002-prefer-trx-over-console-parsing-when-the-extension-is.md` - reviewed against the build.
+- `docs/decisions/0002-prefer-trx-over-console-parsing.md` - reviewed against the build.
 
 ## Risks and open questions
 
@@ -65,5 +65,5 @@ Docs read: docs/architecture/test-filtering.md (run strategies single, mixed, un
 - Frameworks may populate TRX stack and message fields differently; fixtures from all four frameworks cover this.
 - Rule intent for mismatch handling: never report success when the run failed. The mismatch to NoSummary decision is the conservative reading; revisit if it proves noisy.
 
-- Implemented limit: a run of several projects through one `dotnet test --solution` call shares one report file name, so the files would overwrite each other. TRX is used only when a run targets one project (including each project of a mixed, filtered solution run); other runs use the console log and print no trx: or warning.
+- Implemented: a run of several projects through one `dotnet test --solution` call would share one report file name and overwrite it, so a multi-project target is built once and each project runs on its own, in parallel, with its own run folder, log and TRX (the `projects` table is shown, also without a filter).
 - Implemented side effect: with the TRX extension active Microsoft Testing Platform reports host exit code 7 for a crashed host instead of 134; status stays crashed.
