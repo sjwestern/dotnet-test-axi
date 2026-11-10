@@ -2,8 +2,6 @@
 
 ## In flight
 ## Queued
-- [ ] 02-add-framework-adapters-that-translate-th - Add framework adapters that translate the filter blocked-by: 01-parse-and-validate-the-filter-flags (since 2026-11-10)
-  Spec: 02-add-framework-adapters-that-translate-th.md
 - [ ] 03-read-test-projects-from-solution-files - Read test projects from solution files (since 2026-11-10)
   Spec: 03-read-test-projects-from-solution-files.md
 - [ ] 04-detect-each-project-s-framework - Detect each project's framework blocked-by: 02-add-framework-adapters-that-translate-th (since 2026-11-10)
@@ -17,5 +15,7 @@
 - [ ] 08-update-docs-for-per-framework-filters - Update docs for per-framework filters blocked-by: 07-add-sample-solutions-and-end-to-end-test (since 2026-11-10)
   Spec: 08-update-docs-for-per-framework-filters.md
 ## Done
+- [x] 02-add-framework-adapters-that-translate-th - Add framework adapters that translate the filter blocked-by: 01-parse-and-validate-the-filter-flags (done 2026-11-10)
+  Spec: 02-add-framework-adapters-that-translate-th.md
 - [x] 01-parse-and-validate-the-filter-flags - Parse and validate the filter flags (done 2026-11-10)
   Spec: 01-parse-and-validate-the-filter-flags.md
