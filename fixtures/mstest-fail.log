@@ -1,0 +1,45 @@
+Running tests from /work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll (net10.0|x64)
+failed Fails (14ms)
+  from /work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll (net10.0|x64)
+  Assertion failed. Expected values to be equal.
+  
+  expected: 3
+  actual:   2
+  
+  Assert.AreEqual(Scenario.Failing ? 3 : 2, 1 + 1)
+    at Samples.MSTest.SampleTests.Fails() in /work/samples/MSTest.Sample/SampleTests.cs:12
+    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+failed Throws (1ms)
+  from /work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll (net10.0|x64)
+  Test method Samples.MSTest.SampleTests.Throws threw exception:
+  System.InvalidOperationException: boom
+    at Samples.Scenario.FailIfRequested(String message) in /work/samples/Shared/Scenario.cs:20
+    at Samples.MSTest.SampleTests.Throws() in /work/samples/MSTest.Sample/SampleTests.cs:15
+    at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+    at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+    
+skipped Skipped (0ms)
+  not now
+  from /work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll (net10.0|x64)
+failed Theory (2) (0ms)
+  from /work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll (net10.0|x64)
+  Assertion failed. Expected condition to be true.
+  value 2 is rejected
+  
+  actual: false
+  
+  Assert.IsTrue(x != 2 || !Scenario.Failing)
+    at Samples.MSTest.SampleTests.Theory(Int32 x) in /work/samples/MSTest.Sample/SampleTests.cs:25
+    at InvokeStub_SampleTests.Theory(Object, Span`1)
+    at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+/work/samples/MSTest.Sample/bin/Debug/net10.0/MSTest.Sample.dll (net10.0|x64) failed with 3 error(s) (620ms)
+Exit code: 2
+
+Test run summary: Failed!
+  total: 8
+  failed: 3
+  succeeded: 4
+  skipped: 1
+  duration: 839ms
+Test run completed with non-success exit code: 2 (see: https://aka.ms/testingplatform/exitcodes)

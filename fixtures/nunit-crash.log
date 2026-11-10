@@ -1,0 +1,53 @@
+Running tests from /work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample.dll (net10.0|x64)
+/work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample.dll (net10.0|x64) Zero tests ran (279ms)
+Exit code: 134
+  Error output: Process terminated.
+  sample crash
+     at System.Environment.FailFast(System.Runtime.CompilerServices.StackCrawlMarkHandle, System.String, System.Runtime.CompilerServices.ObjectHandleOnStack, System.String)
+     at System.Environment.FailFast(System.Threading.StackCrawlMark ByRef, System.String, System.Exception, System.String)
+     at System.Environment.FailFast(System.String)
+     at Samples.Scenario.CrashIfRequested()
+     at Samples.NUnitSample.SampleTests.Crashes()
+     at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(System.Object, IntPtr*)
+     at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(System.Object, System.Reflection.BindingFlags)
+     at System.Reflection.RuntimeMethodInfo.Invoke(System.Object, System.Reflection.BindingFlags, System.Reflection.Binder, System.Object[], System.Globalization.CultureInfo)
+     at NUnit.Framework.Internal.Reflect.InvokeMethod(System.Reflection.MethodInfo, System.Object, System.Object[])
+     at NUnit.Framework.Internal.MethodWrapper.Invoke(System.Object, System.Object[])
+     at NUnit.Framework.Internal.Commands.TestMethodCommand.InvokeTestMethod(NUnit.Framework.Internal.TestExecutionContext, Boolean)
+     at NUnit.Framework.Internal.Commands.TestMethodCommand.RunTestMethod(NUnit.Framework.Internal.TestExecutionContext)
+     at NUnit.Framework.Internal.Commands.TestMethodCommand.Execute(NUnit.Framework.Internal.TestExecutionContext)
+     at NUnit.Framework.Internal.Execution.SimpleWorkItem+<>c__DisplayClass3_0.<PerformWork>b__0()
+     at NUnit.Framework.Internal.ContextUtils+<>c__DisplayClass1_0`1[[System.__Canon, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].<DoIsolated>b__0(System.Object)
+     at NUnit.Framework.Internal.ContextUtils+<>c__DisplayClass2_0.<DoIsolated>b__0(System.Object)
+     at System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object)
+     at NUnit.Framework.Internal.ContextUtils.DoIsolated(System.Threading.ContextCallback, System.Object)
+     at NUnit.Framework.Internal.ContextUtils.DoIsolated[[System.__Canon, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]](System.Func`1<System.__Canon>)
+     at NUnit.Framework.Internal.Execution.SimpleWorkItem.PerformWork()
+     at NUnit.Framework.Internal.Execution.WorkItem.RunOnCurrentThread()
+     at NUnit.Framework.Internal.Execution.WorkItem.Execute()
+     at NUnit.Framework.Internal.Execution.ParallelWorkItemDispatcher.Dispatch(NUnit.Framework.Internal.Execution.WorkItem, NUnit.Framework.Internal.Execution.ParallelExecutionStrategy)
+     at NUnit.Framework.Internal.Execution.ParallelWorkItemDispatcher.Dispatch(NUnit.Framework.Internal.Execution.WorkItem)
+     at NUnit.Framework.Internal.Execution.CompositeWorkItem.RunChildren()
+     at NUnit.Framework.Internal.Execution.CompositeWorkItem.PerformWork()
+     at NUnit.Framework.Internal.Execution.WorkItem.RunOnCurrentThread()
+     at NUnit.Framework.Internal.Execution.WorkItem.Execute()
+     at NUnit.Framework.Internal.Execution.TestWorker.TestWorkerThreadProc()
+     at System.Threading.Thread+StartHelper.Callback(System.Object)
+     at System.Threading.ExecutionContext.RunInternal(System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object)
+  
+The following exception occurred when running the test module with RunCommand '/work/samples/NUnit.Sample/bin/Debug/net10.0/NUnit.Sample' and RunArguments '':
+
+System.InvalidOperationException: A test session start event was received without a corresponding test session end.
+   at Microsoft.DotNet.Cli.Commands.Test.TestApplication.RunAsync()
+   at Microsoft.DotNet.Cli.Commands.Test.TestApplication.RunAsync()
+   at Microsoft.DotNet.Cli.Commands.Test.TestApplicationActionQueue.Read(BuildOptions buildOptions, TestOptions testOptions, TerminalTestReporter output, Action`1 onHelpRequested)
+
+Test run summary: Zero tests ran
+  error: 1
+
+  total: 0
+  failed: 0
+  succeeded: 0
+  skipped: 0
+  duration: 495ms
+Test run completed with non-success exit code: 1 (see: https://aka.ms/testingplatform/exitcodes)

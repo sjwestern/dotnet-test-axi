@@ -68,7 +68,31 @@ dotnet-test-axi --from-log <file> [--full]
 
 ### Status values
 
-`pass`, `fail`, `build-error`, `no-tests` (zero tests ran, which MTP treats as an error), `no-summary` (no summary was printed, the run likely crashed).
+| Status | Meaning |
+|---|---|
+| `pass` | Summary printed and `dotnet test` exited 0 |
+| `fail` | Tests failed (failures listed) |
+| `build-error` | The build failed (compile errors listed) |
+| `no-tests` | Zero tests ran, which MTP treats as an error. Usually a filter that matched nothing |
+| `crashed` | The test host died mid-run (`host_exit`, `detail`); counts are incomplete, so only `completed` is shown |
+| `invalid-arguments` | The test application rejected an option, for example a filter flag it does not have (`options` lists them) |
+| `unsupported-runner` | The project uses VSTest, not Microsoft Testing Platform |
+| `no-summary` | No summary was printed and no cause was recognised; read the log |
+
+### Framework support
+
+Verified against the sample projects in `tests/Samples` (all on Microsoft Testing Platform):
+
+| Framework | Run, summary and failures | `--class`, `--method`, `--namespace` |
+|---|---|---|
+| xUnit v3 | yes | yes |
+| MSTest | yes | no, reported as `invalid-arguments` |
+| NUnit | yes | no, reported as `invalid-arguments` |
+| TUnit | yes | no, reported as `invalid-arguments` |
+| xUnit v2 / classic VSTest | not supported, reported as `unsupported-runner` | n/a |
+
+`--class`, `--method` and `--namespace` are xUnit v3 options. For other frameworks pass the framework's own filter after `--`.
+Test names from MSTest, NUnit and TUnit are reported without the class, so no rerun hint is offered for them.
 
 ### Config
 
@@ -85,11 +109,16 @@ Logs go to the system temp folder (`dotnet-test-axi/`) unless `logDir` is set.
 
 ## Develop
 
-```sh
-dotnet test --solution DotnetTestAxi.slnx
-```
+Layout: `src/` holds the tool; `tests/` holds the unit tests (`DotnetTestAxi.Tests`, fast), the end-to-end tests (`DotnetTestAxi.EndToEndTests`, which run the real tool against the samples and take about 20 seconds) and `tests/Samples/`.
 
-Parser fixtures in `fixtures/` are real MTP output from generic demo projects. Add a fixture whenever a new output shape is found.
+`tests/Samples/` has one small test project per framework setup: `Xunit3.Sample`, `MSTest.Sample`, `NUnit.Sample`, `TUnit.Sample` (all Microsoft Testing Platform) and `VSTest.Sample` (xUnit v2 on the classic VSTest runner, with its own `global.json`). They pass by default. Set `SAMPLE_SCENARIO=fail` or `crash` to make them fail or kill the test host, and build with `-p:SampleBuildError=true` for a compile error.
+
+Parser fixtures in `fixtures/` are real output. Regenerate the per-framework ones from the samples with `pwsh scripts/capture-fixtures.ps1` and review the diff: a change means a framework or Microsoft Testing Platform output changed. Add a fixture whenever a new output shape is found.
+
+```sh
+dotnet test --project tests/DotnetTestAxi.Tests     # fast
+dotnet test --solution DotnetTestAxi.slnx           # everything, including end to end
+```
 
 Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/), enforced by commitlint through a husky hook. Run `npm install` once after cloning to enable it (Node is only needed for this, not for the tool).
 

@@ -1,0 +1,13 @@
+/work/samples/Xunit3.Sample/SampleTests.cs(11,28): warning xUnit2000: The literal or constant value 1 + 1 should be passed as the 'expected' argument in the call to 'Assert.Equal(expected, actual)' in method 'Fails' on type 'SampleTests'. Swap the parameter values. (https://xunit.net/xunit.analyzers/rules/xUnit2000) [/work/samples/Xunit3.Sample/Xunit3.Sample.csproj]
+Running tests from /work/samples/Xunit3.Sample/bin/Debug/net10.0/Xunit3.Sample.dll (net10.0|x64)
+skipped Samples.Xunit3.SampleTests.Skipped (0ms)
+  not now
+  from /work/samples/Xunit3.Sample/bin/Debug/net10.0/Xunit3.Sample.dll (net10.0|x64)
+/work/samples/Xunit3.Sample/bin/Debug/net10.0/Xunit3.Sample.dll (net10.0|x64) passed (1s 103ms)
+
+Test run summary: Passed!
+  total: 8
+  failed: 0
+  succeeded: 7
+  skipped: 1
+  duration: 1s 327ms

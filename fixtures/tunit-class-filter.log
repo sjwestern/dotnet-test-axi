@@ -1,0 +1,23 @@
+/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll (net10.0) Zero tests ran
+Exit code: 5
+  Standard output: Unknown option '--filter-class'
+  Run '--help' to see the options registered by this test application. If the option belongs to an extension, ensure its package is referenced and the extension is registered.
+  Command line: --filter-class Samples.Missing --server dotnettestcli --dotnet-test-pipe /tmp/pipe
+  
+
+Test run summary: Failed!
+  error: 1
+
+  total: 0
+  failed: 0
+  succeeded: 0
+  skipped: 0
+  duration: 160ms
+Test run completed with non-success exit code: 1 (see: https://aka.ms/testingplatform/exitcodes)
+
+Handshake failures:
+  /work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll (net10.0)
+Exit code: 5
+  Standard output: Unknown option '--filter-class'
+  Run '--help' to see the options registered by this test application. If the option belongs to an extension, ensure its package is referenced and the extension is registered.
+  Command line: --filter-class Samples.Missing --server dotnettestcli --dotnet-test-pipe /tmp/pipe

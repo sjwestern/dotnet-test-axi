@@ -1,0 +1,7 @@
+{
+  "targets": {
+    "unit": "tests/DotnetTestAxi.Tests",
+    "e2e": "tests/DotnetTestAxi.EndToEndTests",
+    "all": "DotnetTestAxi.slnx"
+  }
+}

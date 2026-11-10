@@ -143,4 +143,16 @@ public class OutputTests
         Assert.Equal("none", (string?)o["config"]);
         Assert.Equal("none defined", (string?)o["targets"]);
     }
+
+    [Fact]
+    public void Unsupported_runner_explains_and_names_the_projects()
+    {
+        var o = Decode(Output.Run(Fixture("vstest-in-mtp-solution.log"), "/tmp/x.log", "all", full: false));
+
+        Assert.Equal("unsupported-runner", (string?)o["status"]);
+        Assert.Contains("VSTest", (string?)o["reason"]);
+        Assert.Equal("VSTest.Sample.csproj", (string?)o["projects"]![0]);
+        Assert.Null(o["total"]);
+        Assert.Contains(o["help"]!.AsArray(), h => ((string?)h)!.Contains("dotnet test <path>"));
+    }
 }

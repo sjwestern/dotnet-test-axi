@@ -6,7 +6,10 @@ Agent-friendly `dotnet test` runner and result summariser (a .NET tool). It only
 
 - Keep it specific to .NET testing. Do not add general .NET analysis or project-modification features.
 - Keep the repo generic. Never reference other projects, companies, products or private paths in code, tests, fixtures, docs or examples. Use generic names (`MyApp`, `Demo`) and sanitised paths (`/work/...`).
-- Parser changes are test-first against a log in `fixtures/`. Fixtures come from real runs of throwaway demo projects, with absolute paths rewritten to `/work/...`.
+- Layout: `src/` (the tool), `tests/` (unit tests, end-to-end tests, `tests/Samples/` sample projects), solution `DotnetTestAxi.slnx` at the root.
+- Parser changes are test-first against a log in `fixtures/`. Fixtures are real output from the sample projects (regenerate with `pwsh scripts/capture-fixtures.ps1`, which rewrites absolute paths to `/work/...`). When a framework or runner shows a new output shape, add a scenario to the samples and a captured fixture rather than hand-writing one.
+- Repo-specific scripts are pwsh (`scripts/*.ps1`) so they run on Windows, macOS and Linux. No bash scripts.
+- Samples cover: xUnit v3, MSTest, NUnit and TUnit on Microsoft Testing Platform, and a classic VSTest project. Behaviour per framework is documented in the README framework table; keep it accurate.
 - Never report success without an MTP summary and a zero exit code.
 - Output must follow the AXI rules (load the `axi` skill before changing anything that prints). In short: TOON on stdout produced by the official `Toon.Format` library (never hand-roll TOON, quoting is subtle); minimal fields; truncate long text and show the total size; definitive empty states; errors on stdout as `error`, `code`, `help` with exit 2 for usage errors; reject unknown flags and list the valid ones; no prompts; no progress on stdout; `help[]` suggestions are complete commands; the no-argument home view shows `bin` and `description` first, then live state; `-v`, `-V` and `--version` answer before any other work.
 - Keep field names stable (agents depend on them). Assert output in tests by decoding it with `ToonDecoder`, not by string matching.

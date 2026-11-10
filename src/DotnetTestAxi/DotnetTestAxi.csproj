@@ -17,8 +17,9 @@
   </ItemGroup>
   <ItemGroup>
     <InternalsVisibleTo Include="DotnetTestAxi.Tests" />
+    <InternalsVisibleTo Include="DotnetTestAxi.EndToEndTests" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Toon.Format" Version="1.0.0" />
+    <PackageReference Include="Toon.Format" />
   </ItemGroup>
 </Project>

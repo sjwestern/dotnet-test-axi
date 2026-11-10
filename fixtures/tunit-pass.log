@@ -1,0 +1,16 @@
+/work/samples/TUnit.Sample/SampleTests.cs(9,41): warning TUnitAssertions0005: Assert.That(...) should not be used with a constant value [/work/samples/TUnit.Sample/TUnit.Sample.csproj]
+/work/samples/TUnit.Sample/SampleTests.cs(12,40): warning TUnitAssertions0005: Assert.That(...) should not be used with a constant value [/work/samples/TUnit.Sample/TUnit.Sample.csproj]
+Running tests from /work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll (net10.0|x64)
+skipped Skipped (0ms)
+  not now
+  from /work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll (net10.0|x64)
+/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll (net10.0|x64) passed (783ms)
+
+  In process file artifacts produced:
+
+Test run summary: Passed!
+  total: 8
+  failed: 0
+  succeeded: 7
+  skipped: 1
+  duration: 1s 043ms

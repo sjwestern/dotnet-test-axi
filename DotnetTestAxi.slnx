@@ -1,4 +1,15 @@
 <Solution>
-  <Project Path="src/DotnetTestAxi/DotnetTestAxi.csproj" />
-  <Project Path="tests/DotnetTestAxi.Tests/DotnetTestAxi.Tests.csproj" />
+  <Folder Name="/src/">
+    <Project Path="src/DotnetTestAxi/DotnetTestAxi.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/DotnetTestAxi.Tests/DotnetTestAxi.Tests.csproj" />
+    <Project Path="tests/DotnetTestAxi.EndToEndTests/DotnetTestAxi.EndToEndTests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Samples/">
+    <Project Path="tests/Samples/Xunit3.Sample/Xunit3.Sample.csproj" />
+    <Project Path="tests/Samples/MSTest.Sample/MSTest.Sample.csproj" />
+    <Project Path="tests/Samples/NUnit.Sample/NUnit.Sample.csproj" />
+    <Project Path="tests/Samples/TUnit.Sample/TUnit.Sample.csproj" />
+  </Folder>
 </Solution>

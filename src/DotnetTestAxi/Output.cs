@@ -33,7 +33,54 @@ internal static class Output
         var o = new JsonObject { ["status"] = StatusName(r.Status) };
         var help = new List<string>();
 
-        if (r.Status is RunStatus.BuildError)
+        if (r.Status is RunStatus.UnsupportedRunner)
+        {
+            o["reason"] = "dotnet test rejected this target: dotnet-test-axi runs Microsoft Testing Platform projects only, and this one uses the VSTest runner";
+            if (r.VSTestProjects.Count > 0)
+            {
+                o["projects"] = Strings(r.VSTestProjects.ToArray());
+            }
+
+            help.Add("Run `dotnet test <path>` directly for VSTest projects");
+            help.Add("Migrate to Microsoft Testing Platform: https://aka.ms/dotnet-test/mtp");
+        }
+        else if (r.Status is RunStatus.InvalidArguments)
+        {
+            o["reason"] = "the test application rejected the command line options";
+            if (r.RejectedOptions.Count > 0)
+            {
+                o["options"] = Strings(r.RejectedOptions.ToArray());
+            }
+
+            help.Add("--class, --method and --namespace map to xUnit v3 filters; other frameworks need their own filter syntax");
+            help.Add("Pass the framework's own options after `--`, or rerun without the filter");
+        }
+        else if (r.Status is RunStatus.Crashed)
+        {
+            o["reason"] = "the test host process died before the run finished, so results are incomplete";
+            if (r.Crash!.Module.Length > 0)
+            {
+                o["module"] = r.Crash.Module;
+            }
+
+            if (r.Crash.ExitCode is { } crashExit)
+            {
+                o["host_exit"] = crashExit;
+            }
+
+            if (r.Crash.Detail.Length > 0)
+            {
+                o["detail"] = r.Crash.Detail;
+            }
+
+            o["completed"] = r.Passed + r.Failed + r.Skipped;
+            help.Add("Run the suspect class or test on its own to find the one that crashes the host");
+            if (logPath is not null)
+            {
+                help.Add($"Read {logPath} for the crash output");
+            }
+        }
+        else if (r.Status is RunStatus.BuildError)
         {
             var shown = full ? r.BuildErrors : r.BuildErrors.Take(DefaultLimit).ToList();
             o["errors"] = Rows(shown.Select(e => new JsonObject
@@ -126,6 +173,9 @@ internal static class Output
         RunStatus.Fail => "fail",
         RunStatus.BuildError => "build-error",
         RunStatus.NoTests => "no-tests",
+        RunStatus.UnsupportedRunner => "unsupported-runner",
+        RunStatus.InvalidArguments => "invalid-arguments",
+        RunStatus.Crashed => "crashed",
         _ => "no-summary",
     };
 

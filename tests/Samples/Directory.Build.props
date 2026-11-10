@@ -1,0 +1,15 @@
+<Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <!-- Sample projects contain deliberate failures (switched on by environment variable); keep analyzers quiet. -->
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <NoWarn>$(NoWarn);CS1591;NU1507</NoWarn>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Shared/Scenario.cs" Link="Scenario.cs" />
+    <!-- Build with -p:SampleBuildError=true to produce a compile error. -->
+    <Compile Include="$(MSBuildThisFileDirectory)Shared/BuildError.cs" Link="BuildError.cs" Condition="'$(SampleBuildError)' == 'true'" />
+  </ItemGroup>
+</Project>

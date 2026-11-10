@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit.v3.mtp-v2" />
+    <PackageReference Include="Toon.Format" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/DotnetTestAxi/DotnetTestAxi.csproj" />
+    <!-- The samples are run by the tests, not referenced for code. Referencing them builds them first. -->
+    <ProjectReference Include="../Samples/Xunit3.Sample/Xunit3.Sample.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="../Samples/MSTest.Sample/MSTest.Sample.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="../Samples/NUnit.Sample/NUnit.Sample.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="../Samples/TUnit.Sample/TUnit.Sample.csproj" ReferenceOutputAssembly="false" />
+    <ProjectReference Include="../Samples/VSTest.Sample/VSTest.Sample.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+</Project>

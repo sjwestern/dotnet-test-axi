@@ -118,4 +118,22 @@ public class MtpParserTests
         Assert.Equal("Unit.Orders.OrderTests.Rejects_empty", f.Name);
         Assert.Equal("OrderTests.cs:21", f.Location);
     }
+
+    [Fact]
+    public void Vstest_project_rejecting_the_project_flag_is_unsupported_not_a_build_error()
+    {
+        var r = MtpParser.Parse(Fixtures.Read("vstest-project-flag-rejected.log"));
+
+        Assert.Equal(RunStatus.UnsupportedRunner, r.Status);
+        Assert.Empty(r.BuildErrors);
+    }
+
+    [Fact]
+    public void Vstest_project_in_an_mtp_solution_is_unsupported_and_names_the_projects()
+    {
+        var r = MtpParser.Parse(Fixtures.Read("vstest-in-mtp-solution.log"));
+
+        Assert.Equal(RunStatus.UnsupportedRunner, r.Status);
+        Assert.Equal(["VSTest.Sample.csproj"], r.VSTestProjects);
+    }
 }

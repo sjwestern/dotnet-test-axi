@@ -1,0 +1,51 @@
+Running tests from /work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll (net10.0|x64)
+skipped Skipped (0ms)
+  not now
+  from /work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll (net10.0|x64)
+/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample.dll (net10.0|x64) failed (258ms)
+Exit code: 134
+  Error output: Process terminated.
+  sample crash
+     at System.Environment.FailFast(System.Runtime.CompilerServices.StackCrawlMarkHandle, System.String, System.Runtime.CompilerServices.ObjectHandleOnStack, System.String)
+     at System.Environment.FailFast(System.Threading.StackCrawlMark ByRef, System.String, System.Exception, System.String)
+     at System.Environment.FailFast(System.String)
+     at Samples.Scenario.CrashIfRequested()
+     at Samples.TUnitSample.SampleTests.Crashes()
+     at TUnit.Generated.Samples_TUnitSample_SampleTests__TestSource.__Invoke(Samples.TUnitSample.SampleTests, Int32, System.Object[], System.Threading.CancellationToken)
+     at TUnit.Core.ExecutableTest`1+<InvokeTestAsync>d__5[[System.__Canon, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].MoveNext()
+     at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[TUnit.Core.ExecutableTest`1+<InvokeTestAsync>d__5[[System.__Canon, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], TUnit.Core, Version=1.81.16.0, Culture=neutral, PublicKeyToken=b8d4030011dbd70c]](<InvokeTestAsync>d__5<System.__Canon> ByRef)
+     at System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[[TUnit.Core.ExecutableTest`1+<InvokeTestAsync>d__5[[System.__Canon, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], TUnit.Core, Version=1.81.16.0, Culture=neutral, PublicKeyToken=b8d4030011dbd70c]](<InvokeTestAsync>d__5<System.__Canon> ByRef)
+     at TUnit.Core.ExecutableTest`1[[System.__Canon, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]].InvokeTestAsync(System.Object, System.Threading.CancellationToken)
+     at TUnit.Engine.TestExecutor+<ExecuteTestAsync>d__28.MoveNext()
+     at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[TUnit.Engine.TestExecutor+<ExecuteTestAsync>d__28, TUnit.Engine, Version=1.81.16.0, Culture=neutral, PublicKeyToken=b8d4030011dbd70c]](<ExecuteTestAsync>d__28 ByRef)
+     at System.Runtime.CompilerServices.AsyncValueTaskMethodBuilder.Start[[TUnit.Engine.TestExecutor+<ExecuteTestAsync>d__28, TUnit.Engine, Version=1.81.16.0, Culture=neutral, PublicKeyToken=b8d4030011dbd70c]](<ExecuteTestAsync>d__28 ByRef)
+     at TUnit.Engine.TestExecutor.ExecuteTestAsync(TUnit.Core.AbstractExecutableTest, System.Threading.CancellationToken)
+     at TUnit.Engine.TestExecutor+<ExecuteAsync>d__19.MoveNext()
+     at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[[TUnit.Engine.TestExecutor+<ExecuteAsync>d__19, TUnit.Engine, Version=1.81.16.0, Culture=neutral, PublicKeyToken=b8d4030011dbd70c]](<ExecuteAsync>d__19 ByRef)
+     at System.Runtime.CompilerServices.AsyncValueTaskMethodBuilder.Start[[TUnit.Engine.TestExecutor+<ExecuteAsync>d__19, TUnit.Engine, Version=1.81.16.0, Culture=neutral, PublicKeyToken=b8d4030011dbd70c]](<ExecuteAsync>d__19 ByRef)
+     at TUnit.Engine.TestExecutor.ExecuteAsync(TUnit.Core.AbstractExecutableTest, TUnit.Engine.TestInitializer, System.Threading.CancellationToken, System.Nullable`1<System.TimeSpan>)
+     at TUnit.Engine.Services.TestExecution.TestCoordinator+<ExecuteTestAsync>d__9.MoveNext()
+     at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1[[System.Threading.Tasks.VoidTaskResult, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[TUnit.Engine.Services.TestExecution.TestCoordinator+<ExecuteTestAsync>d__9, TUnit.Engine, Version=1.81.16.0, Culture=neutral, PublicKeyToken=b8d4030011dbd70c]].ExecutionContextCallback(System.Object)
+     at System.Threading.ExecutionContext.RunFromThreadPoolDispatchLoop(System.Threading.Thread, System.Threading.ExecutionContext, System.Threading.ContextCallback, System.Object)
+     at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1[[System.Threading.Tasks.VoidTaskResult, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[TUnit.Engine.Services.TestExecution.TestCoordinator+<ExecuteTestAsync>d__9, TUnit.Engine, Version=1.81.16.0, Culture=neutral, PublicKeyToken=b8d4030011dbd70c]].MoveNext(System.Threading.Thread)
+     at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1+AsyncStateMachineBox`1[[System.Threading.Tasks.VoidTaskResult, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[TUnit.Engine.Services.TestExecution.TestCoordinator+<ExecuteTestAsync>d__9, TUnit.Engine, Version=1.81.16.0, Culture=neutral, PublicKeyToken=b8d4030011dbd70c]].ExecuteFromThreadPool(System.Threading.Thread)
+     at System.Threading.ThreadPoolWorkQueue.Dispatch()
+     at System.Threading.PortableThreadPool+WorkerThread.WorkerThreadStart()
+     at System.Threading.Thread.StartCallback()
+  
+The following exception occurred when running the test module with RunCommand '/work/samples/TUnit.Sample/bin/Debug/net10.0/TUnit.Sample' and RunArguments '':
+
+System.InvalidOperationException: A test session start event was received without a corresponding test session end.
+   at Microsoft.DotNet.Cli.Commands.Test.TestApplication.RunAsync()
+   at Microsoft.DotNet.Cli.Commands.Test.TestApplication.RunAsync()
+   at Microsoft.DotNet.Cli.Commands.Test.TestApplicationActionQueue.Read(BuildOptions buildOptions, TestOptions testOptions, TerminalTestReporter output, Action`1 onHelpRequested)
+
+Test run summary: Zero tests ran
+  error: 1
+
+  total: 1
+  failed: 0
+  succeeded: 0
+  skipped: 1
+  duration: 502ms
+Test run completed with non-success exit code: 1 (see: https://aka.ms/testingplatform/exitcodes)
