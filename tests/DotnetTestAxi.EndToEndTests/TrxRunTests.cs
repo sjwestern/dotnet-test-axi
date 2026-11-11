@@ -86,7 +86,7 @@ public class TrxRunTests
         Assert.Equal(1, exit);
         var trxs = o["trxs"]!.AsArray().Select(n => (string)n!).ToList();
         Assert.Equal(4, trxs.Count);
-        Assert.All(trxs, t => Assert.True(File.Exists(t)));
+        Assert.All(trxs, t => Assert.True(File.Exists(Path.Combine((string)o["results_dir"]!, t))));
         Assert.Equal(4, trxs.Distinct().Count());
         Assert.Equal(4, o["failures"]!.AsArray().Count);
         Assert.Null(o["warning"]);
@@ -115,7 +115,7 @@ public class TrxRunTests
         var trxs = o["trxs"]!.AsArray().Select(n => (string)n!).ToList();
         Assert.Equal(2, trxs.Count);
         Assert.Equal(2, trxs.Distinct().Count());
-        Assert.All(trxs, t => Assert.True(File.Exists(t)));
+        Assert.All(trxs, t => Assert.True(File.Exists(Path.Combine((string)o["results_dir"]!, t))));
         Assert.Equal(2, o["projects"]!.AsArray().Count);
         Assert.Null(o["warning"]);
     }

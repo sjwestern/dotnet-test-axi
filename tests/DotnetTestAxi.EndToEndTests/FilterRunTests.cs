@@ -83,6 +83,7 @@ public class FilterRunTests
         Assert.Equal(4, failures.Count);
         Assert.All(failures, f => Assert.NotNull(f!["project"]));
         Assert.Equal(4, o["logs"]!.AsArray().Count);
+        Assert.True(Directory.Exists((string?)o["results_dir"]));
     }
 
     private static string?[] Row(System.Text.Json.Nodes.JsonArray rows, string name)

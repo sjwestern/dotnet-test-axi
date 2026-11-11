@@ -178,8 +178,36 @@ public class OutputTests
 
         var o = Decode(Output.Run(r, null, "all", full: false));
 
-        Assert.Equal(["/tmp/a/A.trx", "/tmp/b/B.trx"], o["trxs"]!.AsArray().Select(n => (string?)n));
+        Assert.Equal("/tmp", (string?)o["results_dir"]);
+        Assert.Equal(["a/A.trx", "b/B.trx"], o["trxs"]!.AsArray().Select(n => (string?)n));
         Assert.Null(o["trx"]);
+    }
+
+    [Fact]
+    public void Multi_project_logs_and_trxs_are_relative_to_results_dir()
+    {
+        var r = Fixture("mtp-fail.log");
+        r.Logs.AddRange(["/work/run/A.log", "/work/run/B.log"]);
+        r.Trx.AddRange(["/work/run/A.trx", "/work/run/B.trx"]);
+
+        var o = Decode(Output.Run(r, null, "all", full: false));
+
+        Assert.Equal("/work/run", (string?)o["results_dir"]);
+        Assert.Equal(["A.log", "B.log"], o["logs"]!.AsArray().Select(n => (string?)n));
+        Assert.Equal(["A.trx", "B.trx"], o["trxs"]!.AsArray().Select(n => (string?)n));
+    }
+
+    [Fact]
+    public void Single_project_run_keeps_absolute_paths_and_no_results_dir()
+    {
+        var r = Fixture("mtp-fail.log");
+        r.Trx.Add("/work/run/A.trx");
+
+        var o = Decode(Output.Run(r, "/work/run/A.log", "unit", full: false));
+
+        Assert.Null(o["results_dir"]);
+        Assert.Equal("/work/run/A.log", (string?)o["log"]);
+        Assert.Equal("/work/run/A.trx", (string?)o["trx"]);
     }
 
     [Fact]

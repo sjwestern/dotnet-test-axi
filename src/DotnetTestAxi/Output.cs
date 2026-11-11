@@ -156,13 +156,20 @@ internal static class Output
             help.Add("skipped_projects have no test framework (libraries); they were not run");
         }
 
+        var listed = (logPath is null ? r.Logs : []).Concat(logPath is not null && r.Trx.Count > 0 ? [] : r.Trx).ToList();
+        var baseDir = CommonDirectory(listed);
+        if (baseDir is not null)
+        {
+            o["results_dir"] = baseDir;
+        }
+
         if (logPath is not null)
         {
             o["log"] = logPath;
         }
         else if (r.Logs.Count > 0)
         {
-            o["logs"] = Strings(r.Logs.ToArray());
+            o["logs"] = Strings(r.Logs.Select(p => RelativeTo(baseDir, p)).ToArray());
             help.Add("Read the logs listed above for each project's full output");
         }
 
@@ -172,7 +179,7 @@ internal static class Output
         }
         else if (r.Trx.Count > 0)
         {
-            o["trxs"] = Strings(r.Trx.ToArray());
+            o["trxs"] = Strings(r.Trx.Select(p => RelativeTo(baseDir, p)).ToArray());
         }
 
         if (r.TrxMissing.Count > 0)
@@ -226,6 +233,23 @@ internal static class Output
         RunStatus.Crashed => "crashed",
         _ => "no-summary",
     };
+
+    /// <summary>The deepest directory shared by every path (more than one path, not the filesystem root), else null.</summary>
+    internal static string? CommonDirectory(IReadOnlyList<string> paths)
+    {
+        if (paths.Count < 2)
+        {
+            return null;
+        }
+
+        var dirs = paths.Select(p => (Path.GetDirectoryName(p) ?? "").Replace('\\', '/').Split('/')).ToList();
+        var common = dirs[0].TakeWhile((seg, i) => dirs.All(d => d.Length > i && d[i] == seg)).ToArray();
+        var result = string.Join('/', common);
+        return result.Length > 0 && result != "/" && Path.IsPathRooted(paths[0]) ? result : null;
+    }
+
+    internal static string RelativeTo(string? baseDir, string path) =>
+        baseDir is null ? path : Path.GetRelativePath(baseDir, path).Replace('\\', '/');
 
     private static IEnumerable<string> FailureHelp(RunResult r, string? logPath, string? target, bool full, bool truncatedText)
     {

@@ -127,7 +127,7 @@ When the framework can write a TRX report, the tool asks for one and prints `trx
 
 - Each run gets a folder, `<log dir>/<yyyy-MM-dd>/<name>-<HHmmss>/`, with `<name>.log` and `<name>.trx`. Delete a folder to clean up a run, or a date folder to clean up a day.
 - If the framework needs the TrxReport package and the project lacks it, output includes `warning:` and a `help` line with the `dotnet add ... package Microsoft.Testing.Extensions.TrxReport` command. The run still works from the console log.
-- A target with several projects runs each project on its own (built once, projects in parallel) so each writes its own report, and the output lists them as `trxs`.
+- A target with several projects runs each project on its own (built once, projects in parallel) so each writes its own report, and the output lists them as `trxs`, relative to `results_dir`.
 - Read the `trx:` file when failure messages are truncated.
 
 See `docs/architecture/result-sources.md`.
