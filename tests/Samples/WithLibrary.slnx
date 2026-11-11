@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Xunit3.Sample/Xunit3.Sample.csproj" />
+  <Project Path="Library.Sample/Library.Sample.csproj" />
+</Solution>

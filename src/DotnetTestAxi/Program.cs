@@ -76,13 +76,23 @@ internal static partial class Program
         }
 
         RunPlan plan = new(Strategy.Unfiltered, null, []);
+        List<string> nonTest = [];
         if (args.Filter.IsEmpty)
         {
             // TRX needs the framework, so detect even without a filter.
             var projects = TestRunner.ProjectsOf(target);
             if (projects.Count > 0)
             {
-                plan = RunPlan.Choose(true, await FrameworkDetector.DetectAsync(projects, config));
+                var all = await FrameworkDetector.DetectAsync(projects, config);
+                // A project with no detected test framework is a library: running it only yields a false no-summary.
+                var tests = all.Where(d => !d.IsUnknown).ToList();
+                if (tests.Count > 0 && tests.Count < all.Count)
+                {
+                    nonTest = all.Where(d => d.IsUnknown).Select(d => Path.GetFileNameWithoutExtension(d.Project)).ToList();
+                    all = tests;
+                }
+
+                plan = RunPlan.Choose(true, all);
             }
         }
         else
@@ -102,6 +112,7 @@ internal static partial class Program
         {
             var cfgLogDir = config?.LogDir is { } ld && config.Directory is { } cdir ? Path.GetFullPath(ld, cdir) : null;
             var merged = await MixedRun.RunAsync(plan, args, target, cwd, cfgLogDir);
+            merged.NonTestProjects.AddRange(nonTest);
             Console.Write(Output.Run(merged, null, args.Target, args.Full));
             return merged.Status == RunStatus.Pass ? 0 : 1;
         }
@@ -131,6 +142,7 @@ internal static partial class Program
 
         var result = MtpParser.Parse(Ansi().Replace(File.ReadAllText(logPath), ""));
         ResultSources.Finish(result, exit, trxPath);
+        result.NonTestProjects.AddRange(nonTest);
         if (missingTrx is not null) { result.TrxMissing.Add(missingTrx); }
 
         Console.Write(Output.Run(result, logPath, args.Target, args.Full));

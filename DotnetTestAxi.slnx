@@ -13,5 +13,6 @@
     <Project Path="tests/Samples/NUnit.Sample/NUnit.Sample.csproj" />
     <Project Path="tests/Samples/NUnit.NoTrx.Sample/NUnit.NoTrx.Sample.csproj" />
     <Project Path="tests/Samples/TUnit.Sample/TUnit.Sample.csproj" />
+    <Project Path="tests/Samples/Library.Sample/Library.Sample.csproj" />
   </Folder>
 </Solution>

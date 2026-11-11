@@ -150,6 +150,12 @@ internal static class Output
             }));
         }
 
+        if (r.NonTestProjects.Count > 0)
+        {
+            o["skipped_projects"] = Strings(r.NonTestProjects.ToArray());
+            help.Add("skipped_projects have no test framework (libraries); they were not run");
+        }
+
         if (logPath is not null)
         {
             o["log"] = logPath;

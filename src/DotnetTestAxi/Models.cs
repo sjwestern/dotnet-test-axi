@@ -55,6 +55,9 @@ internal sealed class RunResult
     /// <summary>Projects whose framework could not be detected (unknown-framework status).</summary>
     public List<string> FrameworkProjects { get; } = [];
 
+    /// <summary>Projects left out of an unfiltered run because no test framework was detected (libraries, not test projects).</summary>
+    public List<string> NonTestProjects { get; } = [];
+
     /// <summary>Help lines specific to the status, shown ahead of the generic ones.</summary>
     public List<string> StatusHelp { get; } = [];
 

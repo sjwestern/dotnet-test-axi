@@ -93,6 +93,17 @@ public class TrxRunTests
     }
 
     [Fact]
+    public async Task Library_project_without_a_test_framework_is_skipped_not_no_summary()
+    {
+        var (exit, _, o) = await ToolRun.RunAsync("WithLibrary.slnx", "pass");
+
+        Assert.Equal(0, exit);
+        Assert.Equal("pass", (string?)o["status"]);
+        Assert.Equal(["Library.Sample"], o["skipped_projects"]!.AsArray().Select(n => (string)n!).ToArray());
+        Assert.Equal(8L, (long?)o["total"]);
+    }
+
+    [Fact]
     public async Task Multi_project_run_without_a_filter_gets_one_trx_per_project()
     {
         var (exit, _, o) = await ToolRun.RunAsync("SameFramework.slnx", "pass", "--no-build");
