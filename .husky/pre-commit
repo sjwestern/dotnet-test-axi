@@ -1,0 +1,1 @@
+pwsh -NoLogo -NoProfile -File scripts/check-publication.ps1
