@@ -40,6 +40,16 @@ dotnet tool install -g dotnet-test-axi --add-source ./nupkg
 dotnet-test-axi --version        # check it works
 ```
 
+Or run the install script, which packs and installs in one step. Rerun it after `git pull` to update.
+
+```sh
+./scripts/install.sh            # Linux, macOS, WSL
+```
+
+```powershell
+.\scripts\install.ps1          # Windows
+```
+
 If `dotnet-test-axi` is not found, add `~/.dotnet/tools` (`%USERPROFILE%\.dotnet\tools` on Windows) to your `PATH`.
 
 ### Update
