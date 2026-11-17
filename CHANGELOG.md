@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-11-17
+
+### Added
+
+- `scripts/install.sh` and `scripts/install.ps1` pack the tool from a clone and install or update it as a dotnet global tool.
+
 ## [0.4.0] - 2026-11-11
 
 ### Changed
@@ -51,7 +57,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Solution support, including mixed-framework solutions.
 - Agent skill.
 
-[Unreleased]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.2.0...v0.3.0
