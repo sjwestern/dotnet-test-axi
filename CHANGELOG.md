@@ -4,6 +4,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+## [0.5.1] - 2026-11-19
+
 ### Changed
 
 - Passing `--solution` or `--project` now errors with a hint to pass the path as the positional target; the skill says the same.
@@ -61,7 +63,8 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 - Solution support, including mixed-framework solutions.
 - Agent skill.
 
-[Unreleased]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.3.1...v0.4.0
 [0.3.1]: https://github.com/sjwestern/dotnet-test-axi/compare/v0.3.0...v0.3.1
