@@ -17,6 +17,7 @@ Get usage from the CLI, it is the source of truth:
 Rules:
 
 - Use it instead of calling `dotnet test` directly.
+- Pass a project, solution or directory as the positional target: `dotnet-test-axi App.slnx`. There is no `--solution` or `--project` flag; the kind is detected from the path.
 - Never rerun the suite to see more output. Read the `log:` file, or use `--full` for every failure.
 - When a `trx:` path is printed, read it for complete failure messages and stack traces.
 - A `warning:` about the TrxReport package comes with a `dotnet add` command; offer it to the user, do not run it unasked.

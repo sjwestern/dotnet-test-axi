@@ -4,6 +4,10 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Versioning: [S
 
 ## [Unreleased]
 
+### Changed
+
+- Passing `--solution` or `--project` now errors with a hint to pass the path as the positional target; the skill says the same.
+
 ## [0.5.0] - 2026-11-17
 
 ### Added

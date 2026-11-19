@@ -55,6 +55,10 @@ internal sealed class Args
                     if (arg.StartsWith('-'))
                     {
                         a.Error = $"unknown flag {arg}";
+                        if (arg is "--solution" or "--project")
+                        {
+                            a.ErrorHelp = $"{arg} is not a flag: pass the path as the target, e.g. `dotnet-test-axi <path-to-project-or-solution>`; the kind is detected from the path";
+                        }
                     }
                     else if (a.Target is null)
                     {

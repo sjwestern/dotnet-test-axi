@@ -23,6 +23,17 @@ public class ArgsAndConfigTests
         Assert.Contains("--class", Args.ValidFlags);
     }
 
+    [Theory]
+    [InlineData("--solution")]
+    [InlineData("--project")]
+    public void Solution_and_project_flags_point_to_the_positional_target(string flag)
+    {
+        var a = Args.Parse([flag, "App.slnx"]);
+
+        Assert.Equal($"unknown flag {flag}", a.Error);
+        Assert.Contains("pass the path as the target", a.ErrorHelp);
+    }
+
     [Fact]
     public void Project_target_maps_to_project_flag_and_solution_to_solution_flag()
     {
